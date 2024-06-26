@@ -30,7 +30,7 @@ jobs:
         with:
           title: Link Checker Report
           content-filepath: ./lychee/out.md
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.CLA_PERSONAL_ACCESS_TOKEN }}
           labels: |
             report
             automated issue
