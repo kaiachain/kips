@@ -13,16 +13,16 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: Klaytn Improvement Proposals
+title: Kaia Improvement Proposals
 description: >-
-  Klaytn Improvement Proposals (KIPs) describe standards for the Klaytn
+  Kaia Improvement Proposals (KIPs) describe standards for the Kaia
   platform, including core protocol specifications, client APIs, and contract
   standards.
-url: "https://kips.klaytn.com"
-twitter_username: klaytn_official
-github_username: klaytn
-facebook_username: klaytn.official
-medium_username: klaytn
+url: "https://kips.kaia.io"
+twitter_username: kaiachain
+github_username: kaiachain
+facebook_username: kaiachain
+medium_username: kaiachain
 header_pages:
  - all.html
  - core.html
@@ -36,9 +36,9 @@ header_pages:
  - informational.html
 twitter:
   card: summary
-  username: klaytn_official
+  username: kaiachain
 facebook:
-  publisher: https://www.facebook.com/klaytn.official
+  publisher: https://www.facebook.com/kaiachain
 
 # Build settings
 markdown: kramdown
