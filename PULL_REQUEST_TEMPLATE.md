@@ -8,8 +8,8 @@
 Please put an x in the boxes related to your change.
 
 - [ ] Bugfix
-- [ ] New feature or Enhancement
-- [ ] Others
+- [ ] KIP Proposal
+- [ ] KIP Improvement
 
 ## Checklist
 
