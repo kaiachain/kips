@@ -1,19 +1,11 @@
-# Klaytn Improvement Proposals (KIPs)
-
-[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
-
-Klaytn Improvement Proposals (KIPs) describe standards for the Klaytn platform, including core protocol specifications, client APIs, and contract standards.
-
-# NO LONGER MAINTAINED
-
-Since the launch of Kaia Blockchain this repository has been parked in favour of the new open-source projects in [Kaia's Github](https://github.com/kaiachain). Contributors have now moved there continuing with massive open-source contributions to our blockchain ecosystem. A big thank you to everyone who has contributed to this repository. For more information about Klaytn's chain merge with Finschia blockchain please refer to the launching of Kaia blockchain - [kaia.io](http://kaia.io/).
+# Kaia Improvement Proposals (KIPs)
 
 ## Contributing
 
  1. Review [KIP-1](KIPs/kip-1.md).
  2. Fork the repository by clicking "Fork" in the top right.
- 3. Add your KIP to your fork of the repository. There is a [template KIP here](https://github.com/klaytn/kips/blob/master/kip-template.md).
- 4. Submit a Pull Request to Klaytn's [KIPs repository](https://github.com/klaytn/kips).
+ 3. Add your KIP to your fork of the repository. There is a [template KIP here](https://github.com/kaiachain/kips/blob/main/kip-template.md).
+ 4. Submit a Pull Request to Kaia's [KIPs repository](https://github.com/kaiachain/kips).
 
 Your first PR should be a first draft of the final KIP. It must meet the formatting criteria enforced by the build (largely, correct metadata in the header). An editor will manually review the first PR for a new KIP and assign it a number before merging it. Make sure you include a `discussions-to` header with the URL to a discussion forum or open GitHub issue where people can discuss the KIP as a whole.
 
@@ -30,8 +22,8 @@ When you believe your KIP is mature and ready to progress past the draft phase, 
 
 * **Draft** - a KIP that is undergoing rapid iteration and changes.
 * **Last Call** - a KIP that is done with its initial iteration and ready for review by a wide audience for two weeks.
-* **Accepted** - a KIP that has been in 'Last Call' for at least 2 weeks, any technical changes that were requested have been addressed by the author, and finally get approved by the Klaytn core developers. 
-* **Final** - a KIP that has been released as a standard specification. If a Core KIP is in 'Final', its implementation has been included in at least one Klaytn client.
+* **Accepted** - a KIP that has been in 'Last Call' for at least 2 weeks, any technical changes that were requested have been addressed by the author, and finally get approved by the Kaia core developers. 
+* **Final** - a KIP that has been released as a standard specification. If a Core KIP is in 'Final', its implementation has been included in at least one Kaia client.
 
 
 {% include types_lastcall.html %} 
