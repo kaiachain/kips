@@ -1,29 +1,62 @@
 # Kaia Improvement Proposals (KIPs)
 
-## Contributing
+The goal of the KIP project is to standardize and provide high-quality documentation for Kaia itself and conventions built upon it. This repository tracks past and ongoing improvements to Kaia in the form of Kaia Improvement Proposals (KIPs). [KIP-1](https://kips.kaia.io/KIPS/kip-1) governs how KIPs are published.
 
- 1. Review [KIP-1](KIPs/kip-1.md).
- 2. Fork the repository by clicking "Fork" in the top right.
- 3. Add your KIP to your fork of the repository. There is a [template KIP here](https://github.com/kaiachain/kips/blob/main/kip-template.md).
- 4. Submit a Pull Request to Kaia's [KIPs repository](https://github.com/kaiachain/kips).
+The [status page](https://kips.kaia.io/) tracks and lists KIPs, which can be divided into the following categories:
 
-Your first PR should be a first draft of the final KIP. It must meet the formatting criteria enforced by the build (largely, correct metadata in the header). An editor will manually review the first PR for a new KIP and assign it a number before merging it. Make sure you include a `discussions-to` header with the URL to a discussion forum or open GitHub issue where people can discuss the KIP as a whole.
+- [Core KIPs](https://kips.kaia.io/core) are improvements to the Kaia consensus protocol.
+- [Networking KIPs](https://kips.kaia.io/networking) specify the peer-to-peer networking layer of Kaia.
+- [Interface KIPs](https://kips.kaia.io/interface) standardize interfaces to Kaia, which determine how users and applications interact with the blockchain.
+- [KCTs](https://kips.kaia.io/kct) specify the various token standards in Kaia.
+- [SDKs](https://kips.kaia.io/sdk) specify software developer kits and its architecture to support Kaia.
+- [Application](https://kips.kaia.io/application) specify application layer standards, which determine how applications running on Kaia can interact with each other.
+- [Meta KIPs](https://kips.kaia.io/meta) are miscellaneous improvements that nonetheless require some sort of consensus.
+- [Informational KIPs](https://kips.kaia.org/informational) are non-standard improvements that do not require any form of consensus.
 
-If your KIP requires images, the image files should be included in a subdirectory of the `assets` folder for that KIP as follows: `assets/kip-N` (where **N** is to be replaced with the KIP number). When linking to an image in the KIP, use relative links such as `../assets/kip-1/image.png`.
+**Before you write an KIP, ideas MUST be thoroughly discussed on [Kaia Research](https://devforum.kaia.io/c/english/kips-research). Once consensus is reached, thoroughly read and review [KIP-1](https://kips.kaia.io/KIPS/kip-1), which describes the KIP process.**
 
-Once your first PR is merged, we have a bot that helps out by automatically merging PRs to draft KIPs. For this to work, it has to be able to tell that you own the draft being edited. Make sure that the 'author' line of your KIP contains either your Github username or your email address inside <triangular brackets>. If you use your email address, that address must be the one publicly shown on [your GitHub profile](https://github.com/settings/profile).
+Please note that this repository is for documenting standards and not for help implementing them. These types of inquiries should be directed to the [Kaia DevForum](https://devforum.kaia.io/c/english/kips-questions). For specific questions and concerns regarding KIPs, it's best to comment on the relevant discussion thread of the KIP in https://github.com/kaiachain/kips/issues/kip-*.
 
-When you believe your KIP is mature and ready to progress past the draft phase, you should do the following:
+## Preferred Citation Format
 
- - Open a PR changing the state of your KIP to 'Last Call'. An editor will review your draft and see if there is a rough consensus to move forward. If there are significant issues with the KIP - they may close the PR and request that you fix the issues in the draft before trying again.
- - Before moving to 'Last Call', a reference implementation of the KIP should be provided. 
+The canonical URL for an EIP that has achieved draft status at any point is at <https://kips.kaia.io/>. For example, the canonical URL for EIP-1 is <https://kips.kaia.io/KIPS/kip-1>.
 
-## KIP Status Terms
+Consider any document not published at <https://kips.kaia.io/> as a working paper. Additionally, consider published EIPs with a status of "draft" or "last call" to be incomplete drafts, and note that their specification is likely to be subject to change.
 
-* **Draft** - a KIP that is undergoing rapid iteration and changes.
-* **Last Call** - a KIP that is done with its initial iteration and ready for review by a wide audience for two weeks.
-* **Accepted** - a KIP that has been in 'Last Call' for at least 2 weeks, any technical changes that were requested have been addressed by the author, and finally get approved by the Kaia core developers. 
-* **Final** - a KIP that has been released as a standard specification. If a Core KIP is in 'Final', its implementation has been included in at least one Kaia client.
+## Build the status page locally
 
+### Install prerequisites
 
-{% include types_lastcall.html %} 
+1. Open Terminal.
+
+2. Check whether you have Ruby 3.1.4 installed. Later [versions are not supported](https://stackoverflow.com/questions/14351272/undefined-method-exists-for-fileclass-nomethoderror).
+
+   ```sh
+   ruby --version
+   ```
+
+3. If you don't have Ruby installed, install Ruby 3.1.4.
+
+4. Install Bundler:
+
+   ```sh
+   gem install bundler
+   ```
+
+5. Install dependencies:
+
+   ```sh
+   bundle install
+   ```
+
+### Build your local Jekyll site
+
+1. Bundle assets and start the server:
+
+   ```sh
+   bundle exec jekyll serve
+   ```
+
+2. Preview your local Jekyll site in your web browser at `http://localhost:4000`.
+
+More information on Jekyll and GitHub Pages [here](https://docs.github.com/en/enterprise/2.14/user/articles/setting-up-your-github-pages-site-locally-with-jekyll).

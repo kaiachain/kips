@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+    <title>KIP 3: Klaytn Keystore Format v4</title>
+    <meta property="og:title" content="KIP 3: Klaytn Keystore Format v4" />
+    <meta
+      name="description"
+      content="Details on Kaia Improvement Proposal 3 (KIP 3): Klaytn Keystore Format v4"
+    />
+    <meta
+      property="og:description"
+      content="Details on Kaia Improvement Proposal 3 (KIP 3): Klaytn Keystore Format v4"
+    />
+    <meta name="twitter:description" content="Details on Kaia Improvement Proposal 3 (KIP 3): Klaytn Keystore Format v4" />
+  
+  <meta name="generator" content="Jekyll" />
+  <meta property="og:locale" content="en_US" />
+  <link rel="canonical" href="http://localhost:4000/KIPs/kip-3" />
+  <meta property="og:url" content="http://localhost:4000/KIPs/kip-3" />
+  <meta property="og:site_name" content="Kaia Improvement Proposals" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@kaiachain" />
+  <script type="application/ld+json">
+    {
+      "@type": "WebSite",
+      "url": "http://localhost:4000",
+      "name": "Kaia Improvement Proposals",
+      "description": "Kaia Improvement Proposals (KIPs) describe standards for the Kaia platform, including core protocol specifications, client APIs, and contract standards.",
+      "@context": "https://schema.org"
+    }
+  </script>
+  <link rel="stylesheet" href="/assets/css/style.css" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Kaia Improvement Proposals" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Kaia Improvement Proposals</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/all">All</a><a class="page-link" href="/core">Core</a><a class="page-link" href="/networking">Networking</a><a class="page-link" href="/storage">Storage</a><a class="page-link" href="/interface">Interface</a><a class="page-link" href="/token">KCT</a><a class="page-link" href="/sdk">SDK</a><a class="page-link" href="/application">Application</a><a class="page-link" href="/meta">Meta</a><a class="page-link" href="/informational">Informational</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="home">
+  <h1 class="page-heading">
+    KIP 3: Klaytn Keystore Format v4
+    <a href="https://github.com/kaiachain/KIPS/blob/main/KIPs/kip-3.md"><svg role="img" aria-label="Source" xmlns="https://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16"><title>Source</title><path fill-rule="evenodd" d="M9.5 3L8 4.5 11.5 8 8 11.5 9.5 13 14 8 9.5 3zm-5 0L0 8l4.5 5L6 11.5 2.5 8 6 4.5 4.5 3z"/></svg></a>
+  </h1>
+  <table>
+    <tr><th>Author</th><td><a href="mailto:colin.kim@groundx.xyz">Junghyun Colin Kim</a></td></tr>
+    
+      <tr><th>Discussions-To</th><td><a href="https://github.com/klaytn/klaytn/issues/438">https://github.com/klaytn/klaytn/issues/438</a></td></tr>
+    
+    <tr><th>Status</th><td>Final
+    
+    </td></tr>
+    <tr><th>Type</th><td>Standards Track</td></tr>
+    
+      <tr><th>Category</th><td>Application</td></tr>
+    
+    <tr><th>Created</th><td>2020-01-03</td></tr>
+    
+    
+    
+    
+    
+  </table>
+
+  <!--You can leave these HTML comments in your merged KIP and delete the visible duplicate text guides, they will not appear and may be helpful to refer to if you edit it again. This is the suggested template for new KIPs. Note that a KIP number will be assigned by an editor. When opening a pull request to submit your KIP, please use an abbreviated title in the filename, `kip-draft_title_abbrev.md`. The title should be 44 characters or less.-->
+<h1 id="klaytn-keystore-format-v4">Klaytn Keystore Format v4</h1>
+
+<h2 id="simple-summary">Simple Summary</h2>
+<!--"If you can't explain it simply, you don't understand it well enough." Provide a simplified and layman-accessible explanation of the KIP.-->
+<p>This documentation defines the format of a keystore file which is used to securely store private keys of a Klaytn account.</p>
+
+<h2 id="abstract">Abstract</h2>
+<!--A short (~200 word) description of the technical issue being addressed.-->
+<p>Since a Klaytn account can have one or more private keys, the format can provide a better way of storing multiple private keys securely and collectively instead of storing raw private keys.</p>
+
+<h2 id="motivation">Motivation</h2>
+<!--The motivation is critical for KIPs that want to change the Klaytn protocol. It should clearly explain why the existing protocol specification is inadequate to address the problem that the KIP solves. KIP submissions without sufficient motivation may be rejected outright.-->
+<p>Klaytn improves usability by decoupling addresses and key pairs as well as providing various account key types such as multi-signature and role-based keys.
+Due to this change, <a href="https://github.com/ethereum/wiki/wiki/Web3-Secret-Storage-Definition">keystore v3</a> is insufficient for Klaytn.
+Klaytn keystore format v4 is suitable for Klaytn by storing multiple private keys while it is based on keystore v3.</p>
+
+<h2 id="specification">Specification</h2>
+<!--The technical specification should describe the syntax and semantics of any new feature. The specification should be detailed enough to allow competing, interoperable implementations for any of the current Klaytn platforms (klaytn). -->
+
+<p>The specification of Klaytn keystore format v4 in JSON for a Klaytn account is shown below.
+This format can express various Klaytn account key types such as a single key, multiple keys, and role-based keys.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;keystore&gt; :=
+{
+  "version": 4,
+  "id": &lt;a 128-bit UUID in hexstring&gt;,
+  "address": &lt;Klaytn address, a 160-bit hexstring&gt;,
+  "keyring": &lt;keyring&gt;
+}
+
+&lt;keyring&gt; := [&lt;key&gt; (, &lt;key&gt;)*] | [&lt;keys&gt; (, &lt;keys&gt;)*]
+
+&lt;keys&gt; := [] | [&lt;key&gt; (, &lt;key&gt;)*]
+
+&lt;key&gt; :=
+{
+  "cipher": "aes-128-ctr",
+  "ciphertext": &lt;a 256-bit hexstring&gt;,
+  "cipherparams": {
+    "iv": &lt;a 128-bit hexstring&gt;
+  },
+  "kdf": "scrypt" | "pbkdf2",
+  "kdfparams": &lt;kdfparams-scrypt&gt; | &lt;kdfparams-pbkdf2&gt;,
+  "mac": &lt;a 256-bit hexstring&gt;
+}
+
+&lt;kdfparams-scrypt&gt; :=
+{
+  "dklen": &lt;an integer equal or bigger than 32&gt;,
+  "salt": &lt;a 256-bit hexstring&gt;,
+  "n": &lt;an integer&gt;,
+  "r": &lt;an integer&gt;,
+  "p": &lt;an integer&gt;,
+}
+
+&lt;kdfparams-pbkdf2&gt; :=
+{
+  "dklen": &lt;an integer&gt;,
+  "salt": &lt;a 256-bit hexstring&gt;,
+  "prf": "hmac-sha256",
+  "c": &lt;an integer&gt;,
+}
+
+</code></pre></div></div>
+
+<h2 id="examples">Examples</h2>
+<p>Examples are as following:</p>
+
+<ol>
+  <li>A single key
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> {
+     "version": 4,
+     "id": "b6c6bd8f-e3ba-43c1-af4b-1b7dfe13e5f9",
+     "address": "0xa8677855999712d23692a4cad77bb9396a1174cd",
+     "keyring": [
+         {
+             "ciphertext": "5cbd3cf235d02718f1cfac84157786d8e36fcf651e15f0c9a4303a2338697126",
+             "cipherparams": {
+                 "iv": "92a89f3011e020f6a70bb34fddb006c5"
+             },
+             "cipher": "aes-128-ctr",
+             "kdf": "scrypt",
+             "kdfparams": {
+                 "dklen": 32,
+                 "salt": "aa38c864f4f6f538dc3bb4961c9d5d5772b163d2243aa8472cc4f83338e67cd3",
+                 "n": 4096,
+                 "r": 8,
+                 "p": 1
+             },
+             "mac": "3355abc00f3fb1ae06821ece9c13359a0da1bd284cf29ffc26a534a40d210f28"
+         }
+     ]
+ }
+</code></pre></div>    </div>
+  </li>
+  <li>Multiple keys
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> {
+     "version": 4,
+     "id": "b6c6bd8f-e3ba-43c1-af4b-1b7dfe13e5f9",
+     "address": "0xa8677855999712d23692a4cad77bb9396a1174cd",
+     "keyring": [
+         {
+            "ciphertext": "5cbd3cf235d02718f1cfac84157786d8e36fcf651e15f0c9a4303a2338697126",
+            "cipherparams": {
+                "iv": "92a89f3011e020f6a70bb34fddb006c5"
+            },
+            "cipher": "aes-128-ctr",
+            "kdf": "scrypt",
+            "kdfparams": {
+                "dklen": 32,
+                "salt": "aa38c864f4f6f538dc3bb4961c9d5d5772b163d2243aa8472cc4f83338e67cd3",
+                "n": 4096,
+                "r": 8,
+                "p": 1
+              },
+             "mac": "3355abc00f3fb1ae06821ece9c13359a0da1bd284cf29ffc26a534a40d210f28"
+         },
+         {
+            "ciphertext": "5e2f95f61d7af3bebf4ff9f5d5813690c80b0b5aaebd6e8b22d0f928ff06776a",
+            "cipherparams": {
+                "iv": "92a89f3011e020f6a70bb34fddb006c5"
+            },
+            "cipher": "aes-128-ctr",
+            "kdf": "scrypt",
+            "kdfparams": {
+                "dklen": 32,
+                "salt": "e7c4605ad8200e0d93cd67f9d82fb9971e1a2763b22362017c2927231c2a733a",
+                "n": 4096,
+                "r": 8,
+                "p": 1,
+            },
+            "mac": "fb86255428e24ba701201d5815f2f2114214cbd34fe4bc7a24b948a8ceac9f9b",
+         },
+     ]
+ }
+</code></pre></div>    </div>
+  </li>
+  <li>Role-based keys
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> {
+     "version": 4,
+     "id": "b6c6bd8f-e3ba-43c1-af4b-1b7dfe13e5f9",
+     "address": "0xa8677855999712d23692a4cad77bb9396a1174cd",
+     "keyring": [
+         [
+             {
+             "ciphertext": "5cbd3cf235d02718f1cfac84157786d8e36fcf651e15f0c9a4303a2338697126",
+             "cipherparams": {
+                 "iv": "92a89f3011e020f6a70bb34fddb006c5"
+             },
+             "cipher": "aes-128-ctr",
+             "kdf": "scrypt",
+             "kdfparams": {
+                 "dklen": 32,
+                 "salt": "aa38c864f4f6f538dc3bb4961c9d5d5772b163d2243aa8472cc4f83338e67cd3",
+                 "n": 4096,
+                 "r": 8,
+                 "p": 1
+             },
+             "mac": "3355abc00f3fb1ae06821ece9c13359a0da1bd284cf29ffc26a534a40d210f28"
+         }],
+         [],
+         [
+             {
+                "ciphertext": "5e2f95f61d7af3bebf4ff9f5d5813690c80b0b5aaebd6e8b22d0f928ff06776a",
+                "cipherparams": {
+                    "iv": "92a89f3011e020f6a70bb34fddb006c5"
+                },
+                "cipher": "aes-128-ctr",
+                "kdf": "scrypt",
+                "kdfparams": {
+                    "dklen": 32,
+                    "salt": "e7c4605ad8200e0d93cd67f9d82fb9971e1a2763b22362017c2927231c2a733a",
+                    "n": 4096,
+                    "r": 8,
+                    "p": 1,
+                },
+                "mac": "fb86255428e24ba701201d5815f2f2114214cbd34fe4bc7a24b948a8ceac9f9b",
+             },
+            {
+                "ciphertext": "5a17fe2af445e63ed2cdda6834d030a9391998000941c79318ab49bff092b9e7",
+                "cipherparams": { 
+                  "iv": "38aa896fc128075425e512f01e4b206c" 
+                },
+                "cipher": "aes-128-ctr",
+                "kdf": "scrypt",
+                "kdfparams": {
+                    "dklen": 32,
+                    "salt": "e7c4605ad8200e0d93cd67f9d82fb9971e1a2763b22362017c2927231c2a733a",
+                    "n": 4096,
+                    "r": 8,
+                    "p": 1,
+                },
+                "mac": "633f91994f33541fbf1c3c3e973e539c12f1dd98f2757f64e3b63de986f367e0",
+            },
+         ]
+     ]
+ }
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="rationale">Rationale</h2>
+<!--The rationale fleshes out the specification by describing what motivated the design and why particular design decisions were made. It should describe alternate designs that were considered and related work, e.g. how the feature is supported in other languages. The rationale may also provide evidence of consensus within the community, and should discuss important objections or concerns raised during discussion.-->
+<p>The presentation of keys can be an array or an object for a role-based key.
+In this specification, an array is chosen because of the following reasons:</p>
+
+<ol>
+  <li>Any format has extensibility. If Klaytn introduces a new role, any format can support the new role.</li>
+  <li>The array format is used when RLP-encoding TxTypeAccountUpdate transactions, so the array format is consistent with this.</li>
+  <li>Using an object with special strings as keys can have possibilities to use misspelled keys (e.g., “roleTransactin”).</li>
+</ol>
+
+<h2 id="backwards-compatibility">Backwards Compatibility</h2>
+<!-- All KIPs that introduce backwards incompatibilities must include a section describing these incompatibilities and their severity. The KIP must explain how the author proposes to deal with these incompatibilities. KIP submissions without a sufficient backwards compatibility treatise may be rejected outright. The authors should answer the question: "Does this KIP require a hard fork?" -->
+<p>Klaytn keystore format v4 has a field <code class="language-plaintext highlighter-rouge">keyring</code> while keystore v3 has a field <code class="language-plaintext highlighter-rouge">crypto</code> to securely store private keys.
+This means v4 is not compatible with v3, hence keystore v3 should also be supported along with the Klaytn keystore format.</p>
+
+<h2 id="test-cases">Test Cases</h2>
+<!--Test cases for an implementation are mandatory for KIPs that are affecting consensus changes. Other KIPs can choose to include links to test cases if applicable.-->
+<ol>
+  <li>The proposed examples above should be accepted.</li>
+  <li>The keystore v3 should also be supported. One example is shown below:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+ "version": 3,
+ "id": "7a0a8557-22a5-4c90-b554-d6f3b13783ea",
+ "address": "0x86bce8c859f5f304aa30adb89f2f7b6ee5a0d6e2",
+ "crypto": {
+     "ciphertext": "696d0e8e8bd21ff1f82f7c87b6964f0f17f8bfbd52141069b59f084555f277b7",
+     "cipherparams": {
+       "iv": "1fd13e0524fa1095c5f80627f1d24cbd" 
+     },
+     "cipher": "aes-128-ctr",
+     "kdf": "scrypt",
+     "kdfparams": {
+         "dklen": 32,
+         "salt": "7ee980925cef6a60553cda3e91cb8e3c62733f64579f633d0f86ce050c151e26",
+         "n": 4096,
+         "r": 8,
+         "p": 1,
+     },
+     "mac": "8684d8dc4bf17318cd46c85dbd9a9ec5d9b290e04d78d4f6b5be9c413ff30ea4",
+ },
+}
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="implementation">Implementation</h2>
+<!--The implementations must be completed before any KIP is given status "Final", but it need not be completed before the KIP is accepted. While there is merit to the approach of reaching consensus on the specification and rationale before writing code, the principle of "rough consensus and running code" is still useful when it comes to resolving many discussions of API details.-->
+<ul>
+  <li>klaytn
+    <ul>
+      <li>https://github.com/klaytn/klaytn/pull/439</li>
+      <li>https://github.com/klaytn/klaytn/pull/440</li>
+      <li>https://github.com/klaytn/klaytn/pull/441</li>
+      <li>https://github.com/klaytn/klaytn/pull/442</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="copyright">Copyright</h2>
+<p>Copyright and related rights waived via <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.</p>
+
+<h1 id="reference">Reference</h1>
+<p>https://github.com/ethereum/wiki/wiki/Web3-Secret-Storage-Definition</p>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.2.3/mermaid.min.js" integrity="sha512-M4zmdILgXOwrBEVfpVqdO/jC3BJZQzlXHeu967v41/QoT60sESWSLbi7YwntTbYC0ZjewfTbvXO8iKj7amvQow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+  });
+  mermaid.run({
+    querySelector: '.language-mermaid', // markdown 'mermaid' language code blocks
+  });
+</script>
+
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Kaia Improvement Proposals</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Kaia Improvement Proposals</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/kaiachain/KIPs"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">kaiachain/KIPs</span></a></li><li><a href="https://twitter.com/kaiachain"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">kaiachain</span></a></li><li><a href="https://www.facebook.com/kaiachain"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#facebook"></use></svg> <span class="username">kaiachain</span></a></li><li><a href="https://medium.com/kaiachain"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#medium"></use></svg> <span class="username">kaiachain</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Kaia Improvement Proposals (KIPs) describe standards for the Kaia platform, including core protocol specifications, client APIs, and contract standards.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

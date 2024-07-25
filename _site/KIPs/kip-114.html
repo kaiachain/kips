@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+    <title>KIP 114: Supplant DIFFICULTY opcode with RANDOM</title>
+    <meta property="og:title" content="KIP 114: Supplant DIFFICULTY opcode with RANDOM" />
+    <meta
+      name="description"
+      content="Details on Kaia Improvement Proposal 114 (KIP 114): Supplant DIFFICULTY opcode with RANDOM"
+    />
+    <meta
+      property="og:description"
+      content="Details on Kaia Improvement Proposal 114 (KIP 114): Supplant DIFFICULTY opcode with RANDOM"
+    />
+    <meta name="twitter:description" content="Details on Kaia Improvement Proposal 114 (KIP 114): Supplant DIFFICULTY opcode with RANDOM" />
+  
+  <meta name="generator" content="Jekyll" />
+  <meta property="og:locale" content="en_US" />
+  <link rel="canonical" href="http://localhost:4000/KIPs/kip-114" />
+  <meta property="og:url" content="http://localhost:4000/KIPs/kip-114" />
+  <meta property="og:site_name" content="Kaia Improvement Proposals" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@kaiachain" />
+  <script type="application/ld+json">
+    {
+      "@type": "WebSite",
+      "url": "http://localhost:4000",
+      "name": "Kaia Improvement Proposals",
+      "description": "Kaia Improvement Proposals (KIPs) describe standards for the Kaia platform, including core protocol specifications, client APIs, and contract standards.",
+      "@context": "https://schema.org"
+    }
+  </script>
+  <link rel="stylesheet" href="/assets/css/style.css" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Kaia Improvement Proposals" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Kaia Improvement Proposals</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/all">All</a><a class="page-link" href="/core">Core</a><a class="page-link" href="/networking">Networking</a><a class="page-link" href="/storage">Storage</a><a class="page-link" href="/interface">Interface</a><a class="page-link" href="/token">KCT</a><a class="page-link" href="/sdk">SDK</a><a class="page-link" href="/application">Application</a><a class="page-link" href="/meta">Meta</a><a class="page-link" href="/informational">Informational</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="home">
+  <h1 class="page-heading">
+    KIP 114: Supplant DIFFICULTY opcode with RANDOM
+    <a href="https://github.com/kaiachain/KIPS/blob/main/KIPs/kip-114.md"><svg role="img" aria-label="Source" xmlns="https://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16"><title>Source</title><path fill-rule="evenodd" d="M9.5 3L8 4.5 11.5 8 8 11.5 9.5 13 14 8 9.5 3zm-5 0L0 8l4.5 5L6 11.5 2.5 8 6 4.5 4.5 3z"/></svg></a>
+  </h1>
+  <table>
+    <tr><th>Author</th><td><a href="https://github.com/ian0371">Ian</a>, <a href="https://github.com/blukat29">Ollie</a>, <a href="https://github.com/jiseongnoh">Joseph</a>, <a href="https://github.com/aidan-kwon">and Aidan</a></td></tr>
+    
+      <tr><th>Discussions-To</th><td><a href="https://github.com/klaytn/kips/issues/114">https://github.com/klaytn/kips/issues/114</a></td></tr>
+    
+    <tr><th>Status</th><td>Draft
+    
+    </td></tr>
+    <tr><th>Type</th><td>Standards Track</td></tr>
+    
+      <tr><th>Category</th><td>Core</td></tr>
+    
+    <tr><th>Created</th><td>2023-05-31</td></tr>
+    
+    
+    
+    
+    
+  </table>
+
+  <h2 id="simple-summary">Simple Summary</h2>
+
+<p>Introduce on-chain randomness and expose it in the EVM by supplanting DIFFICULTY opcode semantics</p>
+
+<h2 id="abstract">Abstract</h2>
+
+<p>This standard outlines an approach for generating an on-chain random value based on digital signature. Specifically, it introduces new fields, namely <code class="language-plaintext highlighter-rouge">randomReveal</code> and <code class="language-plaintext highlighter-rouge">mixHash</code>, in the block header; <code class="language-plaintext highlighter-rouge">randomReveal</code> is a verifiable random number, and <code class="language-plaintext highlighter-rouge">mixHash</code> is a derivation from a mixture of <code class="language-plaintext highlighter-rouge">randomReveals</code> and additional information. They serve as an unpredictable, verifiable, and dependable source of on-chain randomness. In addition, these fields can be fetched from the EVM via <code class="language-plaintext highlighter-rouge">RANDOM (0x44)</code> opcode.</p>
+
+<h2 id="motivation">Motivation</h2>
+
+<p>An unpredictable, verifiable, and dependable on-chain randomness can be utilized in various use-cases including the protocol and applications.</p>
+
+<ul>
+  <li>
+    <p>Unpredictability indicates that the random should be as difficult to predict as possible.</p>
+  </li>
+  <li>
+    <p>Verifiability ensures that the random is authentic and cannot be manipulated or forged.</p>
+  </li>
+  <li>
+    <p>Dependability implies that the random is generated without trusting any external sources of randomness, such as oracles.</p>
+  </li>
+</ul>
+
+<p>An example of such use-cases is the block proposer selection. An exemplary requirement can be that the next block’s proposer remains undisclosed until the latest block has been finalized, or that the proposer cannot tamper with deciding the next block’s proposer.</p>
+
+<p>In this proposal, new header fields <code class="language-plaintext highlighter-rouge">randomReveal</code> and <code class="language-plaintext highlighter-rouge">mixHash</code> are introduced. <code class="language-plaintext highlighter-rouge">randomReveal</code> is the signature of the proposer, and <code class="language-plaintext highlighter-rouge">randomReveal</code>s are mixed to compute <code class="language-plaintext highlighter-rouge">mixHash</code>, which users can use for a part of the random source. <code class="language-plaintext highlighter-rouge">mixHash</code> is unpredictable, verifiable, and dependable:</p>
+
+<ul>
+  <li>(Unpredictability) the signature is random and so is <code class="language-plaintext highlighter-rouge">mixHash</code>.</li>
+  <li>(Verifiability) the signature can be verified with the public key of the proposer, and <code class="language-plaintext highlighter-rouge">mixHash</code> is computed in a deterministic manner.</li>
+  <li>(Dependability) <code class="language-plaintext highlighter-rouge">mixHash</code> only relies on the validators.</li>
+</ul>
+
+<h2 id="specification">Specification</h2>
+
+<p>The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY”, and “OPTIONAL” in this document are to be interpreted as described in RFC 2119.</p>
+
+<p>The terms hash_to_point (hereinafter referred to as hash), public key, proof-of-possession (hereinafter referred to as pop) are from the ciphersuite <a href="https://www.ietf.org/archive/id/draft-irtf-cfrg-bls-signature-05.html#section-4.2.3">BLS_SIG_BLS12381G2_XMD:SHA-256_SSWU_RO_POP_</a>.</p>
+
+<h3 id="parameters">Parameters</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Constant</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">FORK_BLOCK</code></td>
+      <td>TBD</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="block-structure">Block Structure</h3>
+
+<p>Beginning with <code class="language-plaintext highlighter-rouge">FORK_BLOCK</code>, client software must set the fields in a block header:</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">randomReveal</code>: 96 bytes. It must be specified in the 15th field (0-indexed) of a block header.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">mixHash</code>: 32 bytes. It must be specified in the 16th field (0-indexed) of a block header.</p>
+  </li>
+</ul>
+
+<h3 id="block-processing">Block Processing</h3>
+
+<h4 id="block-proposal">Block Proposal</h4>
+
+<p>Beginning with <code class="language-plaintext highlighter-rouge">FORK_BLOCK</code>, the proposer must fill the new fields in the block proposal:</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">randomReveal</code>: The proposer must sign the hash of the proposing block number.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">mixHash</code>: The proposer must XOR the keccak256 hash of <code class="language-plaintext highlighter-rouge">randomReveal</code> and the previous block’s <code class="language-plaintext highlighter-rouge">mixHash</code>. If the previous block’s <code class="language-plaintext highlighter-rouge">mixHash</code> is null (e.g., previous block is before <code class="language-plaintext highlighter-rouge">FORK_BLOCK</code>), then use 32 bytes of zero instead.</p>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Header</span><span class="p">:</span>
+	<span class="n">parentHash</span><span class="p">:</span>   <span class="nb">hash</span>
+	<span class="n">rewardbase</span><span class="p">:</span>   <span class="n">address</span>
+	<span class="n">root</span><span class="p">:</span>         <span class="nb">hash</span>
+	<span class="n">txHash</span><span class="p">:</span>       <span class="nb">hash</span>
+	<span class="n">receiptHash</span><span class="p">:</span>  <span class="nb">hash</span>
+	<span class="n">bloom</span><span class="p">:</span>        <span class="n">bloom</span>
+	<span class="n">blockScore</span><span class="p">:</span>   <span class="nb">int</span>
+	<span class="n">number</span><span class="p">:</span>       <span class="nb">int</span>
+	<span class="n">gasUsed</span><span class="p">:</span>      <span class="n">uint64</span>
+	<span class="n">time</span><span class="p">:</span>         <span class="nb">int</span>
+	<span class="n">timeFoS</span><span class="p">:</span>      <span class="n">uint8</span>
+	<span class="n">extra</span><span class="p">:</span>        <span class="nb">bytes</span>
+	<span class="n">governance</span><span class="p">:</span>   <span class="nb">bytes</span>
+	<span class="n">vote</span><span class="p">:</span>         <span class="nb">bytes</span>
+	<span class="n">baseFee</span><span class="p">:</span>      <span class="nb">int</span>
+
+	<span class="n">randomReveal</span><span class="p">:</span> <span class="nb">bytes</span> <span class="c1"># new
+</span>	<span class="n">mixHash</span><span class="p">:</span>      <span class="nb">bytes</span> <span class="c1"># new
+</span>
+<span class="n">header</span><span class="p">.</span><span class="n">randomReveal</span> <span class="o">=</span> <span class="n">sign</span><span class="p">(</span><span class="n">privateKey</span><span class="p">,</span> <span class="n">header</span><span class="p">.</span><span class="n">number</span><span class="p">)</span>
+<span class="n">header</span><span class="p">.</span><span class="n">mixHash</span> <span class="o">=</span> <span class="n">xor</span><span class="p">(</span><span class="n">prevHeader</span><span class="p">.</span><span class="n">mixHash</span><span class="p">,</span> <span class="n">keccak256</span><span class="p">(</span><span class="n">randomReveal</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h4 id="validation">Validation</h4>
+
+<p>Beginning with <code class="language-plaintext highlighter-rouge">FORK_BLOCK</code>, validators must validate the new fields:</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">randomReveal</code></p>
+
+    <ul>
+      <li>The validators must fetch the public key and the pop of the proposer by <code class="language-plaintext highlighter-rouge">getInfo(cnNodeId)</code> of the BLS registry standardized by <a href="https://github.com/klaytn/kips/blob/main/KIPs/kip-113.md#validation">KIP-113</a>.</li>
+      <li>The validators must verify the validity of the proposer public key using pop as mentioned in <a href="https://github.com/klaytn/kips/blob/main/KIPs/kip-113.md#validation">here</a>.</li>
+      <li>The validators must verify if <code class="language-plaintext highlighter-rouge">randomReveal</code> is signed by the proposer public key.</li>
+    </ul>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">mixHash</code>: The validators must verify the validity of the proposed <code class="language-plaintext highlighter-rouge">mixHash</code> by calculating <code class="language-plaintext highlighter-rouge">mixHash</code> using the aforementioned <code class="language-plaintext highlighter-rouge">mixHash</code> algorithm.</p>
+  </li>
+</ul>
+
+<h3 id="pseudocode">Pseudocode</h3>
+
+<p>See the following pseudocode that describes the block processing in python:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">DEFAULT_MIXHASH</span> <span class="o">=</span> <span class="sa">b</span><span class="s">"</span><span class="se">\x00</span><span class="s">"</span> <span class="o">*</span> <span class="mi">32</span>
+
+<span class="k">def</span> <span class="nf">fill_kip114_header</span><span class="p">(</span><span class="n">newHeader</span><span class="p">,</span> <span class="n">prevHeader</span><span class="p">,</span> <span class="n">privateKey</span><span class="p">):</span>
+    <span class="n">newHeader</span><span class="p">.</span><span class="n">randomReveal</span> <span class="o">=</span> <span class="n">calc_random_reveal</span><span class="p">(</span><span class="n">privateKey</span><span class="p">,</span> <span class="n">newHeader</span><span class="p">.</span><span class="n">number</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">newHeader</span><span class="p">.</span><span class="n">number</span> <span class="o">==</span> <span class="n">FORK_BLOCK</span><span class="p">:</span>
+        <span class="n">prevMixHash</span> <span class="o">=</span>  <span class="n">DEFAULT_MIXHASH</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">prevMixHash</span> <span class="o">=</span> <span class="n">prevHeader</span><span class="p">.</span><span class="n">mixHash</span>
+    <span class="n">newHeader</span><span class="p">.</span><span class="n">mixHash</span> <span class="o">=</span> <span class="n">calc_mix_hash</span><span class="p">(</span><span class="n">prevMixHash</span><span class="p">,</span> <span class="n">newHeader</span><span class="p">.</span><span class="n">randomReveal</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">calc_random_reveal</span><span class="p">(</span><span class="n">privateKey</span><span class="p">,</span> <span class="n">headerNumber</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">sign</span><span class="p">(</span><span class="n">privateKey</span><span class="p">,</span> <span class="n">headerNumber</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">calc_mix_hash</span><span class="p">(</span><span class="n">prevMixHash</span><span class="p">,</span> <span class="n">randomReveal</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">xor</span><span class="p">(</span><span class="n">prevMixHash</span><span class="p">,</span> <span class="n">keccak256</span><span class="p">(</span><span class="n">randomReveal</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">verify_kip114_header</span><span class="p">(</span><span class="n">newHeader</span><span class="p">,</span> <span class="n">prevHeader</span><span class="p">):</span>
+    <span class="c1"># Getting PoP information from the smart contract registry defined in KIP-113.
+</span>    <span class="p">[</span><span class="n">proposerPubkey</span><span class="p">,</span> <span class="n">proposerPop</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_proposer_pubkey_pop</span><span class="p">()</span>
+    <span class="c1"># pop verify
+</span>    <span class="k">if</span> <span class="ow">not</span> <span class="n">pop_verify</span><span class="p">(</span><span class="n">proposerPubkey</span><span class="p">,</span> <span class="n">proposerPop</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="c1"># signature verify
+</span>    <span class="k">if</span> <span class="ow">not</span> <span class="n">verify</span><span class="p">(</span><span class="n">proposerPubkey</span><span class="p">,</span> <span class="n">newHeader</span><span class="p">.</span><span class="n">number</span><span class="p">,</span> <span class="n">newHeader</span><span class="p">.</span><span class="n">randomReveal</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="c1"># mixHash verify
+</span>    <span class="k">if</span> <span class="n">newHeader</span><span class="p">.</span><span class="n">number</span> <span class="o">==</span> <span class="n">FORK_BLOCK</span><span class="p">:</span>
+        <span class="n">prevMixHash</span> <span class="o">=</span> <span class="n">DEFAULT_MIXHASH</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">prevMixHash</span> <span class="o">=</span> <span class="n">prevHeader</span><span class="p">.</span><span class="n">mixHash</span>
+    <span class="k">return</span> <span class="n">newHeader</span><span class="p">.</span><span class="n">mixHash</span> <span class="o">==</span> <span class="n">calc_mix_hash</span><span class="p">(</span><span class="n">prevMixHash</span><span class="p">,</span> <span class="n">newHeader</span><span class="p">.</span><span class="n">randomReveal</span><span class="p">):</span>
+</code></pre></div></div>
+
+<h3 id="evm">EVM</h3>
+
+<p>Beginning with <code class="language-plaintext highlighter-rouge">FORK_BLOCK</code>, the <code class="language-plaintext highlighter-rouge">RANDOM (0x44)</code> instruction must return the value of <code class="language-plaintext highlighter-rouge">mixHash</code> of the current block it is executing in.</p>
+
+<p>Note: The gas cost of the <code class="language-plaintext highlighter-rouge">RANDOM (0x44)</code> opcode remains unchanged.</p>
+
+<h3 id="genesis-block">Genesis Block</h3>
+
+<p>If <code class="language-plaintext highlighter-rouge">FORK_BLOCK</code> is zero, the genesis block must have <code class="language-plaintext highlighter-rouge">randomReveal</code> and <code class="language-plaintext highlighter-rouge">mixHash</code> fields.</p>
+
+<h2 id="rationale">Rationale</h2>
+
+<h3 id="names-of-the-header-fields">Names of the header fields</h3>
+
+<p>The naming is highly inspired by <a href="https://eips.ethereum.org/EIPS/eip-4399">EIP-4339</a>.
+We use <code class="language-plaintext highlighter-rouge">randomReveal</code> instead of RANDAO reveal because the randoms are generated in a different manner.</p>
+
+<h3 id="block-size-increment-due-to-new-fields-in-the-header">Block size increment due to new fields in the header</h3>
+
+<p>The size increment cost of RLP-encoded header is around 131 bytes per block, which is approximately 3.8GB per year. It is a negligible cost compared to its benefit.</p>
+
+<h3 id="bls-based-random-over-ec-based-random">BLS-based random over EC-based random</h3>
+
+<p>We chose BLS-based verifiable random over EC-based because:</p>
+
+<ul>
+  <li>A BLS library written in Golang is easy to find as in <a href="https://github.com/klaytn/klaytn/issues/1823">link</a>, whereas it is not the case for EC-based as in <a href="https://www.ietf.org/archive/id/draft-irtf-cfrg-vrf-15.html#section-6">link</a>.</li>
+  <li>There is a potential consensus change based on BLS signature. Therefore, this proposal gently introduces BLS signature to the Klaytn protocol as well as adding on-chain randomness.</li>
+</ul>
+
+<h2 id="backwards-compatibility">Backwards Compatibility</h2>
+
+<p>Blocks before <code class="language-plaintext highlighter-rouge">FORK_BLOCK</code> will remain the same.</p>
+
+<h2 id="security-considerations">Security Considerations</h2>
+
+<h3 id="biasability">Biasability</h3>
+
+<p>BLS signature as well as the signing message (i.e., proposing block number) is deterministic. Thus, the proposer has no influence over the computation of <code class="language-plaintext highlighter-rouge">mixHash</code>. In addition, the biasability of <code class="language-plaintext highlighter-rouge">mixHash</code> mainly depends on that of the hash of <code class="language-plaintext highlighter-rouge">randomReveal</code>. To the best of our knowledge, keccak256 is not a biased hash function. Therefore, <code class="language-plaintext highlighter-rouge">mixHash</code>, which is the XOR of the output of keccak256 and the previous <code class="language-plaintext highlighter-rouge">mixHash</code>, is unbiased.</p>
+
+<h3 id="predictability">Predictability</h3>
+
+<p>A list of inputs influencing future randomness consists of but is not limited to the following items:</p>
+
+<ul>
+  <li><strong>Number of colluding validators.</strong> When colluding validators become proposers of consecutive blocks, they collectively share their <code class="language-plaintext highlighter-rouge">randomReveal</code>s in advance to predict the value of <code class="language-plaintext highlighter-rouge">mixHash</code>.</li>
+  <li><strong>Proposer selection policy.</strong> This contributes to how likely the colluding validators become proposers of consecutive blocks.</li>
+</ul>
+
+<p>Define <code class="language-plaintext highlighter-rouge">f(x, N, C)</code>:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">N</code>: the number of validators</li>
+  <li><code class="language-plaintext highlighter-rouge">C</code>: the number of colluding validators (N &gt; C)</li>
+  <li><code class="language-plaintext highlighter-rouge">x</code>: the number of blocks from the latest block</li>
+  <li><code class="language-plaintext highlighter-rouge">f</code>: the probability of predicting the value of <code class="language-plaintext highlighter-rouge">mixHash</code> <code class="language-plaintext highlighter-rouge">x</code> blocks in advance. In other words, the probability of colluding validators becoming proposers for <code class="language-plaintext highlighter-rouge">x</code> consecutive blocks.</li>
+</ul>
+
+<p>Under random proposer selection policy, the proposer is randomly selected after each block, thus <code class="language-plaintext highlighter-rouge">f(x, N, C) = (C/N)^x</code>.</p>
+
+<h3 id="tips-for-application-developers">Tips for application developers</h3>
+
+<p>The following tips attempt to reduce predictability and biasability of randomness outputs returned by <code class="language-plaintext highlighter-rouge">RANDOM (0x44)</code>:</p>
+
+<ul>
+  <li>Make your applications rely on the future randomness with a reasonably high lookahead. Given that IBFT permits one third of the validators to be malicious, developers are advised to give a distance of 200 blocks between bidding and rolling the dice to be “95 nines” safe.</li>
+</ul>
+
+<h2 id="implementation">Implementation</h2>
+
+<p>A simulation in Python:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">blspy</span> <span class="kn">import</span> <span class="n">PrivateKey</span><span class="p">,</span> <span class="n">G1Element</span><span class="p">,</span> <span class="n">G2Element</span><span class="p">,</span> <span class="n">PopSchemeMPL</span>  <span class="c1"># blspy
+</span><span class="kn">from</span> <span class="nn">Crypto.Hash</span> <span class="kn">import</span> <span class="n">keccak</span>  <span class="c1"># pycryptodome
+</span>
+<span class="n">FORK_BLOCK</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># TBD
+</span><span class="n">DEFAULT_MIXHASH</span> <span class="o">=</span> <span class="sa">b</span><span class="s">"</span><span class="se">\x00</span><span class="s">"</span> <span class="o">*</span> <span class="mi">32</span>
+
+<span class="n">validatorNum</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">proposerBLSPrivKeys</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">PrivateKey</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">PrivateKey</span><span class="p">.</span><span class="n">from_bytes</span><span class="p">((</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">).</span><span class="n">to_bytes</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">byteorder</span><span class="o">=</span><span class="s">"big"</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">validatorNum</span><span class="p">)</span>
+<span class="p">]</span>  <span class="c1"># b"\x00..\x01", b"\x00..\x02", ...
+</span><span class="n">proposerBLSPublicKeys</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">G1Element</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">.</span><span class="n">get_g1</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">proposerBLSPrivKeys</span><span class="p">]</span>
+<span class="n">proposerAddrs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">).</span><span class="n">zfill</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">validatorNum</span><span class="p">)</span>
+<span class="p">]</span>  <span class="c1"># "0x00..1, 0x00..2, ..."
+</span>
+
+<span class="c1"># Block header. Only relevant fields are shown here.
+</span><span class="k">class</span> <span class="nc">Header</span><span class="p">:</span>
+    <span class="n">number</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Block number
+</span>    <span class="n">randomReveal</span><span class="p">:</span> <span class="nb">bytes</span>
+    <span class="n">mixHash</span><span class="p">:</span> <span class="nb">bytes</span>
+    <span class="n">proposer</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">randomReveal</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s">""</span><span class="p">,</span> <span class="n">mixHash</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s">""</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">number</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">randomReveal</span> <span class="o">=</span> <span class="n">randomReveal</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">mixHash</span> <span class="o">=</span> <span class="n">mixHash</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">proposer</span> <span class="o">=</span> <span class="n">proposerAddrs</span><span class="p">[</span><span class="n">number</span> <span class="o">%</span> <span class="n">validatorNum</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">"number: {}</span><span class="se">\n\n</span><span class="s">randomReveal ({} bytes): {}</span><span class="se">\n\n</span><span class="s">mixHash ({} bytes): {}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">number</span><span class="p">,</span>
+            <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">randomReveal</span><span class="p">),</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">randomReveal</span><span class="p">,</span>
+            <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">mixHash</span><span class="p">),</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">mixHash</span><span class="p">,</span>
+        <span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">BlsPublicKeyInfo</span><span class="p">:</span>
+    <span class="n">publicKey</span><span class="p">:</span> <span class="nb">bytes</span>
+    <span class="n">pop</span><span class="p">:</span> <span class="nb">bytes</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">publicKey</span><span class="p">,</span> <span class="n">pop</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">publicKey</span> <span class="o">=</span> <span class="n">publicKey</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">pop</span> <span class="o">=</span> <span class="n">pop</span>
+
+
+<span class="c1"># A BLSRegistry that supports the interface IKIP-113 (https://github.com/klaytn/kips/blob/main/KIPs/kip-113.md)
+</span><span class="k">class</span> <span class="nc">BLSRegistry</span><span class="p">:</span>
+    <span class="n">mapping</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">proposerAddr</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">proposerAddrs</span><span class="p">):</span>
+            <span class="n">pop</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">PopSchemeMPL</span><span class="p">.</span><span class="n">pop_prove</span><span class="p">(</span><span class="n">proposerBLSPrivKeys</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">mapping</span><span class="p">[</span><span class="n">proposerAddr</span><span class="p">]</span> <span class="o">=</span> <span class="n">BlsPublicKeyInfo</span><span class="p">(</span>
+                <span class="nb">bytes</span><span class="p">(</span><span class="n">proposerBLSPublicKeys</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">pop</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">getInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addr</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BlsPublicKeyInfo</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">mapping</span><span class="p">[</span><span class="n">addr</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">is_kip114_fork_enabled</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">FORK_BLOCK</span> <span class="o">&lt;=</span> <span class="n">num</span>
+
+
+<span class="c1"># dummy function for fetching the proposer secret key
+# in implementation, this should be fetched from a file
+</span><span class="k">def</span> <span class="nf">get_proposer_private_key</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PrivateKey</span><span class="p">:</span>
+    <span class="n">proposerIdx</span> <span class="o">=</span> <span class="n">num</span> <span class="o">%</span> <span class="n">validatorNum</span>
+    <span class="k">return</span> <span class="n">proposerBLSPrivKeys</span><span class="p">[</span><span class="n">proposerIdx</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">fill_kip114_header</span><span class="p">(</span><span class="n">newHeader</span><span class="p">,</span> <span class="n">prevHeader</span><span class="p">,</span> <span class="n">privateKey</span><span class="p">):</span>
+    <span class="n">newHeader</span><span class="p">.</span><span class="n">randomReveal</span> <span class="o">=</span> <span class="n">calc_random_reveal</span><span class="p">(</span><span class="n">privateKey</span><span class="p">,</span> <span class="n">newHeader</span><span class="p">.</span><span class="n">number</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">newHeader</span><span class="p">.</span><span class="n">number</span> <span class="o">==</span> <span class="n">FORK_BLOCK</span><span class="p">:</span>
+        <span class="n">prevMixHash</span> <span class="o">=</span> <span class="n">DEFAULT_MIXHASH</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">prevMixHash</span> <span class="o">=</span> <span class="n">prevHeader</span><span class="p">.</span><span class="n">mixHash</span>
+    <span class="n">newHeader</span><span class="p">.</span><span class="n">mixHash</span> <span class="o">=</span> <span class="n">calc_mix_hash</span><span class="p">(</span><span class="n">prevMixHash</span><span class="p">,</span> <span class="n">newHeader</span><span class="p">.</span><span class="n">randomReveal</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">calc_random_reveal</span><span class="p">(</span><span class="n">sk</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">block_num_to_bytes</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">PopSchemeMPL</span><span class="p">.</span><span class="n">sign</span><span class="p">(</span><span class="n">sk</span><span class="p">,</span> <span class="n">msg</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">calc_mix_hash</span><span class="p">(</span><span class="n">prevMixHash</span><span class="p">,</span> <span class="n">randomReveal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">xor</span><span class="p">(</span><span class="n">prevMixHash</span><span class="p">,</span> <span class="n">keccak256</span><span class="p">(</span><span class="n">randomReveal</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">gen_next_header</span><span class="p">(</span><span class="n">prevHeader</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Header</span><span class="p">:</span>
+    <span class="n">nextBlockNum</span> <span class="o">=</span> <span class="n">prevHeader</span><span class="p">.</span><span class="n">number</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">newHeader</span> <span class="o">=</span> <span class="n">Header</span><span class="p">(</span><span class="n">nextBlockNum</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">is_kip114_fork_enabled</span><span class="p">(</span><span class="n">nextBlockNum</span><span class="p">):</span>
+        <span class="n">privateKey</span> <span class="o">=</span> <span class="n">get_proposer_private_key</span><span class="p">(</span><span class="n">nextBlockNum</span><span class="p">)</span>
+        <span class="n">fill_kip114_header</span><span class="p">(</span><span class="n">newHeader</span><span class="p">,</span> <span class="n">prevHeader</span><span class="p">,</span> <span class="n">privateKey</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">newHeader</span>
+
+
+<span class="k">def</span> <span class="nf">keccak256</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="n">keccak256</span> <span class="o">=</span> <span class="n">keccak</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">digest_bits</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+    <span class="n">keccak256</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">keccak256</span><span class="p">.</span><span class="n">digest</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">block_num_to_bytes</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">num</span><span class="p">.</span><span class="n">to_bytes</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">byteorder</span><span class="o">=</span><span class="s">"big"</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">xor</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">x</span> <span class="o">^</span> <span class="n">y</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">verify_kip114_header</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="n">prevHeader</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_kip114_fork_enabled</span><span class="p">(</span><span class="n">header</span><span class="p">.</span><span class="n">number</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="c1"># pop verify
+</span>    <span class="n">blsPublicKeyInfo</span> <span class="o">=</span> <span class="n">BLSRegistry</span><span class="p">().</span><span class="n">getInfo</span><span class="p">(</span><span class="n">header</span><span class="p">.</span><span class="n">proposer</span><span class="p">)</span>
+    <span class="n">publicKey</span> <span class="o">=</span> <span class="n">G1Element</span><span class="p">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">blsPublicKeyInfo</span><span class="p">.</span><span class="n">publicKey</span><span class="p">)</span>
+    <span class="n">pop</span> <span class="o">=</span> <span class="n">G2Element</span><span class="p">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">blsPublicKeyInfo</span><span class="p">.</span><span class="n">pop</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">PopSchemeMPL</span><span class="p">.</span><span class="n">pop_verify</span><span class="p">(</span><span class="n">publicKey</span><span class="p">,</span> <span class="n">pop</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="c1"># signature verify
+</span>    <span class="n">msg</span> <span class="o">=</span> <span class="n">block_num_to_bytes</span><span class="p">(</span><span class="n">header</span><span class="p">.</span><span class="n">number</span><span class="p">)</span>
+    <span class="n">sig</span> <span class="o">=</span> <span class="n">G2Element</span><span class="p">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">header</span><span class="p">.</span><span class="n">randomReveal</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">PopSchemeMPL</span><span class="p">.</span><span class="n">verify</span><span class="p">(</span><span class="n">publicKey</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">sig</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="c1"># mixHash verify
+</span>    <span class="k">if</span> <span class="n">header</span><span class="p">.</span><span class="n">number</span> <span class="o">==</span> <span class="n">FORK_BLOCK</span><span class="p">:</span>
+        <span class="c1"># prevHeader mixHash does not exist, so fill with default
+</span>        <span class="n">prevMixHash</span> <span class="o">=</span> <span class="n">DEFAULT_MIXHASH</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">prevMixHash</span> <span class="o">=</span> <span class="n">prevHeader</span><span class="p">.</span><span class="n">mixHash</span>
+    <span class="k">return</span> <span class="n">header</span><span class="p">.</span><span class="n">mixHash</span> <span class="o">==</span> <span class="n">calc_mix_hash</span><span class="p">(</span><span class="n">prevMixHash</span><span class="p">,</span> <span class="n">header</span><span class="p">.</span><span class="n">randomReveal</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="n">Header</span><span class="p">(</span><span class="n">FORK_BLOCK</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">prevHeader</span> <span class="o">=</span> <span class="n">header</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="c1"># print header numbers in [FORK_BLOCK - 1, FORK_BLOCK + N]
+</span>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span> <span class="o">+</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="n">gen_next_header</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+        <span class="n">verified</span> <span class="o">=</span> <span class="n">verify_kip114_header</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="n">prevHeader</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">verified</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"verified:"</span><span class="p">,</span> <span class="n">verified</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"="</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">prevHeader</span> <span class="o">=</span> <span class="n">header</span>
+
+
+<span class="n">main</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h2 id="test-cases">Test Cases</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Proposer secret key:   0x6c605527c8e4f31c959478801d51384d690a22dfc6438604646f7709032c893a
+Previous MixHash:      0x8019df1a2a9f833dc7f400a15b33e54a5c80295165c5953dc23891aab9203810
+Block number:          31337
+Expected Msg:          0x0000000000000000000000000000000000000000000000000000000000007a69
+Expected RandomReveal: 0xadfe25ced45819332cbf088f01cdd2807686dd6309b11d7440237dd623624f401d4753747f5fb92374235e997edcd18318bae2806a1675b1e685e792abd1fbdf5c50ec1e148cc7fe861984d8bc3204c1b2136725b
+Expected MixHash:      0x8772d58248bdf34e81ecbf36f28299cfa758b61ccf3f64e1dc0646687a55892f
+</code></pre></div></div>
+
+<p>Testing the Python simulation above:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sk = PrivateKey.from_bytes(unhexlify("6c605527c8e4f31c959478801d51384d690a22dfc6438604646f7709032c893a"))
+prevMix = unhexlify("8019df1a2a9f833dc7f400a15b33e54a5c80295165c5953dc23891aab9203810")
+num = 31337
+
+msg = block_num_to_bytes(num)
+reveal = calc_random_reveal(sk, num)
+mix = calc_mix_hash(prevMix, reveal)
+assert hexlify(msg) == b"0000000000000000000000000000000000000000000000000000000000007a69"
+assert hexlify(reveal) == b"adfe25ced45819332cbf088f01cdd2807686dd6309b11d7440237dd623624f401d4753747f5fb92374235e997edcd18318bae2806a1675b1e685e792abd1fbdf5c50ec1e148cc7fe861984d8bc3204c1b2136725b
+assert hexlify(mix) == b"8772d58248bdf34e81ecbf36f28299cfa758b61ccf3f64e1dc0646687a55892f"
+</code></pre></div></div>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li><a href="https://github.com/ethereum/consensus-specs/blob/dev/specs/phase0/beacon-chain.md#randao">consensus-specs/beacon-chain.md at dev · ethereum/consensus-specs</a></li>
+  <li><a href="https://eips.ethereum.org/EIPS/eip-4399">EIP-4399: Supplant DIFFICULTY opcode with PREVRANDAO</a></li>
+</ul>
+
+<h2 id="copyright">Copyright</h2>
+
+<p>Copyright and related rights waived via <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.</p>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.2.3/mermaid.min.js" integrity="sha512-M4zmdILgXOwrBEVfpVqdO/jC3BJZQzlXHeu967v41/QoT60sESWSLbi7YwntTbYC0ZjewfTbvXO8iKj7amvQow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+  });
+  mermaid.run({
+    querySelector: '.language-mermaid', // markdown 'mermaid' language code blocks
+  });
+</script>
+
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Kaia Improvement Proposals</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Kaia Improvement Proposals</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/kaiachain/KIPs"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">kaiachain/KIPs</span></a></li><li><a href="https://twitter.com/kaiachain"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">kaiachain</span></a></li><li><a href="https://www.facebook.com/kaiachain"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#facebook"></use></svg> <span class="username">kaiachain</span></a></li><li><a href="https://medium.com/kaiachain"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#medium"></use></svg> <span class="username">kaiachain</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Kaia Improvement Proposals (KIPs) describe standards for the Kaia platform, including core protocol specifications, client APIs, and contract standards.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

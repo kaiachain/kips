@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+    <title>KIP 87: NFT Avatar in Multi-Metaverse</title>
+    <meta property="og:title" content="KIP 87: NFT Avatar in Multi-Metaverse" />
+    <meta
+      name="description"
+      content="Details on Kaia Improvement Proposal 87 (KIP 87): NFT Avatar in Multi-Metaverse"
+    />
+    <meta
+      property="og:description"
+      content="Details on Kaia Improvement Proposal 87 (KIP 87): NFT Avatar in Multi-Metaverse"
+    />
+    <meta name="twitter:description" content="Details on Kaia Improvement Proposal 87 (KIP 87): NFT Avatar in Multi-Metaverse" />
+  
+  <meta name="generator" content="Jekyll" />
+  <meta property="og:locale" content="en_US" />
+  <link rel="canonical" href="http://localhost:4000/KIPs/kip-87" />
+  <meta property="og:url" content="http://localhost:4000/KIPs/kip-87" />
+  <meta property="og:site_name" content="Kaia Improvement Proposals" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@kaiachain" />
+  <script type="application/ld+json">
+    {
+      "@type": "WebSite",
+      "url": "http://localhost:4000",
+      "name": "Kaia Improvement Proposals",
+      "description": "Kaia Improvement Proposals (KIPs) describe standards for the Kaia platform, including core protocol specifications, client APIs, and contract standards.",
+      "@context": "https://schema.org"
+    }
+  </script>
+  <link rel="stylesheet" href="/assets/css/style.css" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Kaia Improvement Proposals" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Kaia Improvement Proposals</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/all">All</a><a class="page-link" href="/core">Core</a><a class="page-link" href="/networking">Networking</a><a class="page-link" href="/storage">Storage</a><a class="page-link" href="/interface">Interface</a><a class="page-link" href="/token">KCT</a><a class="page-link" href="/sdk">SDK</a><a class="page-link" href="/application">Application</a><a class="page-link" href="/meta">Meta</a><a class="page-link" href="/informational">Informational</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="home">
+  <h1 class="page-heading">
+    KIP 87: NFT Avatar in Multi-Metaverse
+    <a href="https://github.com/kaiachain/KIPS/blob/main/KIPs/kip-87.md"><svg role="img" aria-label="Source" xmlns="https://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16"><title>Source</title><path fill-rule="evenodd" d="M9.5 3L8 4.5 11.5 8 8 11.5 9.5 13 14 8 9.5 3zm-5 0L0 8l4.5 5L6 11.5 2.5 8 6 4.5 4.5 3z"/></svg></a>
+  </h1>
+  <table>
+    <tr><th>Author</th><td><a href="https://github.com/yeri-lee">Yeri Lee</a>, <a href="https://github.com/kjhman21">Junghyun Colin Kim</a>, <a href="https://github.com/kernys">Wonbae Kim</a>, <a href="https://github.com/taronsung">Seokrin Sung</a></td></tr>
+    
+      <tr><th>Discussions-To</th><td><a href="https://forum.klaytn.foundation/t/en-kip-87-nft-avatar-standard-proposal/6161">https://forum.klaytn.foundation/t/en-kip-87-nft-avatar-standard-proposal/6161</a></td></tr>
+    
+    <tr><th>Status</th><td>Draft
+    
+    </td></tr>
+    <tr><th>Type</th><td>Standards Track</td></tr>
+    
+      <tr><th>Category</th><td>Application</td></tr>
+    
+    <tr><th>Created</th><td>2022-11-01</td></tr>
+    
+    
+      <tr><th>Requires</th><td>
+
+  <a href="kip-17">17</a>, 
+
+  <a href="kip-37">37</a>
+
+</td></tr>
+    
+    
+    
+    
+  </table>
+
+  <h2 id="simple-summary">Simple Summary</h2>
+<p>Creating an NFT avatar standard to provide an interchangeable visualization of NFT across multiple metaverses.</p>
+
+<h2 id="abstract">Abstract</h2>
+<p>Although fungible tokens (FTs) are easily exchangeable across different platforms through DEX, non-fungible tokens (NFTs) do not easily migrate from one metaverse to another. The exchange of NFTs across platforms often does not promise the equivalent asset value, including quality and style. We aim to define an NFT as a single character with different visualization for multi-metaverse. An NFT character with the standard definition and predefined motion images can create an adequate visualization when entering metaverses as an NFT avatar. The NFT avatar standard will increase the utility of NFT, invigorate the metaverse industry and strengthen interoperability.</p>
+
+<h2 id="motivation">Motivation</h2>
+<p>NFT has different utilities. Some are used as an asset in the gaming industry while some are used as a parcel of virtual land in the metaverse. The usage of NFTs has often been limited to PFP (profile picture) until today. Yet, an NFT character should be interchanged into several forms of avatars corresponding to the metaverse platform it enters. This standard distinguishes the usage between NFT characters as absolute graphical assets and NFT avatars as motion-added chameleon-ed NFT characters.</p>
+
+<p>With the NFT avatar standard, NFT characters will transfer into avatars enabling use cases within multiple metaverses. The character purchased in the NFT marketplace can enter as a 2D avatar in Zep.us while it enters Another.world as a 3D avatar. In addition, user-created 3D avatars, like VR Chat, can also compatibly enter multi-metaverse as NFT avatars.</p>
+
+<p>The NFT avatar standard will generate a positive value creation cycle between creators, the NFT marketplace, and the metaverse. Each individual entity will have a common standard to share, maximizing the utility and interoperability of NFTs. With the standard, the value of an item minted by creators will be increased with heightened practicality and utilization. This will boost the activity within NFT marketplaces while the usage of NFT within metaverses also increases. The versatile utility of NFT characters will increase the public desire to purchase and incentivize creators to generate, ultimately vitalizing the creator economy. Likewise, such dynamics will unleash NFT characters in the multi-metaverse.</p>
+
+<h2 id="specification">Specification</h2>
+<p>The keywords “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY” and “OPTIONAL” in this document are to be interpreted as described in RFC 2119.</p>
+
+<p>As an a metadata extension of <a href="https://eips.ethereum.org/EIPS/eip-721">ERC-721</a> and <a href="https://eips.ethereum.org/EIPS/eip-4955">EIP-4955</a>, the NFT avatar standard supplements the “zep” section under “namespaces”. The data required for the avatar varies by metaverse platform. In the instance of Zep, type of asset and properties of image are defined to maximize the scalability of individual NFT.</p>
+
+<h2 id="schema">Schema</h2>
+<p>In addition to <a href="https://eips.ethereum.org/EIPS/eip-4955">EIP-4955</a>, we define more in-depth specification to represent an avatar in various metaverses.</p>
+
+<p>Here is the schema for this. This schema only defines an avatar schema for <a href="https://zep.us">Zep</a>, but it can be used for various metaverses using similar avatar representation.</p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Asset Metadata"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Identifies the asset to which this NFT represents"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Describes the asset to which this NFT represents"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"image"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A URI pointing to a resource with mime type image/* representing the asset to which this NFT represents. Consider making any images at a width between 320 and 1080 pixels and aspect ratio between 1.91:1 and 4:5 inclusive."</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"namespaces"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Projects that needs specific properties to use the NFT"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"zep"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/zep"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"additionalProperties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"$defs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"zep"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Avatar Schema for Zep"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"enum"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"avatar"</span><span class="w"> </span><span class="p">],</span><span class="w">
+          </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Type of asset that an item will perform within the metaverse. Currently, only 'avatar' is supported."</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"image"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uri"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A URL to the image of the avatar sprite sheet. (only PNG images are supported)"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"frame_width"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"minimum"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Width of a frame. The original image width must be divided by the frame_width. It must range between a minimum of 1 and a maximum of the image width. The values of frame_width and frame_height can be different."</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"frame_height"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"minimum"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"maximum"</span><span class="p">:</span><span class="w"> </span><span class="mi">256</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Height of a frame. The original image height must be divided by the frame_height. It must range between a minimum of 1 and a maximum of the image height. This must be a multiple of an original image size, ranging between a minimum of 1 and a maximum of 256. The values of frame_width and frame_height can be different."</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"animations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"down"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                  </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/zep/$defs/animationDef"</span><span class="p">,</span><span class="w">
+                  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The downward movement of the avatar."</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"left"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                  </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/zep/$defs/animationDef"</span><span class="p">,</span><span class="w">
+                  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The movement of the avatar to the left."</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"right"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                  </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/zep/$defs/animationDef"</span><span class="p">,</span><span class="w">
+                  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The movement of the avatar to the right."</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"up"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                  </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/zep/$defs/animationDef"</span><span class="p">,</span><span class="w">
+                  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The upward movement of the avatar."</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"dance"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                  </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/zep/$defs/animationDef"</span><span class="p">,</span><span class="w">
+                  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The dance movement of the avatar."</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"down_jump"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                  </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/zep/$defs/animationDef"</span><span class="p">,</span><span class="w">
+                  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The downward jump movement of the avatar."</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"left_jump"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                  </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/zep/$defs/animationDef"</span><span class="p">,</span><span class="w">
+                  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The jumping movement of the avatar to the left."</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"right_jump"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                  </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/zep/$defs/animationDef"</span><span class="p">,</span><span class="w">
+                  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The jumping movement of the avatar to the right."</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"up_jump"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                  </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/zep/$defs/animationDef"</span><span class="p">,</span><span class="w">
+                  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The upward jump movement of the avatar."</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"down_attack"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                  </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/zep/$defs/animationDef"</span><span class="p">,</span><span class="w">
+                  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The downward attack movement of the avatar."</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"left_attack"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                  </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/zep/$defs/animationDef"</span><span class="p">,</span><span class="w">
+                  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The attacking movement of the avatar to the left."</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"right_attack"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                  </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/zep/$defs/animationDef"</span><span class="p">,</span><span class="w">
+                  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The attacking movement of the avatar to the right."</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"up_attack"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                  </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/zep/$defs/animationDef"</span><span class="p">,</span><span class="w">
+                  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The upward attack movement of the avatar."</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"down_idle"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                  </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/zep/$defs/animationDef"</span><span class="p">,</span><span class="w">
+                  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The downward idle movement of the avatar."</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"left_idle"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                  </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/zep/$defs/animationDef"</span><span class="p">,</span><span class="w">
+                  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The idleing movement of the avatar to the left."</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"right_idle"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                  </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/zep/$defs/animationDef"</span><span class="p">,</span><span class="w">
+                  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The idleing movement of the avatar to the right."</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"up_idle"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                  </span><span class="nl">"$ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#/$defs/zep/$defs/animationDef"</span><span class="p">,</span><span class="w">
+                  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The upward idle movement of the avatar."</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+              </span><span class="p">},</span><span class="w">
+              </span><span class="nl">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="s2">"down"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"left"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"right"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"up"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"dance"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"down_jump"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"left_jump"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"right_jump"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"up_jump"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"down_attack"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"left_attack"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"right_attack"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"up_attack"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"down_idle"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"left_idle"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"right_idle"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"up_idle"</span><span class="w">
+              </span><span class="p">]</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"image"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"frame_width"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"frame_height"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"animations"</span><span class="w">
+          </span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"type"</span><span class="p">,</span><span class="w"> </span><span class="s2">"properties"</span><span class="w"> </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"$defs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"animationDef"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"frames"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"array"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"maxItems"</span><span class="p">:</span><span class="w"> </span><span class="mi">256</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Frame index of the sprite sheet (zero-based). Each frame has (frame_width X frame_height) image fragment in the sprite sheet image. The frame index starts from 0. The maximum array length is 256."</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"frame_rate"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"minimum"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"maximum"</span><span class="p">:</span><span class="w"> </span><span class="mi">64</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"frame_rate must be between a minimum of 1 and a maximum of 64. frame_rate represents the number of frames per second."</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"repeat"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"enum"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">],</span><span class="w">
+              </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The number of repetitions of the animation. Only two values are supported: -1 and 1. If it is set to -1, it repeats endlessly. If 1, it repeats once."</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"frames"</span><span class="p">,</span><span class="w"> </span><span class="s2">"frame_rate"</span><span class="p">,</span><span class="w"> </span><span class="s2">"repeat"</span><span class="w"> </span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="example">Example</h3>
+
+<p>Here is an example of the schema.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Klaytn Core"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Klaytn Story NFTs - Core"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://klaytn-story-bucket.s3.ap-northeast-2.amazonaws.com/core-face.png"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"namespaces"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"zep"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"avatar"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://klaytn-story-bucket.s3.ap-northeast-2.amazonaws.com/core-sheet.png"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"frame_width"</span><span class="p">:</span><span class="w"> </span><span class="mi">48</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"frame_height"</span><span class="p">:</span><span class="w"> </span><span class="mi">64</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"animations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"down"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"frames"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"frame_rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"repeat"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"left"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"frames"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="w"> </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"frame_rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"repeat"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"right"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"frames"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="w"> </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"frame_rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"repeat"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"up"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"frames"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="mi">19</span><span class="w"> </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"frame_rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"repeat"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"dance"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"frames"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span><span class="w"> </span><span class="mi">22</span><span class="p">,</span><span class="w"> </span><span class="mi">23</span><span class="p">,</span><span class="w"> </span><span class="mi">24</span><span class="p">,</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w"> </span><span class="mi">26</span><span class="p">,</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w"> </span><span class="mi">28</span><span class="p">,</span><span class="w"> </span><span class="mi">29</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="mi">31</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="mi">33</span><span class="p">,</span><span class="w"> </span><span class="mi">34</span><span class="p">,</span><span class="w"> </span><span class="mi">35</span><span class="p">,</span><span class="w"> </span><span class="mi">36</span><span class="p">,</span><span class="w"> </span><span class="mi">37</span><span class="w"> </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"frame_rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"repeat"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"down_jump"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"frames"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">38</span><span class="w"> </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"frame_rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"repeat"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"left_jump"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"frames"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">39</span><span class="w"> </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"frame_rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"repeat"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"right_jump"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"frames"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">40</span><span class="w"> </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"frame_rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"repeat"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"up_jump"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"frames"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">41</span><span class="w"> </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"frame_rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"repeat"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"down_attack"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"frames"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"frame_rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"repeat"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"left_attack"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"frames"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">43</span><span class="w"> </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"frame_rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"repeat"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"right_attack"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"frames"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">44</span><span class="w"> </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"frame_rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"repeat"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"up_attack"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"frames"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">45</span><span class="w"> </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"frame_rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"repeat"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"down_idle"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"frames"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"frame_rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"repeat"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"left_idle"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"frames"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"frame_rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"repeat"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"right_idle"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"frames"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"frame_rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"repeat"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"up_idle"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"frames"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">15</span><span class="w"> </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"frame_rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"repeat"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="backward-compatibility">Backward Compatibility</h2>
+<p>This standard can be fully <a href="https://eips.ethereum.org/EIPS/eip-721">ERC-721</a>, <a href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1155.md#erc-1155-metadata-uri-json-schema">ERC-1155</a>, <a href="https://eips.ethereum.org/EIPS/eip-4955">EIP-4955</a>, <a href="https://kips.klaytn.foundation/KIPs/kip-17">KIP-17</a>, and <a href="https://kips.klaytn.foundation/KIPs/kip-37">KIP-37</a> compatible by adding an extension “avatars” attribute in the metadata. This allows developers to easily adopt the standard quickly.</p>
+
+<h2 id="reference">Reference</h2>
+<ul>
+  <li><a href="https://eips.ethereum.org/EIPS/eip-721">ERC-721</a> Non-Fungible Token Standard</li>
+  <li><a href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1155.md#erc-1155-metadata-uri-json-schema">ERC-1155</a> Multi-Token Standard</li>
+  <li><a href="https://eips.ethereum.org/EIPS/eip-4955">EIP-4955</a></li>
+  <li><a href="https://kips.klaytn.foundation/KIPs/kip-17">KIP-17</a></li>
+  <li><a href="https://kips.klaytn.foundation/KIPs/kip-37">KIP-37</a></li>
+  <li><a href="https://docs.decentraland.org/creator/wearables/linked-wearables/">Decentraland Docs</a></li>
+</ul>
+
+<h2 id="copyright">Copyright</h2>
+<p>Copyright and related rights waived via <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.</p>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.2.3/mermaid.min.js" integrity="sha512-M4zmdILgXOwrBEVfpVqdO/jC3BJZQzlXHeu967v41/QoT60sESWSLbi7YwntTbYC0ZjewfTbvXO8iKj7amvQow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+  });
+  mermaid.run({
+    querySelector: '.language-mermaid', // markdown 'mermaid' language code blocks
+  });
+</script>
+
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Kaia Improvement Proposals</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Kaia Improvement Proposals</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/kaiachain/KIPs"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">kaiachain/KIPs</span></a></li><li><a href="https://twitter.com/kaiachain"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">kaiachain</span></a></li><li><a href="https://www.facebook.com/kaiachain"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#facebook"></use></svg> <span class="username">kaiachain</span></a></li><li><a href="https://medium.com/kaiachain"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#medium"></use></svg> <span class="username">kaiachain</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Kaia Improvement Proposals (KIPs) describe standards for the Kaia platform, including core protocol specifications, client APIs, and contract standards.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

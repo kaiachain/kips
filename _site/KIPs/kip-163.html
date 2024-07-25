@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+    <title>KIP 163: CnStakingV3 with public delegation</title>
+    <meta property="og:title" content="KIP 163: CnStakingV3 with public delegation" />
+    <meta
+      name="description"
+      content="Details on Kaia Improvement Proposal 163 (KIP 163): CnStakingV3 with public delegation"
+    />
+    <meta
+      property="og:description"
+      content="Details on Kaia Improvement Proposal 163 (KIP 163): CnStakingV3 with public delegation"
+    />
+    <meta name="twitter:description" content="Details on Kaia Improvement Proposal 163 (KIP 163): CnStakingV3 with public delegation" />
+  
+  <meta name="generator" content="Jekyll" />
+  <meta property="og:locale" content="en_US" />
+  <link rel="canonical" href="http://localhost:4000/KIPs/kip-163" />
+  <meta property="og:url" content="http://localhost:4000/KIPs/kip-163" />
+  <meta property="og:site_name" content="Kaia Improvement Proposals" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@kaiachain" />
+  <script type="application/ld+json">
+    {
+      "@type": "WebSite",
+      "url": "http://localhost:4000",
+      "name": "Kaia Improvement Proposals",
+      "description": "Kaia Improvement Proposals (KIPs) describe standards for the Kaia platform, including core protocol specifications, client APIs, and contract standards.",
+      "@context": "https://schema.org"
+    }
+  </script>
+  <link rel="stylesheet" href="/assets/css/style.css" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Kaia Improvement Proposals" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Kaia Improvement Proposals</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/all">All</a><a class="page-link" href="/core">Core</a><a class="page-link" href="/networking">Networking</a><a class="page-link" href="/storage">Storage</a><a class="page-link" href="/interface">Interface</a><a class="page-link" href="/token">KCT</a><a class="page-link" href="/sdk">SDK</a><a class="page-link" href="/application">Application</a><a class="page-link" href="/meta">Meta</a><a class="page-link" href="/informational">Informational</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="home">
+  <h1 class="page-heading">
+    KIP 163: CnStakingV3 with public delegation
+    <a href="https://github.com/kaiachain/KIPS/blob/main/KIPs/kip-163.md"><svg role="img" aria-label="Source" xmlns="https://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16"><title>Source</title><path fill-rule="evenodd" d="M9.5 3L8 4.5 11.5 8 8 11.5 9.5 13 14 8 9.5 3zm-5 0L0 8l4.5 5L6 11.5 2.5 8 6 4.5 4.5 3z"/></svg></a>
+  </h1>
+  <table>
+    <tr><th>Author</th><td><a href="https://github.com/hyeonLewis">Lewis</a>, <a href="https://github.com/ian0371">Ian</a>, <a href="https://github.com/blukat29">Ollie</a>, <a href="https://github.com/aidan-kwon">and Aidan</a></td></tr>
+    
+      <tr><th>Discussions-To</th><td><a href="https://github.com/klaytn/kips/issues/163">https://github.com/klaytn/kips/issues/163</a></td></tr>
+    
+    <tr><th>Status</th><td>Draft
+    
+    </td></tr>
+    <tr><th>Type</th><td>Standards Track</td></tr>
+    
+      <tr><th>Category</th><td>Core</td></tr>
+    
+    <tr><th>Created</th><td>2024-04-30</td></tr>
+    
+    
+    
+    
+    
+  </table>
+
+  <h2 id="simple-summary">Simple Summary</h2>
+
+<p>Introducing a new CnStakingV3 with public delegation.</p>
+
+<h2 id="abstract">Abstract</h2>
+
+<p>The new CnStakingV3 will be compatible with public delegation. The public delegation will support <code class="language-plaintext highlighter-rouge">delegation</code> and <code class="language-plaintext highlighter-rouge">redelegation</code> for general users. Also, the staking information interval will be changed to 1 block, which is currently 86,400 blocks.</p>
+
+<h2 id="motivation">Motivation</h2>
+
+<p>In KIP-81, Klaytn introduced CnStakingV2. However, it’s difficult for general users to delegate their KLAY if a validator doesn’t provide public delegation services. For example, users can delegate to <code class="language-plaintext highlighter-rouge">SwapScanner</code> and <code class="language-plaintext highlighter-rouge">KommuneDAO</code> since they provide their own public delegation services. This narrowed the delegation options to a small number of GC members. In addition, Klaytn expects various GC members to join in the merged chain; there is a strong need to introduce a new CnStakingV3 with public delegation.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">redelegation</code> can make massive staking changes in a short period, which can lead to non-negligible errors in the validator set and reward distribution with the current 86,400 blocks interval. To prevent this, the staking information intervl will be changed to 1 block.</p>
+
+<h2 id="specification">Specification</h2>
+
+<p>The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY”, and “OPTIONAL” in this document are to be interpreted as described in RFC 2119.</p>
+
+<h3 id="overview">Overview</h3>
+
+<p>CnStakingV3 is basically an upgraded version of CnStakingV2, so it must be compatible with the existing core contracts like <code class="language-plaintext highlighter-rouge">AddressBook</code>, <code class="language-plaintext highlighter-rouge">StakingTracker</code> and so on. The notifying changes include the following:</p>
+
+<ul>
+  <li>
+    <p>CnStakingV3 supports public delegation natively, allowing it to receive delegations and re-delegation from general users.</p>
+  </li>
+  <li>
+    <p>Re-delegation is supported between CnStakingV3 enabling public delegation and re-delegation.</p>
+  </li>
+</ul>
+
+<p>A GC member can enable public delegation from CnStakingV3. If it is enabled, all staking functionalities must be proxied via a public delegation contract defined in this proposal, namely <code class="language-plaintext highlighter-rouge">PublicDelegation</code>. When users want to delegate their KLAY, they stake KLAY to <code class="language-plaintext highlighter-rouge">PublicDelegation</code> and receive <code class="language-plaintext highlighter-rouge">shares</code> in return, which represent users’ assets.</p>
+
+<p><code class="language-plaintext highlighter-rouge">PublicDelegation</code> shall be implemented based on an interest-bearing token model, especially ERC-4626. However, <code class="language-plaintext highlighter-rouge">shares</code> must not be transferable.</p>
+
+<p>From <code class="language-plaintext highlighter-rouge">FORK_BLOCK</code>, the staking information for block <code class="language-plaintext highlighter-rouge">N</code> will be come from block <code class="language-plaintext highlighter-rouge">N-1</code> instead of <code class="language-plaintext highlighter-rouge">CalcStakingBlockNumber(N)</code>.</p>
+
+<h3 id="smart-contracts-overview">Smart Contracts Overview</h3>
+
+<p>This KIP contains upgraded and newly implemented smart contracts. The overall structure is shown in below diagram.</p>
+
+<ul>
+  <li>
+    <p>CnStakingV3: an upgraded version of CnStakingV2. It can enable public delegation and use re-delegation between CNs enable public delegation.</p>
+  </li>
+  <li>
+    <p>IKIP163: an interface that a public delegation must implement to be compatible with CnStakingV3.</p>
+  </li>
+  <li>
+    <p>PublicDelegation: a public delegation contract provided by Klaytn. Note that it will be only compatible with CnStakingV3.</p>
+  </li>
+</ul>
+
+<p>Henceforth, CnStakingV3 shall be denoted as CNv3, and Public Delegation as PD.</p>
+
+<p><img src="/assets/kip-163/overview.png" alt="" /></p>
+
+<h4 id="cnstakingv3">CnStakingV3</h4>
+
+<p>CNv3 can use either initial lockup or PD; the two features must be mutually exclusive. If CNv3 uses initial lockup, there’s no difference from CNv2. Henceforth, all CNv3s are considered to be using PD to focus on the newly added features.</p>
+
+<h5 id="interface">Interface</h5>
+
+<p>Note that it only addresses changes compared to CNv2. The function <code class="language-plaintext highlighter-rouge">delegate</code> renames from <code class="language-plaintext highlighter-rouge">stakeKlay</code> to clarify its meaning.</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pragma</span> <span class="n">solidity</span> <span class="mf">0.8</span><span class="p">.</span><span class="mi">25</span><span class="p">;</span>
+
+<span class="k">interface</span> <span class="n">ICnStakingV3</span> <span class="p">{</span>
+    <span class="k">event</span> <span class="n">SetPublicDelegation</span><span class="p">(</span><span class="kt">address</span> <span class="k">indexed</span> <span class="n">from</span><span class="p">,</span> <span class="kt">address</span> <span class="n">publicStaking</span><span class="p">,</span> <span class="kt">address</span> <span class="n">rewardAddress</span><span class="p">);</span>
+
+    <span class="k">event</span> <span class="n">ToggleRedelegation</span><span class="p">();</span>
+    <span class="k">event</span> <span class="n">UpdatePublicStaking</span><span class="p">(</span><span class="kt">address</span> <span class="k">indexed</span> <span class="n">publicStaking</span><span class="p">);</span>
+    <span class="k">event</span> <span class="n">Redelegation</span><span class="p">(</span><span class="kt">address</span> <span class="k">indexed</span> <span class="n">targetCnStakingV3</span><span class="p">,</span> <span class="kt">address</span> <span class="k">indexed</span> <span class="n">from</span><span class="p">,</span> <span class="kt">address</span> <span class="k">indexed</span> <span class="n">to</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">value</span><span class="p">);</span>
+    <span class="k">event</span> <span class="n">HandleRedelegation</span><span class="p">(</span><span class="kt">address</span> <span class="k">indexed</span> <span class="n">prevCnStakingV3</span><span class="p">,</span> <span class="kt">address</span> <span class="k">indexed</span> <span class="n">targetCnStakingV3</span><span class="p">,</span> <span class="kt">address</span> <span class="k">indexed</span> <span class="n">recipient</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">value</span><span class="p">);</span>
+
+    <span class="c1">// Setup public delegation
+</span>    <span class="k">function</span> <span class="n">setPublicDelegation</span><span class="p">(</span><span class="kt">address</span> <span class="n">_pdFactory</span><span class="p">,</span> <span class="kt">bytes</span> <span class="k">memory</span> <span class="n">_pdArgs</span><span class="p">)</span> <span class="k">external</span><span class="p">;</span>
+
+    <span class="c1">// Toggle redelegation
+</span>    <span class="k">function</span> <span class="n">submitToggleRedelegation</span><span class="p">()</span> <span class="k">external</span><span class="p">;</span>
+    <span class="k">function</span> <span class="n">toggleRedelegation</span><span class="p">()</span> <span class="k">external</span><span class="p">;</span>
+
+    <span class="c1">// Delegation/Redelegation functions.
+</span>    <span class="k">function</span> <span class="n">delegate</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span><span class="p">;</span>
+    <span class="k">function</span> <span class="n">redelegate</span><span class="p">(</span><span class="kt">address</span> <span class="n">_targetCnV3</span><span class="p">,</span> <span class="kt">address</span> <span class="n">_from</span><span class="p">,</span> <span class="kt">address</span> <span class="n">_to</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_value</span><span class="p">)</span> <span class="k">external</span><span class="p">;</span>
+    <span class="k">function</span> <span class="n">handleRedelegation</span><span class="p">(</span><span class="kt">address</span> <span class="n">_recipient</span><span class="p">)</span> <span class="k">external</span> <span class="k">payable</span><span class="p">;</span>
+
+    <span class="c1">// Record _account's last redelegation to prevent redelegation hopping.
+</span>    <span class="k">function</span> <span class="n">lastRedelegation</span><span class="p">(</span><span class="kt">address</span> <span class="n">_account</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h5 id="methods">Methods</h5>
+
+<p>The features added in CNv3 are only active when PD is enabled; without PD, existing features behave exactly as they did in CNv2. If PD is enabled, some staking functions only callable through PD. This ensures that users’ assets staked via PD are safe even if control of CNv3 is compromised.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>PD disabled (Same as CNv2)</th>
+      <th>PD enabled</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">delegate/receive</code></td>
+      <td>No condition</td>
+      <td>Only PD</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">submitApproveStakingWithdrawal</code></td>
+      <td>Only Admin</td>
+      <td>N.A.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">submitCancelApprovedStakingWithdrawal</code></td>
+      <td>Only Admin</td>
+      <td>N.A.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">approveStakingWithdrawal</code></td>
+      <td>Only Admin</td>
+      <td>Only PD</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cancelApprovedStakingWithdrawal</code></td>
+      <td>Only Multi-sig</td>
+      <td>Only PD</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">withdrawApprovedStaking</code></td>
+      <td>Only Multi-sig</td>
+      <td>Only PD</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The CNv3 must call <code class="language-plaintext highlighter-rouge">setPublicDelegation</code> to set public delegation. In <code class="language-plaintext highlighter-rouge">setPublicDelegation</code>, it deploys a new public delegation contract and connect to CNv3.</p>
+
+<p>Redelegation can be configured, and it requires that both the originating and the target CNv3 have PD and redelegation enabled to function properly. Users can redelegate their staking to another CNv3 without waiting for lockup period. But to prevent redelegation hopping, which makes Klaytn’s consensus be unstable, users who have been redelegated must wait a lockup period before they can redelegate again. For example, if a user redelegates from [<code class="language-plaintext highlighter-rouge">A</code> → <code class="language-plaintext highlighter-rouge">B</code>], then user must wait for a lockup period to redelegate from B to another CNv3. The last redelegation records will be stored in each CNv3s. The below diagram shows how redelegation is processed between CNv3 and PD. The action of PD is discussed in more detail in Public Delegation.</p>
+
+<p><img src="/assets/kip-163/redelegation_flow.png" alt="" /></p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">function</span> <span class="n">setPublicDelegation</span><span class="p">(</span><span class="kt">address</span> <span class="n">_pdFactory</span><span class="p">,</span> <span class="kt">bytes</span> <span class="k">memory</span> <span class="n">_pdArgs</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Deploys and sets a PD to CnV3. The <code class="language-plaintext highlighter-rouge">PublicDelegation</code> will be deployed via <code class="language-plaintext highlighter-rouge">_pdFactory</code> with <code class="language-plaintext highlighter-rouge">_pdArgs</code>. The <code class="language-plaintext highlighter-rouge">_pdFactor</code> is a simple factory contract that deploys <code class="language-plaintext highlighter-rouge">PublicDelegation</code>, which will be singleton contract deployed by Klaytn. The <code class="language-plaintext highlighter-rouge">_pdArgs</code> will be encoded <code class="language-plaintext highlighter-rouge">struct PDConstructorArgs</code> to deploy PD. The reward address must be set to the PD address.</p>
+
+<p>The function validates the following requirement(s):</p>
+
+<ul>
+  <li>The function MUST revert if PD is not enabled.</li>
+  <li>The function MUST revert if CnV3 already initialized.</li>
+  <li>The function MUST revert if <code class="language-plaintext highlighter-rouge">_pdArgs</code> isn’t encoded correctly.</li>
+  <li>The function MUST revert if PD deployment fails.</li>
+</ul>
+
+<p>The function emits <code class="language-plaintext highlighter-rouge">SetPublicDelegation</code> event.</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">function</span> <span class="n">redelegate</span><span class="p">(</span><span class="kt">address</span> <span class="n">_targetCnV3</span><span class="p">,</span> <span class="kt">address</span> <span class="n">_user</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_value</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Requests CNv3 to redelegate <code class="language-plaintext highlighter-rouge">_user</code>’s <code class="language-plaintext highlighter-rouge">_value</code> of KLAY to <code class="language-plaintext highlighter-rouge">_targetCnV3</code>. CNv3 calls <code class="language-plaintext highlighter-rouge">handleRedelegation</code> with <code class="language-plaintext highlighter-rouge">_value</code> to <code class="language-plaintext highlighter-rouge">_targetCnV3</code> internally.</p>
+
+<p>The function validates the following requirement(s):</p>
+
+<ul>
+  <li>The function MUST revert if CNv3 does not allow PD, or if the caller is not PD.</li>
+  <li>The function MUST revert if CNv3 does not allow redelegation.</li>
+  <li>The function MUST revert if <code class="language-plaintext highlighter-rouge">_targetCnV3</code> is itself.</li>
+  <li>The function MUST revert if <code class="language-plaintext highlighter-rouge">_targetCnV3</code> isn’t a valid CNv3 staking contract registered in AddressBook.</li>
+  <li>The function MUST revert if <code class="language-plaintext highlighter-rouge">_value</code> is larger than total staking amount.</li>
+  <li>The function MUST revert if <code class="language-plaintext highlighter-rouge">lastRedelegation[_user] != 0 &amp;&amp; lastRedelegation[_user] + lockup &lt;= block.timestamp</code>.</li>
+</ul>
+
+<p>The function emits <code class="language-plaintext highlighter-rouge">Redelegation</code> event.</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">function</span> <span class="n">handleRedelegation</span><span class="p">(</span><span class="kt">address</span> <span class="n">_user</span><span class="p">)</span> <span class="k">payable</span>
+</code></pre></div></div>
+
+<p>Handles redelegation request from departure CNv3. This CNv3 will stake msg.value on behalf of <code class="language-plaintext highlighter-rouge">_user</code> using <code class="language-plaintext highlighter-rouge">stakeFor(_user)</code> in PD. It allows existing code to be reused without additional implementation for redelegation. It records <code class="language-plaintext highlighter-rouge">lastRedelegation[_user]</code> to prevent redelegation hopping.</p>
+
+<p>The function validates the following requirement(s):</p>
+
+<ul>
+  <li>The function MUST revert if CNv3 does not allow PD.</li>
+  <li>The function MUST revert if CNv3 does not allow redelegation.</li>
+  <li>The function MUST revert if departure CNv3 isn’t a valid CNv3 staking contract registered in AddressBook.</li>
+  <li>The function MUST revert if balance after calling <code class="language-plaintext highlighter-rouge">stakeFor</code> is lower than expected.
+    <ul>
+      <li>In <code class="language-plaintext highlighter-rouge">stakeFor</code>, PD will stake <code class="language-plaintext highlighter-rouge">msg.value</code> back to CNv3. It means CNv3 can compute deterministic balance changes.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>The function emits <code class="language-plaintext highlighter-rouge">HandleRedelegation</code> event.</p>
+
+<h4 id="ikip163">IKIP163</h4>
+
+<p>IKIP163 must be implemented in <code class="language-plaintext highlighter-rouge">PublicDelegation</code> to be fully compatible with CnStakingV3:</p>
+
+<h5 id="interface-1">Interface</h5>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pragma</span> <span class="n">solidity</span> <span class="mf">0.8</span><span class="p">.</span><span class="mi">25</span><span class="p">;</span>
+
+<span class="c1">/// @title KIP-163 Public Delegation Interface
+/// @dev See https://github.com/klaytn/kips/issues/163
+</span><span class="k">interface</span> <span class="n">IKIP163</span> <span class="p">{</span>
+    <span class="c1">/// @dev Stake KLAY for the _recipient.
+</span>    <span class="c1">/// It is used in CnStakingV3.handleRedelegation to stake KLAY for the _recipient when handling redelegation.
+</span>    <span class="c1">/// It must stake KLAY to the CnStakingV3 in the same transaction.
+</span>    <span class="c1">/// See CnStakingV3.handleRedelegation for more details.
+</span>    <span class="c1">/// @param _recipient The address to stake for
+</span>    <span class="k">function</span> <span class="n">stakeFor</span><span class="p">(</span><span class="kt">address</span> <span class="n">_recipient</span><span class="p">)</span> <span class="k">external</span> <span class="k">payable</span><span class="p">;</span>
+
+    <span class="c1">/// @dev Returns the current rewards to be automatically compounded during the `stakeFor` function.
+</span>    <span class="c1">/// It is used in CnStakingV3.handleRedelegation to calculate the expected balance after calling `stakeFor`.
+</span>    <span class="c1">/// If implemented public delegation doesn't support auto-compounding during the `stakeFor`, it should return 0.
+</span>    <span class="c1">/// See CnStakingV3.handleRedelegation for more details.
+</span>    <span class="k">function</span> <span class="n">reward</span><span class="p">()</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Also, all staking operations in CNv3 must be done through public delegation, so there is no fixed interface, but it should call CNv3 appropriately.</p>
+
+<h5 id="methods-1">Methods</h5>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">function</span> <span class="n">stakeFor</span><span class="p">(</span><span class="kt">address</span> <span class="n">_recipient</span><span class="p">)</span> <span class="k">payable</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>It is used in <code class="language-plaintext highlighter-rouge">CnStakingV3.handleRedelegation</code> to stake KLAY for the <code class="language-plaintext highlighter-rouge">_recipient</code> when handling redelegation. The <code class="language-plaintext highlighter-rouge">stakeFor</code> MUST not revert <code class="language-plaintext highlighter-rouge">handleRedelegation</code>.</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">function</span> <span class="n">reward</span><span class="p">()</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>It returns the current rewards to be automatically compounded during the <code class="language-plaintext highlighter-rouge">stakeFor</code> function. It is used in <code class="language-plaintext highlighter-rouge">CnStakingV3.handleRedelegation</code> to calculate the expected balance after calling <code class="language-plaintext highlighter-rouge">stakeFor</code> function. If the public delegation doesn’t support auto-compounding during the <code class="language-plaintext highlighter-rouge">stakeFor</code>, it must return 0, otherwise exact rewards to be compounded. The <code class="language-plaintext highlighter-rouge">reward</code> MUST not revert <code class="language-plaintext highlighter-rouge">handleRedelegation</code>.</p>
+
+<h4 id="publicdelegation">PublicDelegation</h4>
+
+<p>PD is a public delegation contract based on ERC4626. It must be set up through <code class="language-plaintext highlighter-rouge">setPublicDelegation</code> in CNv3. Since PD must receive and calculate block rewards, the reward address of the CNv3 must be set to PD. If validator deploys multiple CNv3s to use both initial lockup and PD, the reward address for all CNv3s must be PD (i.e., the reward for initial lockup is also sent to PD).</p>
+
+<p>When block reward is auto-compounding, the commission is calculated and paid automatically.</p>
+
+<p>Since PD is a type of token contract, its name and symbol will be determined as follows:</p>
+
+<ul>
+  <li>Name: <code class="language-plaintext highlighter-rouge">{gcName} Public Delegated KLAY</code> (ex. <code class="language-plaintext highlighter-rouge">KF Public Delegated KLAY</code>)</li>
+  <li>Symbol: <code class="language-plaintext highlighter-rouge">{gcName}-pdKLAY</code> (ex. <code class="language-plaintext highlighter-rouge">KF-pdKLAY</code>)</li>
+</ul>
+
+<h5 id="interface-2">Interface</h5>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pragma</span> <span class="n">solidity</span> <span class="mf">0.8</span><span class="p">.</span><span class="mi">25</span><span class="p">;</span>
+
+<span class="k">import</span> <span class="s">"../CnV3/ICnStakingV3.sol"</span><span class="p">;</span>
+<span class="k">import</span> <span class="s">"./IKIP163.sol"</span><span class="p">;</span>
+
+<span class="k">interface</span> <span class="n">IPublicDelegation</span> <span class="k">is</span> <span class="n">IKIP163</span> <span class="p">{</span>
+    <span class="cm">/* ========== STRUCT ========== */</span>
+
+    <span class="k">struct</span> <span class="n">PDConstructorArgs</span> <span class="p">{</span>
+        <span class="kt">address</span> <span class="n">owner</span><span class="p">;</span>
+        <span class="kt">address</span> <span class="n">commissionTo</span><span class="p">;</span>
+        <span class="kt">uint256</span> <span class="n">commissionRate</span><span class="p">;</span>
+        <span class="kt">string</span> <span class="n">gcName</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/* ========== ENUM ========== */</span>
+
+    <span class="c1">/// @dev Current state of the withdrawal request
+</span>    <span class="k">enum</span> <span class="n">WithdrawalRequestState</span> <span class="p">{</span>
+        <span class="n">Undefined</span><span class="p">,</span>
+        <span class="n">Requested</span><span class="p">,</span>
+        <span class="n">Withdrawable</span><span class="p">,</span>
+        <span class="n">Withdrawn</span><span class="p">,</span>
+        <span class="n">PendingCancel</span><span class="p">,</span>
+        <span class="n">Canceled</span>
+    <span class="p">}</span>
+
+    <span class="cm">/* ========== EVENTS ========== */</span>
+
+    <span class="c1">// Initialization
+</span>    <span class="k">event</span> <span class="n">DeployContract</span><span class="p">(</span><span class="kt">string</span> <span class="n">_contractType</span><span class="p">,</span> <span class="kt">address</span> <span class="n">_baseCnStakingV3</span><span class="p">,</span> <span class="n">PDConstructorArgs</span> <span class="n">_pdArgs</span><span class="p">);</span>
+
+    <span class="c1">// Operations
+</span>    <span class="k">event</span> <span class="n">UpdateCommissionTo</span><span class="p">(</span><span class="kt">address</span> <span class="k">indexed</span> <span class="n">_prevCommissionTo</span><span class="p">,</span> <span class="kt">address</span> <span class="k">indexed</span> <span class="n">_commissionTo</span><span class="p">);</span>
+    <span class="k">event</span> <span class="n">UpdateCommissionRate</span><span class="p">(</span><span class="kt">uint256</span> <span class="k">indexed</span> <span class="n">_prevCommissionRate</span><span class="p">,</span> <span class="kt">uint256</span> <span class="k">indexed</span> <span class="n">_commissionRate</span><span class="p">);</span>
+    <span class="k">event</span> <span class="n">SendCommission</span><span class="p">(</span><span class="kt">address</span> <span class="k">indexed</span> <span class="n">_commissionTo</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_commission</span><span class="p">);</span>
+
+    <span class="c1">// Staking
+</span>    <span class="k">event</span> <span class="n">Staked</span><span class="p">(</span><span class="kt">address</span> <span class="k">indexed</span> <span class="n">_user</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_assets</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_shares</span><span class="p">);</span>
+    <span class="k">event</span> <span class="n">Redeemed</span><span class="p">(</span><span class="kt">address</span> <span class="k">indexed</span> <span class="n">_user</span><span class="p">,</span> <span class="kt">address</span> <span class="k">indexed</span> <span class="n">_recipient</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_assets</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_shares</span><span class="p">);</span>
+    <span class="k">event</span> <span class="n">Redelegated</span><span class="p">(</span><span class="kt">address</span> <span class="k">indexed</span> <span class="n">_user</span><span class="p">,</span> <span class="kt">address</span> <span class="k">indexed</span> <span class="n">_targetCnV3</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_assets</span><span class="p">);</span>
+    <span class="k">event</span> <span class="n">RequestWithdrawal</span><span class="p">(</span>
+        <span class="kt">address</span> <span class="k">indexed</span> <span class="n">_user</span><span class="p">,</span>
+        <span class="kt">address</span> <span class="k">indexed</span> <span class="n">_recipient</span><span class="p">,</span>
+        <span class="kt">uint256</span> <span class="k">indexed</span> <span class="n">_requestId</span><span class="p">,</span>
+        <span class="kt">uint256</span> <span class="n">_assets</span>
+    <span class="p">);</span>
+    <span class="k">event</span> <span class="n">RequestCancelWithdrawal</span><span class="p">(</span><span class="kt">address</span> <span class="k">indexed</span> <span class="n">_user</span><span class="p">,</span> <span class="kt">uint256</span> <span class="k">indexed</span> <span class="n">_requestId</span><span class="p">);</span>
+    <span class="k">event</span> <span class="n">Claimed</span><span class="p">(</span><span class="kt">address</span> <span class="k">indexed</span> <span class="n">_user</span><span class="p">,</span> <span class="kt">uint256</span> <span class="k">indexed</span> <span class="n">_requestId</span><span class="p">);</span>
+
+    <span class="cm">/* ========== CONSTANT/IMMUTABLE GETTERS ========== */</span>
+
+    <span class="k">function</span> <span class="n">MAX_COMMISSION_RATE</span><span class="p">()</span> <span class="k">external</span> <span class="k">pure</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">);</span>
+
+    <span class="k">function</span> <span class="n">COMMISSION_DENOMINATOR</span><span class="p">()</span> <span class="k">external</span> <span class="k">pure</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">);</span>
+
+    <span class="k">function</span> <span class="n">CONTRACT_TYPE</span><span class="p">()</span> <span class="k">external</span> <span class="k">pure</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">string</span> <span class="k">memory</span><span class="p">);</span>
+
+    <span class="k">function</span> <span class="n">VERSION</span><span class="p">()</span> <span class="k">external</span> <span class="k">pure</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">);</span>
+
+    <span class="k">function</span> <span class="n">baseCnStakingV3</span><span class="p">()</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="n">ICnStakingV3</span><span class="p">);</span>
+
+    <span class="cm">/* ========== OPERATION FUNCTIONS ========== */</span>
+
+    <span class="k">function</span> <span class="n">updateCommissionTo</span><span class="p">(</span><span class="kt">address</span> <span class="n">_commissionTo</span><span class="p">)</span> <span class="k">external</span><span class="p">;</span>
+
+    <span class="k">function</span> <span class="n">updateCommissionRate</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">_commissionRate</span><span class="p">)</span> <span class="k">external</span><span class="p">;</span>
+
+    <span class="cm">/* ========== PUBLIC FUNCTIONS ========== */</span>
+
+    <span class="c1">// Staking
+</span>    <span class="k">function</span> <span class="n">stake</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span><span class="p">;</span>
+
+    <span class="k">function</span> <span class="n">stakeFor</span><span class="p">(</span><span class="kt">address</span> <span class="n">_recipient</span><span class="p">)</span> <span class="k">external</span> <span class="k">payable</span><span class="p">;</span> <span class="c1">// Defined in IKIP163
+</span>
+    <span class="k">receive</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span><span class="p">;</span>
+
+    <span class="c1">// Withdrawal
+</span>    <span class="k">function</span> <span class="n">withdraw</span><span class="p">(</span><span class="kt">address</span> <span class="n">_recipient</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_assets</span><span class="p">)</span> <span class="k">external</span><span class="p">;</span>
+
+    <span class="k">function</span> <span class="n">redeem</span><span class="p">(</span><span class="kt">address</span> <span class="n">_recipient</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_shares</span><span class="p">)</span> <span class="k">external</span><span class="p">;</span>
+
+    <span class="k">function</span> <span class="n">cancelApprovedStakingWithdrawal</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">_requestId</span><span class="p">)</span> <span class="k">external</span><span class="p">;</span>
+
+    <span class="k">function</span> <span class="n">claim</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">_requestId</span><span class="p">)</span> <span class="k">external</span><span class="p">;</span>
+
+    <span class="c1">// Redelegation
+</span>    <span class="k">function</span> <span class="n">redelegateByAssets</span><span class="p">(</span><span class="kt">address</span> <span class="n">_targetCnV3</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_assets</span><span class="p">)</span> <span class="k">external</span><span class="p">;</span>
+
+    <span class="k">function</span> <span class="n">redelegateByShares</span><span class="p">(</span><span class="kt">address</span> <span class="n">_targetCnV3</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_shares</span><span class="p">)</span> <span class="k">external</span><span class="p">;</span>
+
+    <span class="c1">// Sweep
+</span>    <span class="k">function</span> <span class="n">sweep</span><span class="p">()</span> <span class="k">external</span><span class="p">;</span>
+
+    <span class="cm">/* ========== PUBLIC VIEWS ========== */</span>
+
+    <span class="k">function</span> <span class="n">commissionTo</span><span class="p">()</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">address</span><span class="p">);</span>
+
+    <span class="k">function</span> <span class="n">commissionRate</span><span class="p">()</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">);</span>
+
+    <span class="k">function</span> <span class="n">userRequestIds</span><span class="p">(</span><span class="kt">address</span> <span class="n">_owner</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_index</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">);</span>
+
+    <span class="k">function</span> <span class="n">requestIdToOwner</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">_requestId</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">address</span><span class="p">);</span>
+
+    <span class="k">function</span> <span class="n">getCurrentWithdrawalRequestState</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">_requestId</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="n">WithdrawalRequestState</span><span class="p">);</span>
+
+    <span class="k">function</span> <span class="n">getUserRequestCount</span><span class="p">(</span><span class="kt">address</span> <span class="n">_owner</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">);</span>
+
+    <span class="k">function</span> <span class="n">getUserRequestIdsWithState</span><span class="p">(</span>
+        <span class="kt">address</span> <span class="n">_owner</span><span class="p">,</span>
+        <span class="n">WithdrawalRequestState</span> <span class="n">_state</span>
+    <span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">[]</span> <span class="k">memory</span><span class="p">);</span>
+
+    <span class="k">function</span> <span class="n">getUserRequestIds</span><span class="p">(</span><span class="kt">address</span> <span class="n">_owner</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">[]</span> <span class="k">memory</span><span class="p">);</span>
+
+    <span class="k">function</span> <span class="n">maxRedeem</span><span class="p">(</span><span class="kt">address</span> <span class="n">_owner</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">);</span>
+
+    <span class="k">function</span> <span class="n">maxWithdraw</span><span class="p">(</span><span class="kt">address</span> <span class="n">_owner</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">);</span>
+
+    <span class="k">function</span> <span class="n">reward</span><span class="p">()</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">);</span> <span class="c1">// Defined in IKIP163
+</span>
+    <span class="k">function</span> <span class="n">totalAssets</span><span class="p">()</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">);</span>
+
+    <span class="k">function</span> <span class="n">convertToShares</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">_assets</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">);</span>
+
+    <span class="k">function</span> <span class="n">convertToAssets</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">_shares</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">);</span>
+
+    <span class="k">function</span> <span class="n">previewDeposit</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">_assets</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">);</span>
+
+    <span class="k">function</span> <span class="n">previewWithdraw</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">_assets</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">);</span>
+
+    <span class="k">function</span> <span class="n">previewRedeem</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">_shares</span><span class="p">)</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h5 id="constants">Constants</h5>
+
+<p>The PublicDelegation has constants related to commission.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">MAX_COMMISSION_RATE</code>: Max commission rate. It will be 10,000. (= 100%)</li>
+  <li><code class="language-plaintext highlighter-rouge">COMMISSION_DENOMINATOR</code>: Commission denominator. It will be 10,000.</li>
+</ul>
+
+<h5 id="methods-2">Methods</h5>
+
+<p>All math for managing a user’s staking follows ERC4626 standard. Note that PD isn’t based on ERC20 assets, but native KLAY.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">totalAssets()</code>: Total assets managed by PD. It contains reward.</li>
+  <li><code class="language-plaintext highlighter-rouge">maxRedeem(address owner)</code>: Max reedeemable shares of owner.</li>
+  <li><code class="language-plaintext highlighter-rouge">maxWithdraw(address owner)</code>: Max withdrawable KLAY of owner.</li>
+  <li><code class="language-plaintext highlighter-rouge">convertToAssets(uint256 shares)</code>: Expected KLAY when convert shares.</li>
+  <li><code class="language-plaintext highlighter-rouge">previewDeposit(uint256 assets)</code>: Expected shares when deposit assets of KLAY.</li>
+  <li><code class="language-plaintext highlighter-rouge">previewWithdraw(uint256 assets)</code>: Expected shares to withdraw assets of KLAY.</li>
+  <li><code class="language-plaintext highlighter-rouge">previewRedeem(uint256 shares)</code>: Expected KLAY when redeem shares.</li>
+</ul>
+
+<p>To enable auto-compounding, PD stakes cumulative KLAY rewards to CNv3 automatically when the below functions are called or call <code class="language-plaintext highlighter-rouge">sweep</code> function explicitly.</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">function</span> <span class="n">updateCommissionTo</span><span class="p">(</span><span class="kt">address</span> <span class="n">_commissionTo</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>It updates commission receiver address of PD. Previously accumulated commission must go to previous commission receiver.</p>
+
+<p>The function validates the following requirement(s):</p>
+
+<ul>
+  <li>The function MUST revert if caller is not an owner.</li>
+</ul>
+
+<p>The function emits <code class="language-plaintext highlighter-rouge">UpdateCommissionTo</code> event.</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">function</span> <span class="n">updateCommissionRate</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">_commissionRate</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>It updates commission rate of PD. Previously accumulated rewards must follow previous commission rate.</p>
+
+<p>The function validates the following requirement(s):</p>
+
+<ul>
+  <li>The function MUST revert if caller is not an owner.</li>
+  <li>The function MUST revert if <code class="language-plaintext highlighter-rouge">_commissionRate</code> is higher than <code class="language-plaintext highlighter-rouge">MAX_COMMISSION_RATE</code>.</li>
+</ul>
+
+<p>The function emits <code class="language-plaintext highlighter-rouge">UpdateCommissionRate</code> event.</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">function</span> <span class="n">stake</span><span class="p">()</span> <span class="k">payable</span><span class="p">;</span>
+<span class="k">function</span> <span class="n">stakeFor</span><span class="p">(</span><span class="kt">address</span> <span class="n">_recipient</span><span class="p">)</span> <span class="k">payable</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Call <code class="language-plaintext highlighter-rouge">delegate</code> with <code class="language-plaintext highlighter-rouge">msg.value</code> to CNv3 internally. It must mint corresponding shares to user. <code class="language-plaintext highlighter-rouge">stakeFor</code> is used when <code class="language-plaintext highlighter-rouge">msg.sender != _recipient</code>.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>User gives</th>
+      <th>User receives</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">KLAY</code></td>
+      <td><code class="language-plaintext highlighter-rouge">previewDeposit(KLAY)</code>: Floored amount of <code class="language-plaintext highlighter-rouge">shares</code> (<code class="language-plaintext highlighter-rouge">pdKLAY</code>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The function validates the following requirement(s):</p>
+
+<ul>
+  <li>The function MUST revert if user would receive 0 shares.</li>
+  <li>The function MUST revert if delegate call reverts.</li>
+</ul>
+
+<p>The function emits <code class="language-plaintext highlighter-rouge">Staked</code> event.</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">function</span> <span class="n">withdraw</span><span class="p">(</span><span class="kt">address</span> <span class="n">_recipient</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_assets</span><span class="p">);</span>
+<span class="k">function</span> <span class="n">redeem</span><span class="p">(</span><span class="kt">address</span> <span class="n">_recipient</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_shares</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Call <code class="language-plaintext highlighter-rouge">approveStakingWithdrawal</code> to CNv3 internally. It must burn corresponding shares of user. User will use <code class="language-plaintext highlighter-rouge">withdraw</code> to withdraw the <code class="language-plaintext highlighter-rouge">exact amount of KLAY</code>, otherwise use <code class="language-plaintext highlighter-rouge">redeem</code> to withdraw the <code class="language-plaintext highlighter-rouge">exact amount of shares</code>. Note that user must use <code class="language-plaintext highlighter-rouge">redeem</code> to withdraw all the KLAY because total withdrawable KLAY is changed every block (1 second).</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>User gives (<code class="language-plaintext highlighter-rouge">pdKLAY</code>)</th>
+      <th>User will receive (7-day lockup)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">withdraw(recipient, KLAY)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">previewWithdraw(KLAY)</code>: Ceiled amount of shares to withdraw KLAY</td>
+      <td><code class="language-plaintext highlighter-rouge">KLAY</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">redeem(recipient, shares)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">shares</code></td>
+      <td><code class="language-plaintext highlighter-rouge">previewRedeem(shares)</code>: Floored amount of KLAY</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The function validates the following requirement(s):</p>
+
+<ul>
+  <li>The function MUST revert if user requests to withdraw 0 KLAY.</li>
+  <li>The function MUST revert if user withdraws more than staked.</li>
+  <li>The function MUST revert if <code class="language-plaintext highlighter-rouge">approveStakingWithdrawal</code> call reverts.</li>
+</ul>
+
+<p>The functions emit <code class="language-plaintext highlighter-rouge">RequestWithdrawal</code> event.</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">function</span> <span class="n">cancelApprovedStakingWithdrawal</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">_requestId</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Call <code class="language-plaintext highlighter-rouge">cancelApprovedStakingWithdrawal</code> to CNv3 internally. User’s shares must be revived accordingly. Note that KLAY in withdrawal requests didn’t receive any rewards.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>User gives</th>
+      <th>User receives</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>-</td>
+      <td><code class="language-plaintext highlighter-rouge">previewDeposit(KLAY in withdrawal request)</code>: Floored amount of shares</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The function validates the following requirement(s):</p>
+
+<ul>
+  <li>The function MUST revert if a user attempts to withdraw another user’s request.</li>
+  <li>The function MUST revert if <code class="language-plaintext highlighter-rouge">cancelApprovedStakingWithdrawal</code> call reverts.</li>
+</ul>
+
+<p>The function emits <code class="language-plaintext highlighter-rouge">RequestCancelWithdrawal</code> event.</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">function</span> <span class="n">claim</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">_requestId</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Calls <code class="language-plaintext highlighter-rouge">withdrawApprovedStaking</code> to CNv3 internally. If the withdrawal was canceled, it must revive user’s shares accordingly. Note that KLAY in withdrawal requests didn’t receive any rewards.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>User gives</th>
+      <th>User receives</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Claim success</td>
+      <td>-</td>
+      <td><code class="language-plaintext highlighter-rouge">KLAY</code> in withdrawal request</td>
+    </tr>
+    <tr>
+      <td>Claim failure</td>
+      <td>-</td>
+      <td><code class="language-plaintext highlighter-rouge">previewDeposit(KLAY in withdrawal request)</code>: Floored amount of shares</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The function validates the following requirement(s):</p>
+
+<ul>
+  <li>The function MUST revert if a user attempts to claim another user’s request.</li>
+  <li>The function MUST revert if <code class="language-plaintext highlighter-rouge">withdrawApprovedStaking</code> call reverts.</li>
+</ul>
+
+<p>The function emits <code class="language-plaintext highlighter-rouge">Claimed</code> if withdrew successfully.</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">function</span> <span class="n">redelegateByAssets</span><span class="p">(</span><span class="kt">address</span> <span class="n">_targetCnV3</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_assets</span><span class="p">);</span>
+<span class="k">function</span> <span class="n">redelegateByShares</span><span class="p">(</span><span class="kt">address</span> <span class="n">_targetCnV3</span><span class="p">,</span> <span class="kt">uint256</span> <span class="n">_shares</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Call <code class="language-plaintext highlighter-rouge">redelegate</code> to CNv3 internally. It must burn corresponding shares of users. User will use <code class="language-plaintext highlighter-rouge">byAssets</code> to redelegate the <code class="language-plaintext highlighter-rouge">exact amount of KLAY</code>, otherwise use <code class="language-plaintext highlighter-rouge">byShares</code> to redelegate the <code class="language-plaintext highlighter-rouge">exact amount of shares</code>. Note that user must use <code class="language-plaintext highlighter-rouge">byShares</code> to redelegate all the KLAY same reason as <code class="language-plaintext highlighter-rouge">redeem</code>. User must receive the corresponding shares by PD connected to targetCNv3. In below tables, $\color{blue}{blue}$ is for target, while $\color{red}{red}$ is from.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>User gives</th>
+      <th>User receives</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">redelegateByAssets(target, KLAY)</code></td>
+      <td>$\color{red}{previewWithdraw(KLAY)}$: Ceiled amount of shares to redelegate KLAY</td>
+      <td>$\color{blue}{previewDeposit(KLAY)}$: Floored amount of shares</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">redelegateByShares(target, shares)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">shares</code></td>
+      <td>$\color{blue}{previewDeposit(KLAY)}$: Floored amount of shares, where <code class="language-plaintext highlighter-rouge">KLAY</code> is $\color{red}{previewRedeem(shares)}$</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The function validates the following requirement(s):</p>
+
+<ul>
+  <li>The function MUST revert if <code class="language-plaintext highlighter-rouge">_targetCnV3</code> isn’t a valid CNv3 staking contract.</li>
+  <li>The function MUST revert if current CNv3 doesn’t allow redelegation.</li>
+  <li>The function MUST revert if a user redelegates more KLAY than staked.</li>
+  <li>The function MUST revert if a user redelegates 0 KLAY.</li>
+  <li>The function MUST revert if <code class="language-plaintext highlighter-rouge">redelegate</code> call reverts.</li>
+</ul>
+
+<p>The functions emit <code class="language-plaintext highlighter-rouge">Redelegated</code> event.</p>
+
+<h3 id="core-logic">Core Logic</h3>
+
+<p>From <code class="language-plaintext highlighter-rouge">FORK_BLOCK</code>, the staking information for block <code class="language-plaintext highlighter-rouge">N</code> will be recorded in block <code class="language-plaintext highlighter-rouge">N-1</code> instead of <code class="language-plaintext highlighter-rouge">CalcStakingBlockNumber(N)</code>.</p>
+
+<h4 id="parameters">Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Constant</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">FORK_BLOCK</code></td>
+      <td>TBD</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// In staking_manager.go</span>
+<span class="k">func</span> <span class="n">GetStakingInfo</span><span class="p">(</span><span class="n">blockNum</span> <span class="kt">uint64</span><span class="p">)</span> <span class="o">*</span><span class="n">StakingInfo</span> <span class="p">{</span>
+	<span class="n">stakingBlockNumber</span> <span class="o">:=</span> <span class="n">blockNum</span>
+	<span class="k">var</span> <span class="n">stakingInfo</span> <span class="o">*</span><span class="n">StakingInfo</span>
+	<span class="k">if</span> <span class="n">isForkBlockEnabled</span><span class="p">(</span><span class="n">blockNum</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c">// After `FORK_BLOCK`, staking information for block `N` will be recorded in block `N-1`.</span>
+	    <span class="k">if</span> <span class="n">blockNum</span> <span class="o">&gt;</span> <span class="m">0</span> <span class="p">{</span>
+			<span class="n">stakingBlockNumber</span><span class="o">--</span>
+		<span class="p">}</span>
+		<span class="n">stakingInfo</span> <span class="o">=</span> <span class="n">GetStakingInfoForForkBlock</span><span class="p">(</span><span class="n">stakingBlockNumber</span><span class="p">)</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c">// Before `FORK_BLOCK`, staking information for block `N` will be recorded in `CalcStakingBlockNumber(N)`.</span>
+		<span class="n">stakingBlockNumber</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">CalcStakingBlockNumber</span><span class="p">(</span><span class="n">blockNum</span><span class="p">)</span>
+		<span class="n">stakingInfo</span> <span class="o">=</span> <span class="n">GetStakingInfoOnStakingBlock</span><span class="p">(</span><span class="n">stakingBlockNumber</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="n">stakingInfo</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Function</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">GetStakingInfo(blockNum)</code></td>
+      <td>Returns staking information needed to handle block <code class="language-plaintext highlighter-rouge">blockNum</code>.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">GetStakingInfoForForkBlock(blockNum)</code></td>
+      <td>Returns staking information at block <code class="language-plaintext highlighter-rouge">blockNum</code>. If <code class="language-plaintext highlighter-rouge">blockNum</code> is before <code class="language-plaintext highlighter-rouge">FORK_BLOCK - 1</code>, return nil.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">GetStakingInfoOnStakingBlock(blockNum)</code></td>
+      <td>Returns staking information at staking block <code class="language-plaintext highlighter-rouge">blockNum</code>. If <code class="language-plaintext highlighter-rouge">blockNum</code> is not a staking interval block nor after <code class="language-plaintext highlighter-rouge">FORK_BLOCK</code>, return nil.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="rationale">Rationale</h2>
+
+<h3 id="non-transferable-shares-in-publicdelegation">Non-transferable shares in PublicDelegation</h3>
+
+<p>Originally, the shares minted by PublicDelegation is based on ERC4626, one of ERC20 extensions. It means shares will be utilized as a ERC20 token (e.g., Liquidity Pool, Collaterals). This is of course a common use cases on many blockchains; LST. However, since different LSTs are issued by each GC, which causes significant liquidity fragmentation. Therefore, although <code class="language-plaintext highlighter-rouge">shares</code> are not transferable in this KIP, Klaytn will keep considering ways to activate staked KLAY while preventing liquidity fragmentation.</p>
+
+<h3 id="initial-lockup-and-public-delegation-are-mutually-exclusive">Initial lockup and public delegation are mutually exclusive</h3>
+
+<p>All delegations must be through <code class="language-plaintext highlighter-rouge">PublicDelegation</code> if enabled. However, it conflicts with the existing initial lockup feature from CnStakingV2 because the initial lockup is staked directly into CnStakingV3 without <code class="language-plaintext highlighter-rouge">PublicDelegation</code>. To solve this issue, public delegation and initial lockup must be set to mutually exclusive. However, if both features must be used, there are alternative ways to achieve it:</p>
+
+<ol>
+  <li>Deposit initial lockup through <code class="language-plaintext highlighter-rouge">PublicDelegation</code> and implement additional logic for initial lockup (setup unlock time and amounts)</li>
+  <li>Maintain current initial lockup implementation. In <code class="language-plaintext highlighter-rouge">PublicDelegation</code>, calculate the shares considering the initial lockup of CnStakingV3.</li>
+</ol>
+
+<p>First approach needs additional implementation in PD only for initial lockup. This raises the question of whether it’s reasonable for PD to consider initial lockup. Developing an independent lockup contract for initial lockup is possible, but this causes additional security and maintenance issues.</p>
+
+<p>The second approach makes PD logic more complicated. PD has to read the state of the initial lockup every time and make calculations, which is a permanent cost increase.</p>
+
+<p>Overall, it’s determined that initial lockup and PD are best used in CNv3 where they are mutually exclusive and independent.</p>
+
+<h2 id="backward-compatibility">Backward Compatibility</h2>
+
+<p>The existing CNv1 and CNv2 and previous custom public delegation services will still be available. However, it is strongly recommended to deploy CNv3 for new GCs and gradually move to CNv3 for original GCs.</p>
+
+<h2 id="security-considerations">Security Considerations</h2>
+
+<h3 id="erc4626-inflation-attack">ERC4626 Inflation Attack</h3>
+
+<p>This is fundamentally due to that when using ERC20 as a base asset, contract cannot prevent tokens from being deposited directly into it. This only increases the underlying asset without issuing any shares, and can result in zero shares for other users to receive. However, since the PD in this is based on the KLAY, we can control all KLAY inflows by fallback.</p>
+
+<h2 id="implementation">Implementation</h2>
+
+<p>TBA</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li><a href="https://eips.ethereum.org/EIPS/eip-4626">ERC4626</a></li>
+  <li><a href="https://blog.openzeppelin.com/a-novel-defense-against-erc4626-inflation-attacks">Inflation Attack</a></li>
+  <li><a href="https://docs.cosmos.network/v0.46/modules/staking/">Cosmos Staking Module</a></li>
+</ul>
+
+<h2 id="copyright">Copyright</h2>
+
+<p>Copyright and related rights waived via <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.</p>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.2.3/mermaid.min.js" integrity="sha512-M4zmdILgXOwrBEVfpVqdO/jC3BJZQzlXHeu967v41/QoT60sESWSLbi7YwntTbYC0ZjewfTbvXO8iKj7amvQow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+  });
+  mermaid.run({
+    querySelector: '.language-mermaid', // markdown 'mermaid' language code blocks
+  });
+</script>
+
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Kaia Improvement Proposals</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Kaia Improvement Proposals</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/kaiachain/KIPs"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">kaiachain/KIPs</span></a></li><li><a href="https://twitter.com/kaiachain"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">kaiachain</span></a></li><li><a href="https://www.facebook.com/kaiachain"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#facebook"></use></svg> <span class="username">kaiachain</span></a></li><li><a href="https://medium.com/kaiachain"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#medium"></use></svg> <span class="username">kaiachain</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Kaia Improvement Proposals (KIPs) describe standards for the Kaia platform, including core protocol specifications, client APIs, and contract standards.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

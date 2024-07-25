@@ -23,6 +23,8 @@ twitter_username: kaiachain
 github_username: kaiachain
 facebook_username: kaiachain
 medium_username: kaiachain
+repository: kaiachain/KIPS
+
 header_pages:
  - all.html
  - core.html
@@ -34,6 +36,7 @@ header_pages:
  - application.html
  - meta.html
  - informational.html
+
 twitter:
   card: summary
   username: kaiachain
@@ -70,4 +73,7 @@ exclude:
   - kip-template.md
   - ISSUE_TEMPLATE.md
   - PULL_REQUEST_TEMPLATE.md
-#  - README.md
+  - README.md
+
+include:
+  - LICENSE

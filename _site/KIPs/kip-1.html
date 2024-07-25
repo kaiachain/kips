@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+    <title>KIP 1: KIP Purpose and Guidelines</title>
+    <meta property="og:title" content="KIP 1: KIP Purpose and Guidelines" />
+    <meta
+      name="description"
+      content="Details on Kaia Improvement Proposal 1 (KIP 1): KIP Purpose and Guidelines"
+    />
+    <meta
+      property="og:description"
+      content="Details on Kaia Improvement Proposal 1 (KIP 1): KIP Purpose and Guidelines"
+    />
+    <meta name="twitter:description" content="Details on Kaia Improvement Proposal 1 (KIP 1): KIP Purpose and Guidelines" />
+  
+  <meta name="generator" content="Jekyll" />
+  <meta property="og:locale" content="en_US" />
+  <link rel="canonical" href="http://localhost:4000/KIPs/kip-1" />
+  <meta property="og:url" content="http://localhost:4000/KIPs/kip-1" />
+  <meta property="og:site_name" content="Kaia Improvement Proposals" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@kaiachain" />
+  <script type="application/ld+json">
+    {
+      "@type": "WebSite",
+      "url": "http://localhost:4000",
+      "name": "Kaia Improvement Proposals",
+      "description": "Kaia Improvement Proposals (KIPs) describe standards for the Kaia platform, including core protocol specifications, client APIs, and contract standards.",
+      "@context": "https://schema.org"
+    }
+  </script>
+  <link rel="stylesheet" href="/assets/css/style.css" /><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Kaia Improvement Proposals" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Kaia Improvement Proposals</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/all">All</a><a class="page-link" href="/core">Core</a><a class="page-link" href="/networking">Networking</a><a class="page-link" href="/storage">Storage</a><a class="page-link" href="/interface">Interface</a><a class="page-link" href="/token">KCT</a><a class="page-link" href="/sdk">SDK</a><a class="page-link" href="/application">Application</a><a class="page-link" href="/meta">Meta</a><a class="page-link" href="/informational">Informational</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="home">
+  <h1 class="page-heading">
+    KIP 1: KIP Purpose and Guidelines
+    <a href="https://github.com/kaiachain/KIPS/blob/main/KIPs/kip-1.md"><svg role="img" aria-label="Source" xmlns="https://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16"><title>Source</title><path fill-rule="evenodd" d="M9.5 3L8 4.5 11.5 8 8 11.5 9.5 13 14 8 9.5 3zm-5 0L0 8l4.5 5L6 11.5 2.5 8 6 4.5 4.5 3z"/></svg></a>
+  </h1>
+  <table>
+    <tr><th>Author</th><td><a href="mailto:colin.kim@groundx.xyz">Junghyun Kim</a></td></tr>
+    
+    <tr><th>Status</th><td>Active
+    
+    </td></tr>
+    <tr><th>Type</th><td>Meta</td></tr>
+    
+    <tr><th>Created</th><td>2019-11-10</td></tr>
+    
+    
+    
+    
+    
+  </table>
+
+  <h2 id="what-is-a-kip">What is a KIP?</h2>
+
+<p>KIP stands for Klaytn Improvement Proposal. A KIP is a design document providing information to the Klaytn community, or describing a new feature for Klaytn or its processes or environment. The KIP should provide a concise technical specification of the feature and a rationale for the feature. The KIP author is responsible for building consensus within the community and documenting dissenting opinions.</p>
+
+<h2 id="kip-rationale">KIP Rationale</h2>
+
+<p>We intend KIPs to be the primary mechanisms for proposing new features, for collecting community technical input on an issue, and for documenting the design decisions that have gone into Klaytn. Because the KIPs are maintained as text files in a versioned repository, their revision history is the historical record of the feature proposal.</p>
+
+<p>For Klaytn implementers, KIPs are a convenient way to track the progress of their implementation. Ideally each implementation maintainer would list the KIPs that they have implemented. This will give end users a convenient way to know the current status of a given implementation or library.</p>
+
+<h2 id="kip-types">KIP Types</h2>
+
+<p>There are three types of KIP:</p>
+
+<ul>
+  <li>A <strong>Standard Track KIP</strong> describes any change that affects most or all Klaytn implementations, such as a change to the network protocol, a change in block or transaction validity rules, proposed application standards/conventions, or any change or addition that affects the interoperability of applications using Klaytn. Furthermore Standard Track KIPs can be broken down into the following categories. Standards Track KIPs consist of two parts, a design document and implementation.
+    <ul>
+      <li><strong>Core</strong> - improvements requiring a consensus fork as well as changes that are not necessarily consensus critical but may be relevant to core development.</li>
+      <li><strong>Networking</strong> - includes improvements related to networking layers.</li>
+      <li><strong>Storage</strong> - includes improvements related to storage layers.</li>
+      <li><strong>Interface</strong> - includes improvements around client API/RPC specifications and standards, and also certain language-level standards like method names and contract ABIs.</li>
+      <li><strong>KCT</strong> - includes improvements or standards related to Klaytn compatible tokens.</li>
+      <li><strong>SDK</strong> - includes improvements related to SDKs.</li>
+      <li><strong>Application</strong> - application-level standards and conventions, such as name registries, URI schemes, library/package formats, and wallet formats.</li>
+    </ul>
+  </li>
+  <li>A <strong>Meta KIP</strong> describes a process surrounding Klaytn or proposes a change to (or an event in) a process. Meta KIPs are like Standard Track KIPs but apply to areas other than the Klaytn protocol itself. They may propose an implementation, but not to Klaytn’s codebase; they often require community consensus; unlike Informational KIPs, they are more than recommendations, and users are typically not free to ignore them. Examples include procedures, guidelines, changes to the decision-making process, and changes to the tools or environment used in Klaytn development. Any Meta KIP is also considered a Process KIP.</li>
+  <li>An <strong>Informational KIP</strong> describes a Klaytn design issue, or provides general guidelines or information to the Klaytn community, but does not propose a new feature. Informational KIPs do not necessarily represent Klaytn community consensus or a recommendation, so users and implementers are free to ignore Informational KIPs or follow their advice.</li>
+</ul>
+
+<p>It is highly recommended that a single KIP contains a single key proposal or new idea. The more focused the KIP, the more successful it tends to be. A change to one client doesn’t require a KIP; a change that affects multiple clients, or defines a standard for multiple apps to use, does.</p>
+
+<p>A KIP must meet certain minimum criteria. It must be a clear and complete description of the proposed enhancement. The enhancement must represent a net improvement. The proposed implementation, if applicable, must be solid and must not complicate the protocol unduly.</p>
+
+<h3 id="special-requirements-for-core-kips">Special requirements for Core KIPs</h3>
+
+<p>If a <strong>Core</strong> KIP mentions or proposes changes to the KLVM (KLaytn Virtual Machine, forked from Byzantium EVM), it should refer to the instructions by their mnemonics and define the opcodes of those mnemonics at least once. A preferred way is the following:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>REVERT (0xfe)
+</code></pre></div></div>
+
+<h2 id="kip-work-flow">KIP Work Flow</h2>
+
+<h3 id="shepherding-a-kip">Shepherding a KIP</h3>
+
+<p>Parties involved in the process are you, the champion or <em>KIP author</em>, the <a href="#kip-editors"><em>KIP editors</em></a>, and the Klaytn core developers.</p>
+
+<p>Before you begin writing a formal KIP, you should vet your idea. Ask the Klaytn community first if an idea is original to avoid wasting time on something that will be be rejected based on prior research. It is thus recommended to open a discussion thread on <a href="https://github.com/klaytn/KIPs/issues">the Issues section of this repository</a>.</p>
+
+<p>In addition to making sure your idea is original, it will be your role as the author to make your idea clear to reviewers and interested parties, as well as inviting editors, developers and community to give feedback on the aforementioned channels. You should try and gauge whether the interest in your KIP is commensurate with both the work involved in implementing it and how many parties will have to conform to it. For example, the work required for implementing a Core KIP will be much greater than for others and the KIP will need sufficient interest from the Klaytn client teams. Negative community feedback will be taken into consideration and may prevent your KIP from moving past the Draft stage.</p>
+
+<h3 id="core-kips">Core KIPs</h3>
+
+<p>For Core KIPs, given that they require client implementations to be considered <strong>Final</strong> (see “KIPs Process” below), you will need to either provide an implementation for clients or convince clients to implement your KIP.</p>
+
+<p>In short, your role as the champion is to write the KIP using the style and format described below, shepherd the discussions in the appropriate forums, and build community consensus around the idea.</p>
+
+<h3 id="kip-process">KIP Process</h3>
+
+<p>Following is the process that a successful KIP will move along:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[ IDEA ] -&gt; [ DRAFT ] -&gt; [ LAST CALL ] -&gt; [ ACCEPTED ] -&gt; [ FINAL ]
+</code></pre></div></div>
+
+<p>Each status change is requested by the KIP author and reviewed by the KIP editors. Use a pull request to update the status. Please include a link to where people should continue discussing your KIP. The KIP editors will process these requests as per the conditions below.</p>
+
+<ul>
+  <li><strong>Idea</strong> – Once the champion has asked the Klaytn community whether an idea has any chance of support, they will write a draft KIP as a <a href="https://github.com/klaytn/KIPs/pulls">pull request</a>. Consider including an implementation if this will aid people in studying the KIP.
+    <ul>
+      <li>:arrow_right: Draft – If agreeable, a KIP editor will assign the KIP a number (generally the issue or PR number related to the KIP) and merge your pull request. The KIP editor will not unreasonably deny a KIP.</li>
+      <li>:x: Draft – Reasons for denying draft status include being too unfocused, too broad, duplication of effort, being technically unsound, not providing proper motivation or addressing backwards compatibility.</li>
+    </ul>
+  </li>
+  <li><strong>Draft</strong> – Once the first draft has been merged, you may submit follow-up pull requests with further changes to your draft until such point as you believe the KIP to be mature and ready to proceed to the next status. A KIP in draft status must be implemented to be considered for promotion to the next status.
+    <ul>
+      <li>:arrow_right: Last Call – If agreeable, the KIP editor will assign Last Call status and set a review end date (<code class="language-plaintext highlighter-rouge">review-period-end</code>), normally 14 days later.</li>
+      <li>:x: Last Call – A request for Last Call status will be denied if material changes are still expected to be made to the draft. We hope that KIPs only enter Last Call once.</li>
+    </ul>
+  </li>
+  <li><strong>Last Call</strong> – This KIP will listed prominently as a pinned issue.
+    <ul>
+      <li>:x: – A Last Call which results in material changes or substantial unaddressed technical complaints will cause the KIP to revert to Draft.</li>
+      <li>:arrow_right: Accepted – A successful Last Call without material changes or unaddressed technical complaints will become Accepted.</li>
+    </ul>
+  </li>
+  <li><strong>Accepted</strong> – This status signals that material changes are unlikely and Klaytn client developers should consider this KIP for inclusion. Their process for deciding whether to encode it into their clients as part of a hard fork is not part of the KIP process.
+    <ul>
+      <li>:arrow_right: Draft – The KIP can be decided to move it back to the Draft status at the discretion. E.g. a major, but correctable, flaw was found in the KIP.</li>
+      <li>:arrow_right: Rejected – The KIP can be decided to be marked as this KIP as Rejected at their discretion. E.g. a major, but uncorrectable, flaw was found in the KIP.</li>
+      <li>:arrow_right: Final – Standard Track Core KIPs must be implemented in any of Klaytn clients before it can be considered Final. When the implementation is complete and adopted by the community, the status will be changed to “Final”.</li>
+    </ul>
+  </li>
+  <li><strong>Final</strong> – This KIP represents the current state-of-the-art. A Final KIP should only be updated to correct errata.</li>
+</ul>
+
+<p>Other exceptional statuses include:</p>
+
+<ul>
+  <li><strong>Active</strong> – Some Informational and Process KIPs may also have a status of “Active” if they are never meant to be completed. E.g. KIP 1 (this KIP).</li>
+  <li><strong>Abandoned</strong> – This KIP is no longer pursued by the original authors or it may not be a (technically) preferred option anymore.
+    <ul>
+      <li>:arrow_right: Draft – Authors or new champions wishing to pursue this KIP can ask for changing it to Draft status.</li>
+    </ul>
+  </li>
+  <li><strong>Rejected</strong> – A KIP that is fundamentally broken or a Core KIP that was rejected by the Core Devs and will not be implemented. A KIP cannot move on from this state.</li>
+  <li><strong>Superseded</strong> – A KIP which was previously Final but is no longer considered state-of-the-art. Another KIP will be in Final status and reference the Superseded KIP. A KIP cannot move on from this state.</li>
+</ul>
+
+<h2 id="what-belongs-in-a-successful-kip">What belongs in a successful KIP?</h2>
+
+<p>Each KIP should have the following parts:</p>
+
+<ul>
+  <li>Preamble - RFC 822 style headers containing metadata about the KIP, including the KIP number, a short descriptive title (limited to a maximum of 44 characters), and the author details. See <a href="#kip-header-preamble">below</a> for details.</li>
+  <li>Abstract - A short (~200 word) description of the technical issue being addressed.</li>
+  <li>Motivation (*optional) - The motivation is critical for KIPs that want to change the Klaytn protocol. It should clearly explain why the existing protocol specification is inadequate to address the problem that the KIP solves. KIP submissions without sufficient motivation may be rejected outright.</li>
+  <li>Specification - The technical specification should describe the syntax and semantics of any new feature. The specification should be detailed enough to allow competing, interoperable implementations for any of the current Klaytn platforms.</li>
+  <li>Rationale - The rationale fleshes out the specification by describing what motivated the design and why particular design decisions were made. It should describe alternate designs that were considered and related work, e.g. how the feature is supported in other languages. The rationale may also provide evidence of consensus within the community, and should discuss important objections or concerns raised during discussion.</li>
+  <li>Backwards Compatibility - All KIPs that introduce backwards incompatibilities must include a section describing these incompatibilities and their severity. The KIP must explain how the author proposes to deal with these incompatibilities. KIP submissions without a sufficient backwards compatibility treatise may be rejected outright.</li>
+  <li>Test Cases - Test cases for an implementation are mandatory for KIPs that are affecting consensus changes. Other KIPs can choose to include links to test cases if applicable.</li>
+  <li>Implementations - The implementations must be completed before any KIP is given status “Final”, but it need not be completed before the KIP is merged as draft. While there is merit to the approach of reaching consensus on the specification and rationale before writing code, the principle of “rough consensus and running code” is still useful when it comes to resolving many discussions of API details.</li>
+  <li>Copyright Waiver - All KIPs must be in the public domain. See the bottom of this KIP for an example copyright waiver.</li>
+</ul>
+
+<h2 id="kip-formats-and-templates">KIP Formats and Templates</h2>
+
+<p>KIPs should be written in <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">markdown</a> format.
+Image files should be included in a subdirectory of the <code class="language-plaintext highlighter-rouge">assets</code> folder for that KIP as follows: <code class="language-plaintext highlighter-rouge">assets/kip-N</code> (where <strong>N</strong> is to be replaced with the KIP number). When linking to an image in the KIP, use relative links such as <code class="language-plaintext highlighter-rouge">../assets/kip-1/image.png</code>.</p>
+
+<h2 id="kip-header-preamble">KIP Header Preamble</h2>
+
+<p>Each KIP must begin with an <a href="https://www.ietf.org/rfc/rfc822.txt">RFC 822</a> style header preamble, preceded and followed by three hyphens (<code class="language-plaintext highlighter-rouge">---</code>). This header is also termed <a href="https://jekyllrb.com/docs/front-matter/">“front matter” by Jekyll</a>. The headers must appear in the following order. Headers marked with “*” are optional and are described below. All other headers are required.</p>
+
+<p>` kip:` <em>KIP number</em> (this is determined by the KIP editor)</p>
+
+<p>` title:` <em>KIP title</em></p>
+
+<p>` author:` <em>a list of the author’s or authors’ name(s) and/or username(s), or name(s) and email(s). Details are below.</em></p>
+
+<p>` * discussions-to:` <em>a url pointing to the official discussion thread</em></p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>` status:` *Draft</td>
+      <td>Last Call</td>
+      <td>Accepted</td>
+      <td>Final</td>
+      <td>Active</td>
+      <td>Abandoned</td>
+      <td>Rejected</td>
+      <td>Superseded*</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>` * review-period-end:` <em>date review period ends</em></p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>` type:` *Standards Track</td>
+      <td>Informational</td>
+      <td>Meta*</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td>` * category:` *Core</td>
+      <td>Networking</td>
+      <td>Storage</td>
+      <td>Interface</td>
+      <td>KCT</td>
+      <td>SDK</td>
+      <td>Application* (Standards Track KIPs only)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>` created:` <em>date created on</em></p>
+
+<p>` * updated:` <em>comma separated list of dates</em></p>
+
+<p>` * requires:` <em>KIP number(s)</em></p>
+
+<p>` * replaces:` <em>KIP number(s)</em></p>
+
+<p>` * superseded-by:` <em>KIP number(s)</em></p>
+
+<p>` * resolution:` <em>a url pointing to the resolution of this KIP</em></p>
+
+<p>Headers that permit lists must separate elements with commas.</p>
+
+<p>Headers requiring dates will always do so in the format of ISO 8601 (yyyy-mm-dd).</p>
+
+<h4 id="author-header"><code class="language-plaintext highlighter-rouge">author</code> header</h4>
+
+<p>The <code class="language-plaintext highlighter-rouge">author</code> header optionally lists the names, email addresses or usernames of the authors/owners of the KIP. Those who prefer anonymity may use a username only, or a first name and a username. The format of the author header value must be:</p>
+
+<blockquote>
+  <p>Random J. User &lt;address@dom.ain&gt;</p>
+</blockquote>
+
+<p>or</p>
+
+<blockquote>
+  <p>Random J. User (@username)</p>
+</blockquote>
+
+<p>if the email address or GitHub username is included, and</p>
+
+<blockquote>
+  <p>Random J. User</p>
+</blockquote>
+
+<p>if the email address is not given.</p>
+
+<h4 id="resolution-header"><code class="language-plaintext highlighter-rouge">resolution</code> header</h4>
+
+<p>The <code class="language-plaintext highlighter-rouge">resolution</code> header is required for Standards Track KIPs only. It contains a URL that should point to an email message or other web resource where the pronouncement about the KIP is made.</p>
+
+<h4 id="discussions-to-header"><code class="language-plaintext highlighter-rouge">discussions-to</code> header</h4>
+
+<p>While a KIP is a draft, a <code class="language-plaintext highlighter-rouge">discussions-to</code> header will indicate the mailing list or URL where the KIP is being discussed. As mentioned above, examples for places to discuss your KIP include an issue in this repo or in a fork of this repo.</p>
+
+<p>No <code class="language-plaintext highlighter-rouge">discussions-to</code> header is necessary if the KIP is being discussed privately with the author.</p>
+
+<p>As a single exception, <code class="language-plaintext highlighter-rouge">discussions-to</code> cannot point to GitHub pull requests.</p>
+
+<h4 id="type-header"><code class="language-plaintext highlighter-rouge">type</code> header</h4>
+
+<p>The <code class="language-plaintext highlighter-rouge">type</code> header specifies the type of KIP: Standards Track, Meta, or Informational. If the track is Standards Track, please include the subcategory (core, networking, storage, interface, token, SDK or application).</p>
+
+<h4 id="category-header"><code class="language-plaintext highlighter-rouge">category</code> header</h4>
+
+<p>The <code class="language-plaintext highlighter-rouge">category</code> header specifies the KIP’s category. This is required for standards-track KIPs only.</p>
+
+<h4 id="created-header"><code class="language-plaintext highlighter-rouge">created</code> header</h4>
+
+<p>The <code class="language-plaintext highlighter-rouge">created</code> header records the date that the KIP was assigned a number. Both headers should be in yyyy-mm-dd format, e.g. 2001-08-14.</p>
+
+<h4 id="updated-header"><code class="language-plaintext highlighter-rouge">updated</code> header</h4>
+
+<p>The <code class="language-plaintext highlighter-rouge">updated</code> header records the date(s) when the KIP was updated with “substantial” changes. This header is only valid for KIPs of Draft and Active status.</p>
+
+<h4 id="requires-header"><code class="language-plaintext highlighter-rouge">requires</code> header</h4>
+
+<p>KIPs may have a <code class="language-plaintext highlighter-rouge">requires</code> header, indicating the KIP numbers that this KIP depends on.</p>
+
+<h4 id="superseded-by-and-replaces-headers"><code class="language-plaintext highlighter-rouge">superseded-by</code> and <code class="language-plaintext highlighter-rouge">replaces</code> headers</h4>
+
+<p>KIPs may also have a <code class="language-plaintext highlighter-rouge">superseded-by</code> header indicating that a KIP has been rendered obsolete by a later document; the value is the number of the KIP that replaces the current document. The newer KIP must have a <code class="language-plaintext highlighter-rouge">replaces</code> header containing the number of the KIP that it rendered obsolete.</p>
+
+<h2 id="auxiliary-files">Auxiliary Files</h2>
+
+<p>KIPs may include auxiliary files such as diagrams. Such files must be named KIP-XXXX-Y.ext, where “XXXX” is the KIP number, “Y” is a serial number (starting at 1), and “ext” is replaced by the actual file extension (e.g. “png”).</p>
+
+<h2 id="transferring-kip-ownership">Transferring KIP Ownership</h2>
+
+<p>It occasionally becomes necessary to transfer ownership of KIPs to a new champion. In general, we’d like to retain the original author as a co-author of the transferred KIP, but that’s really up to the original author. A good reason to transfer ownership is because the original author no longer has the time or interest in updating it or following through with the KIP process, or has fallen off the face of the ‘net (i.e. is unreachable or isn’t responding to email). A bad reason to transfer ownership is because you don’t agree with the direction of the KIP. We try to build consensus around a KIP, but if that’s not possible, you can always submit a competing KIP.</p>
+
+<p>If you are interested in assuming ownership of a KIP, send a message asking to take over, addressed to both the original author and the KIP editor. If the original author doesn’t respond to email in a timely manner, the KIP editor will make a unilateral decision (it’s not like such decisions can’t be reversed :)).</p>
+
+<h2 id="kip-editors">KIP Editors</h2>
+
+<p>The current KIP editors are</p>
+
+<p>` * Kyungup Kim (@KimKyungup)`</p>
+
+<p>` * Junghyun Colin Kim (@kjhman21)`</p>
+
+<p>` * Sangmin Seo (@smseo)`</p>
+
+<h2 id="kip-editor-responsibilities">KIP Editor Responsibilities</h2>
+
+<p>For each new KIP that comes in, an editor does the following:</p>
+
+<ul>
+  <li>Read the KIP to check if it is ready: sound and complete. The ideas must make technical sense, even if they don’t seem likely to get to final status.</li>
+  <li>The title should accurately describe the content.</li>
+  <li>Check the KIP for language (spelling, grammar, sentence structure, etc.), markup (Github flavored Markdown), code style</li>
+</ul>
+
+<p>If the KIP isn’t ready, the editor will send it back to the author for revision, with specific instructions.</p>
+
+<p>Once the KIP is ready for the repository, the KIP editor will:</p>
+
+<ul>
+  <li>
+    <p>Assign a KIP number (generally the PR number or, if preferred by the author, the Issue # if there was discussion in the Issues section of this repository about this KIP)</p>
+  </li>
+  <li>
+    <p>Merge the corresponding pull request</p>
+  </li>
+  <li>
+    <p>Send a message back to the KIP author with the next step.</p>
+  </li>
+</ul>
+
+<p>Many KIPs are written and maintained by developers with write access to the Klaytn codebase. The KIP editors monitor KIP changes, and correct any structure, grammar, spelling, or markup mistakes we see.</p>
+
+<p>The editors don’t pass judgment on KIPs. We merely do the administrative &amp; editorial part.</p>
+
+<h2 id="history">History</h2>
+
+<p>This document was derived heavily from <a href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1.md">Ethereum’s EIP-1</a> written by Martin Becze, Hudson Jameson, et al.</p>
+
+<p><a href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1.md">Ethereum’s EIP-1</a> was derived heavily from <a href="https://github.com/bitcoin/bips">Bitcoin’s BIP-0001</a> written by Amir Taaki which in turn was derived from <a href="https://www.python.org/dev/peps/">Python’s PEP-0001</a>. In many places text was simply copied and modified.</p>
+
+<p>The authors of the documents are not responsible for its use in the Klaytn Improvement Proposal, and should not be bothered with technical questions specific to Klaytn or the KIP. Please direct all comments to the KIP editors.</p>
+
+<h2 id="copyright">Copyright</h2>
+
+<p>Copyright and related rights waived via <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.</p>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.2.3/mermaid.min.js" integrity="sha512-M4zmdILgXOwrBEVfpVqdO/jC3BJZQzlXHeu967v41/QoT60sESWSLbi7YwntTbYC0ZjewfTbvXO8iKj7amvQow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+  });
+  mermaid.run({
+    querySelector: '.language-mermaid', // markdown 'mermaid' language code blocks
+  });
+</script>
+
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Kaia Improvement Proposals</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Kaia Improvement Proposals</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/kaiachain/KIPs"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">kaiachain/KIPs</span></a></li><li><a href="https://twitter.com/kaiachain"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">kaiachain</span></a></li><li><a href="https://www.facebook.com/kaiachain"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#facebook"></use></svg> <span class="username">kaiachain</span></a></li><li><a href="https://medium.com/kaiachain"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#medium"></use></svg> <span class="username">kaiachain</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Kaia Improvement Proposals (KIPs) describe standards for the Kaia platform, including core protocol specifications, client APIs, and contract standards.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
