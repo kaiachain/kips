@@ -24,6 +24,8 @@ github_username: kaiachain
 facebook_username: kaiachain
 medium_username: kaiachain
 repository: kaiachain/KIPS
+lang: en
+timezone: UTC
 
 header_pages:
  - all.html
@@ -44,6 +46,7 @@ facebook:
   publisher: https://www.facebook.com/kaiachain
 
 # Build settings
+highlighter: rouge
 markdown: kramdown
 theme: minima
 kramdown:
@@ -52,17 +55,19 @@ kramdown:
   auto_ids: true
   # This is to ensure more determistic behaviour
   auto_id_stripping: true
+  syntax_highlighter: rouge
 
 permalink: /:slug
 
 defaults:
   -
     scope:
-      path: "KIPs"
+      path: "KIPS"
     values:
       layout: "kip"
 
 exclude:
+  - .github
   - Gemfile
   - Gemfile.lock
   - node_modules
@@ -77,3 +82,5 @@ exclude:
 
 include:
   - LICENSE
+
+markdown_ext: "markdown,mkdown,mkdn,mkd,md"
