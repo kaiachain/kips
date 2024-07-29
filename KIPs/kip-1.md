@@ -69,7 +69,7 @@ Following is the process that a successful KIP will move along:
 
 Each status change is requested by the KIP author and reviewed by the KIP editors. Use a pull request to update the status. Please include a link to where people should continue discussing your KIP. The KIP editors will process these requests as per the conditions below.
 
-* **Idea** -- Once the champion has asked the Kaia community in  https://devforum.kaia.io/ whether an idea has any chance of support, they will write a draft KIP as a [pull request](https://github.com/kaiachain/KIPs/pulls). Consider including an implementation if this will aid people in studying the KIP.
+* **Idea** -- Once the champion has asked the Kaia community in  https://devforum.kaia.io/c/kips whether an idea has any chance of support, they will write a draft KIP as a [pull request](https://github.com/kaiachain/KIPs/pulls). Consider including an implementation if this will aid people in studying the KIP.
   * :arrow_right: Draft -- If agreeable, a KIP editor will assign the KIP a number (generally the issue or PR number related to the KIP) and merge your pull request. The KIP editor will not unreasonably deny a KIP.
   * :x: Draft -- Reasons for denying draft status include being too unfocused, too broad, duplication of effort, being technically unsound, not providing proper motivation or addressing backwards compatibility.
 * **Draft** -- Once the first draft has been merged, you may submit follow-up pull requests with further changes to your draft until such point as you believe the KIP to be mature and ready to proceed to the next status. A KIP in draft status must be implemented to be considered for promotion to the next status.
