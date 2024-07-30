@@ -13,7 +13,7 @@ replaces (*optional): <KIP number(s)>
 ---
 
 <!--
-  READ KIP-1 (https://kips.kaia.io/KIPS/kip-1) BEFORE USING THIS TEMPLATE!
+  READ KIP-1 (https://kips.kaia.io/KIPs/kip-1) BEFORE USING THIS TEMPLATE!
 
   This is the suggested template for new KIPs. After you have filled in the requisite fields, please delete these comments.
 
