@@ -9,28 +9,28 @@ created: 2019-11-10
 
 ## What is a KIP?
 
-KIP stands for Klaytn Improvement Proposal. A KIP is a design document providing information to the Klaytn community, or describing a new feature for Klaytn or its processes or environment. The KIP should provide a concise technical specification of the feature and a rationale for the feature. The KIP author is responsible for building consensus within the community and documenting dissenting opinions.
+KIP stands for Kaia Improvement Proposal. A KIP is a design document providing information to the Kaia community, or describing a new feature for Kaia or its processes or environment. The KIP should provide a concise technical specification of the feature and a rationale for the feature. The KIP author is responsible for building consensus within the community and documenting dissenting opinions.
 
 ## KIP Rationale
 
-We intend KIPs to be the primary mechanisms for proposing new features, for collecting community technical input on an issue, and for documenting the design decisions that have gone into Klaytn. Because the KIPs are maintained as text files in a versioned repository, their revision history is the historical record of the feature proposal.
+We intend KIPs to be the primary mechanisms for proposing new features, for collecting community technical input on an issue, and for documenting the design decisions that have gone into Kaia. Because the KIPs are maintained as text files in a versioned repository, their revision history is the historical record of the feature proposal.
 
-For Klaytn implementers, KIPs are a convenient way to track the progress of their implementation. Ideally each implementation maintainer would list the KIPs that they have implemented. This will give end users a convenient way to know the current status of a given implementation or library.
+For Kaia implementers, KIPs are a convenient way to track the progress of their implementation. Ideally each implementation maintainer would list the KIPs that they have implemented. This will give end users a convenient way to know the current status of a given implementation or library.
 
 ## KIP Types
 
 There are three types of KIP:
 
-- A **Standard Track KIP** describes any change that affects most or all Klaytn implementations, such as a change to the network protocol, a change in block or transaction validity rules, proposed application standards/conventions, or any change or addition that affects the interoperability of applications using Klaytn. Furthermore Standard Track KIPs can be broken down into the following categories. Standards Track KIPs consist of two parts, a design document and implementation.
+- A **Standard Track KIP** describes any change that affects most or all Kaia implementations, such as a change to the network protocol, a change in block or transaction validity rules, proposed application standards/conventions, or any change or addition that affects the interoperability of applications using Kaia. Furthermore Standard Track KIPs can be broken down into the following categories. Standards Track KIPs consist of two parts, a design document and implementation.
   - **Core** - improvements requiring a consensus fork as well as changes that are not necessarily consensus critical but may be relevant to core development.
   - **Networking** - includes improvements related to networking layers.
   - **Storage** - includes improvements related to storage layers.
   - **Interface** - includes improvements around client API/RPC specifications and standards, and also certain language-level standards like method names and contract ABIs.
-  - **KCT** - includes improvements or standards related to Klaytn compatible tokens.
+  - **KCT** - includes improvements or standards related to Kaia compatible tokens.
   - **SDK** - includes improvements related to SDKs.
   - **Application** - application-level standards and conventions, such as name registries, URI schemes, library/package formats, and wallet formats.
-- A **Meta KIP** describes a process surrounding Klaytn or proposes a change to (or an event in) a process. Meta KIPs are like Standard Track KIPs but apply to areas other than the Klaytn protocol itself. They may propose an implementation, but not to Klaytn's codebase; they often require community consensus; unlike Informational KIPs, they are more than recommendations, and users are typically not free to ignore them. Examples include procedures, guidelines, changes to the decision-making process, and changes to the tools or environment used in Klaytn development. Any Meta KIP is also considered a Process KIP.
-- An **Informational KIP** describes a Klaytn design issue, or provides general guidelines or information to the Klaytn community, but does not propose a new feature. Informational KIPs do not necessarily represent Klaytn community consensus or a recommendation, so users and implementers are free to ignore Informational KIPs or follow their advice.
+- A **Meta KIP** describes a process surrounding Kaia or proposes a change to (or an event in) a process. Meta KIPs are like Standard Track KIPs but apply to areas other than the Kaia protocol itself. They may propose an implementation, but not to Kaia's codebase; they often require community consensus; unlike Informational KIPs, they are more than recommendations, and users are typically not free to ignore them. Examples include procedures, guidelines, changes to the decision-making process, and changes to the tools or environment used in Kaia development. Any Meta KIP is also considered a Process KIP.
+- An **Informational KIP** describes a Kaia design issue, or provides general guidelines or information to the Kaia community, but does not propose a new feature. Informational KIPs do not necessarily represent Kaia community consensus or a recommendation, so users and implementers are free to ignore Informational KIPs or follow their advice.
 
 It is highly recommended that a single KIP contains a single key proposal or new idea. The more focused the KIP, the more successful it tends to be. A change to one client doesn't require a KIP; a change that affects multiple clients, or defines a standard for multiple apps to use, does.
 
@@ -38,7 +38,7 @@ A KIP must meet certain minimum criteria. It must be a clear and complete descri
 
 ### Special requirements for Core KIPs
 
-If a **Core** KIP mentions or proposes changes to the KLVM (KLaytn Virtual Machine, forked from Byzantium EVM), it should refer to the instructions by their mnemonics and define the opcodes of those mnemonics at least once. A preferred way is the following:
+If a **Core** KIP mentions or proposes changes to the KLVM (Kaia Virtual Machine, forked from Byzantium EVM), it should refer to the instructions by their mnemonics and define the opcodes of those mnemonics at least once. A preferred way is the following:
 ```
 REVERT (0xfe)
 ```
@@ -47,11 +47,11 @@ REVERT (0xfe)
 
 ### Shepherding a KIP
 
-Parties involved in the process are you, the champion or *KIP author*, the [*KIP editors*](#kip-editors), and the Klaytn core developers.
+Parties involved in the process are you, the champion or *KIP author*, the [*KIP editors*](#kip-editors), and the Kaia core developers.
 
-Before you begin writing a formal KIP, you should vet your idea. Ask the Klaytn community first if an idea is original to avoid wasting time on something that will be be rejected based on prior research. It is thus recommended to open a discussion thread on [the Issues section of this repository](https://github.com/klaytn/KIPs/issues). 
+Before you begin writing a formal KIP, you should vet your idea. Ask the Kaia community first if an idea is original to avoid wasting time on something that will be be rejected based on prior research. It is thus recommended to open a discussion thread on [the Issues section of this repository](https://github.com/kaiachain/KIPs/issues). 
 
-In addition to making sure your idea is original, it will be your role as the author to make your idea clear to reviewers and interested parties, as well as inviting editors, developers and community to give feedback on the aforementioned channels. You should try and gauge whether the interest in your KIP is commensurate with both the work involved in implementing it and how many parties will have to conform to it. For example, the work required for implementing a Core KIP will be much greater than for others and the KIP will need sufficient interest from the Klaytn client teams. Negative community feedback will be taken into consideration and may prevent your KIP from moving past the Draft stage.
+In addition to making sure your idea is original, it will be your role as the author to make your idea clear to reviewers and interested parties, as well as inviting editors, developers and community to give feedback on the aforementioned channels. You should try and gauge whether the interest in your KIP is commensurate with both the work involved in implementing it and how many parties will have to conform to it. For example, the work required for implementing a Core KIP will be much greater than for others and the KIP will need sufficient interest from the Kaia client teams. Negative community feedback will be taken into consideration and may prevent your KIP from moving past the Draft stage.
 
 ### Core KIPs
 
@@ -69,7 +69,7 @@ Following is the process that a successful KIP will move along:
 
 Each status change is requested by the KIP author and reviewed by the KIP editors. Use a pull request to update the status. Please include a link to where people should continue discussing your KIP. The KIP editors will process these requests as per the conditions below.
 
-* **Idea** -- Once the champion has asked the Klaytn community whether an idea has any chance of support, they will write a draft KIP as a [pull request](https://github.com/klaytn/KIPs/pulls). Consider including an implementation if this will aid people in studying the KIP.
+* **Idea** -- Once the champion has asked the Kaia community in [Dev Forum - TBD](https://devforum.kaia.io/c/kips) whether an idea has any chance of support, they will write a draft KIP as a [pull request](https://github.com/kaiachain/KIPs/pulls). Consider including an implementation if this will aid people in studying the KIP.
   * :arrow_right: Draft -- If agreeable, a KIP editor will assign the KIP a number (generally the issue or PR number related to the KIP) and merge your pull request. The KIP editor will not unreasonably deny a KIP.
   * :x: Draft -- Reasons for denying draft status include being too unfocused, too broad, duplication of effort, being technically unsound, not providing proper motivation or addressing backwards compatibility.
 * **Draft** -- Once the first draft has been merged, you may submit follow-up pull requests with further changes to your draft until such point as you believe the KIP to be mature and ready to proceed to the next status. A KIP in draft status must be implemented to be considered for promotion to the next status.
@@ -78,10 +78,10 @@ Each status change is requested by the KIP author and reviewed by the KIP editor
 * **Last Call** -- This KIP will listed prominently as a pinned issue.
   * :x: -- A Last Call which results in material changes or substantial unaddressed technical complaints will cause the KIP to revert to Draft.
   * :arrow_right: Accepted -- A successful Last Call without material changes or unaddressed technical complaints will become Accepted.
-* **Accepted** -- This status signals that material changes are unlikely and Klaytn client developers should consider this KIP for inclusion. Their process for deciding whether to encode it into their clients as part of a hard fork is not part of the KIP process.
+* **Accepted** -- This status signals that material changes are unlikely and Kaia client developers should consider this KIP for inclusion. Their process for deciding whether to encode it into their clients as part of a hard fork is not part of the KIP process.
   * :arrow_right: Draft -- The KIP can be decided to move it back to the Draft status at the discretion. E.g. a major, but correctable, flaw was found in the KIP.
   * :arrow_right: Rejected -- The KIP can be decided to be marked as this KIP as Rejected at their discretion. E.g. a major, but uncorrectable, flaw was found in the KIP.
-  * :arrow_right: Final -- Standard Track Core KIPs must be implemented in any of Klaytn clients before it can be considered Final. When the implementation is complete and adopted by the community, the status will be changed to “Final”.
+  * :arrow_right: Final -- Standard Track Core KIPs must be implemented in any of Kaia clients before it can be considered Final. When the implementation is complete and adopted by the community, the status will be changed to “Final”.
 * **Final** -- This KIP represents the current state-of-the-art. A Final KIP should only be updated to correct errata.
 
 Other exceptional statuses include:
@@ -98,8 +98,8 @@ Each KIP should have the following parts:
 
 - Preamble - RFC 822 style headers containing metadata about the KIP, including the KIP number, a short descriptive title (limited to a maximum of 44 characters), and the author details. See [below](#kip-header-preamble) for details.
 - Abstract - A short (~200 word) description of the technical issue being addressed.
-- Motivation (*optional) - The motivation is critical for KIPs that want to change the Klaytn protocol. It should clearly explain why the existing protocol specification is inadequate to address the problem that the KIP solves. KIP submissions without sufficient motivation may be rejected outright.
-- Specification - The technical specification should describe the syntax and semantics of any new feature. The specification should be detailed enough to allow competing, interoperable implementations for any of the current Klaytn platforms.
+- Motivation (*optional) - The motivation is critical for KIPs that want to change the Kaia protocol. It should clearly explain why the existing protocol specification is inadequate to address the problem that the KIP solves. KIP submissions without sufficient motivation may be rejected outright.
+- Specification - The technical specification should describe the syntax and semantics of any new feature. The specification should be detailed enough to allow competing, interoperable implementations for any of the current Kaia platforms.
 - Rationale - The rationale fleshes out the specification by describing what motivated the design and why particular design decisions were made. It should describe alternate designs that were considered and related work, e.g. how the feature is supported in other languages. The rationale may also provide evidence of consensus within the community, and should discuss important objections or concerns raised during discussion.
 - Backwards Compatibility - All KIPs that introduce backwards incompatibilities must include a section describing these incompatibilities and their severity. The KIP must explain how the author proposes to deal with these incompatibilities. KIP submissions without a sufficient backwards compatibility treatise may be rejected outright.
 - Test Cases - Test cases for an implementation are mandatory for KIPs that are affecting consensus changes. Other KIPs can choose to include links to test cases if applicable.
@@ -237,7 +237,7 @@ Once the KIP is ready for the repository, the KIP editor will:
 
 - Send a message back to the KIP author with the next step.
 
-Many KIPs are written and maintained by developers with write access to the Klaytn codebase. The KIP editors monitor KIP changes, and correct any structure, grammar, spelling, or markup mistakes we see.
+Many KIPs are written and maintained by developers with write access to the Kaia codebase. The KIP editors monitor KIP changes, and correct any structure, grammar, spelling, or markup mistakes we see.
 
 The editors don't pass judgment on KIPs. We merely do the administrative & editorial part.
 
@@ -247,7 +247,7 @@ This document was derived heavily from [Ethereum's EIP-1](https://github.com/eth
 
 [Ethereum's EIP-1](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1.md) was derived heavily from [Bitcoin's BIP-0001](https://github.com/bitcoin/bips) written by Amir Taaki which in turn was derived from [Python's PEP-0001](https://www.python.org/dev/peps/). In many places text was simply copied and modified.
 
-The authors of the documents are not responsible for its use in the Klaytn Improvement Proposal, and should not be bothered with technical questions specific to Klaytn or the KIP. Please direct all comments to the KIP editors.
+The authors of the documents are not responsible for its use in the Kaia Improvement Proposal, and should not be bothered with technical questions specific to Kaia or the KIP. Please direct all comments to the KIP editors.
 
 ## Copyright
 

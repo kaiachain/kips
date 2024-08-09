@@ -1,0 +1,27 @@
+---
+layout: null
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kaia KIPs</title>
+    <description>A feed of all KIPs</description>
+    <link>{{ site.url }}</link>
+    <atom:link href="{{ site.url }}/all.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>{{ site.time | date_to_rfc822 }}</lastBuildDate>
+    {% assign kips = site.pages | sort: 'kip' %}
+    {% for kip in kips %}
+      <item>
+        <title>{{ kip.title | xml_escape }}</title>
+        <category>{{ kip.type | xml_escape }}/{{ kip.category | xml_escape }}</category>
+        {% if kip.discussions-to %}
+          <comments>{{ kip.discussions-to | xml_escape }}</comments>
+        {% endif %}
+        <description>{{ kip.content | xml_escape }}</description>
+        <pubDate>{{ kip.created | date_to_rfc822 }}</pubDate>
+        <link>{{ site.url }}{{ kip.url }}</link>
+        <guid isPermaLink="true">{{ site.url }}{{ kip.url }}</guid>
+      </item>
+    {% endfor %}
+  </channel>
+</rss>
