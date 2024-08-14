@@ -61,7 +61,7 @@ permalink: /:slug
 defaults:
   -
     scope:
-      path: "KIPS"
+      path: "KIPs"
     values:
       layout: "kip"
 
