@@ -13,7 +13,7 @@ The [status page](https://kips.kaia.io/) tracks and lists KIPs, which can be div
 - [Meta KIPs](https://kips.kaia.io/meta) are miscellaneous improvements that nonetheless require some sort of consensus.
 - [Informational KIPs](https://kips.kaia.io/informational) are non-standard improvements that do not require any form of consensus.
 
-**Before you write an KIP, ideas MUST be thoroughly discussed on [Kaia Research - TBD](https://devforum.kaia.io/c/kips). Once consensus is reached, thoroughly read and review [KIP-1](https://kips.kaia.io/KIPS/kip-1), which describes the KIP process.**
+**Before you write a KIP, ideas MUST be thoroughly discussed on [Kaia Research - TBD](https://devforum.kaia.io/c/kips). Once consensus is reached, thoroughly read and review [KIP-1](https://kips.kaia.io/KIPS/kip-1), which describes the KIP process.**
 
 Please note that this repository is for documenting standards and not for help implementing them. These types of inquiries should be directed to the [Kaia DevForum - TBD](https://devforum.kaia.io/c/kips). For specific questions and concerns regarding KIPs, it's best to comment on the relevant discussion thread of the KIP in https://github.com/kaiachain/kips/issues.
 
