@@ -17,7 +17,7 @@ replaces (*optional): <KIP number(s)>
 
   This is the suggested template for new KIPs. After you have filled in the requisite fields, please delete these comments.
 
-  Note that an KIP number will be assigned by an editor. When opening a pull request to submit your KIP, please use an abbreviated title in the filename, `kip-draft_title_abbrev.md`.
+  Note that a KIP number will be assigned by an editor. When opening a pull request to submit your KIP, please use an abbreviated title in the filename, `kip-draft_title_abbrev.md`.
 
   The title should be 44 characters or less. It should not repeat the KIP number in title, irrespective of the category.
 
@@ -78,7 +78,7 @@ replaces (*optional): <KIP number(s)>
 ## Security Considerations
 
 <!--
-  All KIPs must contain a section that discusses the security implications/considerations relevant to the proposed change. Include information that might be important for security discussions, surfaces risks and can be used throughout the life cycle of the proposal. For example, include security-relevant design decisions, concerns, important discussions, implementation-specific guidance and pitfalls, an outline of threats and risks and how they are being addressed. KIP submissions missing the "Security Considerations" section will be rejected. An KIP cannot proceed to status "Final" without a Security Considerations discussion deemed sufficient by the reviewers.
+  All KIPs must contain a section that discusses the security implications/considerations relevant to the proposed change. Include information that might be important for security discussions, surfaces risks and can be used throughout the life cycle of the proposal. For example, include security-relevant design decisions, concerns, important discussions, implementation-specific guidance and pitfalls, an outline of threats and risks and how they are being addressed. KIP submissions missing the "Security Considerations" section will be rejected. A KIP cannot proceed to status "Final" without a Security Considerations discussion deemed sufficient by the reviewers.
 
   The current placeholder is acceptable for a draft.
 

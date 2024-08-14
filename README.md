@@ -19,7 +19,7 @@ Please note that this repository is for documenting standards and not for help i
 
 ## Preferred Citation Format
 
-The canonical URL for an KIP that has achieved draft status at any point is at <https://kips.kaia.io/>. For example, the canonical URL for KIP-1 is <https://kips.kaia.io/KIPS/kip-1>.
+The canonical URL for a KIP that has achieved draft status at any point is at <https://kips.kaia.io/>. For example, the canonical URL for KIP-1 is <https://kips.kaia.io/KIPS/kip-1>.
 
 Consider any document not published at <https://kips.kaia.io/> as a working paper. Additionally, consider published KIPs with a status of "draft" or "last call" to be incomplete drafts, and note that their specification is likely to be subject to change.
 
