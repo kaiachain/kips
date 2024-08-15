@@ -492,7 +492,7 @@ This is why the operator and the previous token owner are both significant to th
 We chose Interface Query Standard (KIP-13) to expose the interfaces that a KIP-17 smart contract supports.
 
 A future KIP may create a global registry of interfaces for contracts.
-We strongly support such an KIP and it would allow your KIP-17 implementation to implement `IKIP17Enumerable`, `IKIP17Metadata`, or other interfaces by delegating to a separate contract.
+We strongly support such a KIP and it would allow your KIP-17 implementation to implement `IKIP17Enumerable`, `IKIP17Metadata`, or other interfaces by delegating to a separate contract.
 
 **Gas and Complexity** (regarding the enumeration extension)
 

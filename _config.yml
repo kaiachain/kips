@@ -23,6 +23,9 @@ twitter_username: kaiachain
 github_username: kaiachain
 facebook_username: kaiachain
 medium_username: kaiachain
+lang: en
+timezone: UTC
+
 header_pages:
  - all.html
  - core.html
@@ -34,6 +37,7 @@ header_pages:
  - application.html
  - meta.html
  - informational.html
+
 twitter:
   card: summary
   username: kaiachain
@@ -41,6 +45,7 @@ facebook:
   publisher: https://www.facebook.com/kaiachain
 
 # Build settings
+highlighter: rouge
 markdown: kramdown
 theme: minima
 kramdown:
@@ -49,6 +54,7 @@ kramdown:
   auto_ids: true
   # This is to ensure more determistic behaviour
   auto_id_stripping: true
+  syntax_highlighter: rouge
 
 permalink: /:slug
 
@@ -60,6 +66,7 @@ defaults:
       layout: "kip"
 
 exclude:
+  - .github
   - Gemfile
   - Gemfile.lock
   - node_modules
@@ -70,4 +77,9 @@ exclude:
   - kip-template.md
   - ISSUE_TEMPLATE.md
   - PULL_REQUEST_TEMPLATE.md
-#  - README.md
+  - README.md
+
+include:
+  - LICENSE
+
+markdown_ext: "markdown,mkdown,mkdn,mkd,md"

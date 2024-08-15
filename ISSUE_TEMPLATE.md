@@ -1,9 +1,9 @@
 
-ATTENTION! If you would like to submit an KIP and it has already been written as a draft (see the [template](https://github.com/kaiachain/KIPs/blob/main/kip-template.md) for an example), please submit it as a [Pull Request](https://github.com/kaiachain/kips/pulls).
+ATTENTION! If you would like to submit a KIP and it has already been written as a draft (see the [template](https://github.com/kaiachain/KIPs/blob/main/kip-template.md) for an example), please submit it as a [Pull Request](https://github.com/kaiachain/kips/pulls).
 
 If you are considering a proposal but would like to get some feedback on the idea before submitting a draft, then continue opening an Issue as a thread for discussion.  Note that the more clearly and completely you state your idea the higher the quality of the feedback you are likely to receive.
 
-Keep in mind the following guidelines from [KIP-1](http://kips.kaia.io/KIPs/kip-1):
+Keep in mind the following guidelines from [KIP-1](https://kips.kaia.io/KIPs/kip-1):
 
 > Each KIP must have a champion - someone who writes the KIP using the style and format described below, shepherds the discussions in the appropriate forums, and attempts to build community consensus around the idea. The KIP champion (a.k.a. Author) should first attempt to ascertain whether the idea is KIP-able. Posting to the the Protocol Discussion forum or opening an Issue is the best way to go about this.
 
