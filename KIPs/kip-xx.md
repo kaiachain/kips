@@ -33,6 +33,7 @@ Since the genesis block, calldata gas calculation has followed two branches:
 
 - Non-zero bytes: 68 gas units per byte
 - Zero bytes: 4 gas units per byte
+
 With the Istanbul hardfork, the gas calculation was modified to no longer distinguish between zero and non-zero bytes, introducing a flat rate of 100 gas units per byte.
 
 The Prague hardfork reverted to the original logic from the genesis block, reintroducing the distinction between non-zero and zero bytes. However, the assigned costs were adjusted to 16 gas units per non-zero byte and 4 gas units per zero byte.
