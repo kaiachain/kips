@@ -2,7 +2,7 @@
 kip: to be assigned
 title: Transaction data gas cost reduction
 author: Lake (@hyunsooda) and Ollie (@blukat29)
-discussions-to: https://github.com/klaytn/kips/issues/163 # TODO: Revise me
+discussions-to: https://github.com/kaiachain/kips/issues/22
 status: Draft
 type: Standards Track
 category: Core
