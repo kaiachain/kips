@@ -42,7 +42,9 @@ In summary, these changes result in a reduction of 84 gas units per non-zero byt
 
 ## Backward Compatibility
 
-Since the Kaia client implementation applies different logic based on the hardfork state, the correct gas cost is determined according to the block number associated with each hardfork.
+The gas pricing change is backwards incompatible since the hardfork.
+
+SDKs and Wallets will be able to continue operating with no change as they usually use `eth_estimateGas` API.
 
 ## References
 [EIP-2028](https://eips.ethereum.org/EIPS/eip-2028)
