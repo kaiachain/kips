@@ -9,10 +9,6 @@ category: Core
 created: 2024-10-18
 ---
 
-## Simple Summary
-
-Changing to calldata gas cost.
-
 ## Abstract
 
 Reduce the calldata gas costs to the EIP-2028 level. The purpose is to achieve better compatibility with Ethereum-oriented SDKs and tools.
