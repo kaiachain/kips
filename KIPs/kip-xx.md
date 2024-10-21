@@ -15,7 +15,7 @@ Changing to calldata gas cost.
 
 ## Abstract
 
-This KIP introduces a new tag for calldata gas payment, defining a calculation method that distinguishes between zero and non-zero bytes, with distinct costs assigned to each byte.
+Reduce the calldata gas costs to the EIP-2028 level. The purpose is to achieve better compatibility with Ethereum-oriented SDKs and tools.
 
 ## Motivation
 
