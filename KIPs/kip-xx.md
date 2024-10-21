@@ -29,16 +29,20 @@ The gas cost distinguishes between non-zero and zero bytes, assigning 16 and 4 g
 
 ### Overview
 
-Since the genesis block, calldata gas calculation has followed two branches:
+The calldata costs has been depending on the transaction types and hardfork levels.
 
-- Non-zero bytes: 68 gas units per byte
-- Zero bytes: 4 gas units per byte
+Since the genesis block, calldata gas calculation was calculated using the formula:  
+Transaction type 0 (Legacy):
+`nonzero_bytes_in_calldata` * 68 + `zero_bytes_in_calldata` * 4  
+Other types:
+`nonzero_bytes_in_calldata` * 100 + `zero_bytes_in_calldata` * 100
 
-With the Istanbul hardfork, the gas calculation was modified to no longer distinguish between zero and non-zero bytes, introducing a flat rate of 100 gas units per byte.
+Since the Istanbul hardfork, the calculation was simplified to the latter:  
+For all transaction types: `nonzero_bytes_in_calldata` * 100 + `zero_bytes_in_calldata` * 100  
 
-The Prague hardfork reverted to the original logic from the genesis block, reintroducing the distinction between non-zero and zero bytes. However, the assigned costs were adjusted to 16 gas units per non-zero byte and 4 gas units per zero byte.
-
-In summary, these changes result in a reduction of 84 gas units per non-zero byte and 96 gas units per zero byte.
+This proposal introduces a new hardfork in which the formula will be:  
+For all transaction types: `nonzero_bytes_in_calldata` * 16 + `zero_bytes_in_calldata` * 4  
+which is identical to [EIP-2028](https://eips.ethereum.org/EIPS/eip-2028).
 
 ## Backward Compatibility
 
