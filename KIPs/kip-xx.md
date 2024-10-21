@@ -23,8 +23,6 @@ TBD
 
 ## Specification
 
-The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY”, and “OPTIONAL” in this document are to be interpreted as described in RFC 2119.
-
 The gas cost distinguishes between non-zero and zero bytes, assigning 16 and 4 gas units to each, respectively.
 
 ### Overview
