@@ -15,14 +15,12 @@ Reduce the calldata gas costs to the [EIP-2028](https://eips.ethereum.org/EIPS/e
 
 ## Motivation
 
-Since the introduction of [EIP-4337](https://eips.ethereum.org/EIPS/eip-4337), several bundler software solutions have been developed.
-
-The `eth_estimateUserOperationGas` API calculates the gas required for a userOperation.
-This estimate is computed based on the input’s composition, which includes both nonzero and zero bytes.
-Following the Istanbul hardfork, Ethereum set the gas cost at 16 gas per nonzero byte and 4 gas per zero byte.
-As a result, some bundlers have adopted predefined gas costs for these byte types.
-
-To maintain compatibility with Ethereum's tooling ecosystem, the Kaia mainnet aligns its gas pricing with the specifications of EIP-2028 introduced in the new hardfork, which defines new costs for nonzero and zero bytes.
+The adoption of [EIP-2028](https://eips.ethereum.org/EIPS/eip-2028) will improve the compatibility with [ERC-4337](https://eips.ethereum.org/EIPS/eip-4337) ecosystem tools.
+Since the introduction of [ERC-4337](https://eips.ethereum.org/EIPS/eip-4337), several bundler software solutions have been developed.
+The bundler's `eth_estimateUserOperationGas` API calculates the gas required for a UserOperation.
+The calculation depends on the calldata costs in a UserOperation.
+The issue is that some tools assumes EIP-2028 rule [unless explicitly configured](https://github.com/eth-infinitism/bundler/blob/f4647969386aa859b7edf608467168d140e5f92c/packages/sdk/src/PreVerificationGasCalculator.ts#L44-L54), making their result incompatible with Kaia.
+This proposal introduces a new hardfork that aligns the calldata cost calculation to that of EIP-2028.
 
 ## Specification
 
