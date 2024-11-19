@@ -23,6 +23,7 @@ TBU
 
 | Parameter | Value |
 |-|-|
+| `EMPTY_ROOT_HASH` | `0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421` |
 | `EMPTY_CODE_HASH` | `0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470` |
 | `SET_CODE_TX_TYPE` | `0x04` |
 | `ENVELOPED_SET_CODE_TX_TYPE` | `0x7804` |
@@ -74,9 +75,9 @@ SCA's encoding:         0x02 || rlp([[nonce, balance, humanReadable, accountKey]
 
 Now both EOAs and SCAs hold the same set of 7 fields: `nonce`, `balance`, `humanReadable`, `accountKey`, `storageRoot`, `codeHash`, and `codeInfo`.
 
-When an EOA is RLP encoded, the compact encoding is used when the account has storageRoot = 0x0, codeHash = EMPTY_CODE_HASH, and codeInfo = 0x0. Conversely, when decoding an RLP-encoded EOA, the compact encoding implies that the account has storageRoot = 0x0, codeHash = EMPTY_CODE_HASH, and codeInfo = 0x0.
+When an EOA is RLP encoded, the compact encoding is used when the account has storageRoot = EMPTY_ROOT_HASH, codeHash = EMPTY_CODE_HASH, and codeInfo = 0x0. Conversely, when decoding an RLP-encoded EOA, the compact encoding implies that the account has storageRoot = EMPTY_ROOT_HASH, codeHash = EMPTY_CODE_HASH, and codeInfo = 0x0.
 
-If an EOA’s delegation was cleared by a SetCode transaction with authorization.address = 0x0, set its CodeHash to EMPTY_CODE_HASH as per EIP-7702, and also set its CodeInfo to 0x0. Note that the account does not necessarily return to compact encoding. It will be compactly encoded only if storageRoot is 0x0.
+If an EOA’s delegation was cleared by a SetCode transaction with authorization.address = 0x0, set its CodeHash to EMPTY_CODE_HASH as per EIP-7702, and also set its CodeInfo to 0x0. Note that the account does not necessarily return to compact encoding. It will be compactly encoded only if storageRoot is EMPTY_ROOT_HASH.
 
 An EOA with codeHash = EMPTY_CODE_HASH can be called “EOA without code” and an EOA with codeHash != EMPTY_CODE_HASH can be called “EOA with code”. Note that EOA without code doesn’t always mean it will be compactly encoded.
 
@@ -103,7 +104,7 @@ The `to` address of the following transaction types MUST be an EOA with code or 
 - `TxTypeFeeDelegatedSmartContractExecution`
 - `TxTypeFeeDelegatedSmartContractExecutionWithRatio`
 
-Note that whether the storageRoot is 0x0 or not does not matter in transaction type restrictions.
+Note that whether the emptiness of storageRoot does not matter in transaction type restrictions.
 
 ### Changes to APIs
 
@@ -125,7 +126,7 @@ For SetCode transaction type, kaia namespace APIs that return the transaction fi
 
 #### eth_getCode, eth_getStorageAt, kaia_getCode, kaia_getStorageAt
 
-APIs querying the code and storage of an account MUST work correctly for EOA if its storageRoot is not 0x0.
+APIs querying the code and storage of an account MUST work correctly for EOAs.
 
 #### kaia_getAccount
 
