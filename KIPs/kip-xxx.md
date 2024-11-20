@@ -128,9 +128,11 @@ For SetCode transaction type, kaia namespace APIs that return the transaction fi
 
 APIs querying the code and storage of an account MUST work correctly for EOAs.
 
-#### kaia_getAccount
+#### kaia_getAccount, kaia_isContractAccount
 
 For both EOAs and SCAs, its kaia_getAccount result SHOULD include storageRoot, codeHash, codeFormat, vmVersion fields.
+
+For both EOAs and SCAs, kaia_isContractAccount SHOULD return true if its codeHash is not EMPTY_CODE_HASH.
 
 ### Changes to SDK
 
@@ -163,6 +165,8 @@ SmartContractExecution transaction types can be sent to EOAs with code. Kaia’s
 ## Backwards Compatibility
 
 The stateRoot calculation is backward compatible because we retain the EOA’s compact encoding.
+
+The semantics of Ethereum typed transactions are backward compatible. If the target account has nonempty code, the code is executed.
 
 ## Implementation
 
