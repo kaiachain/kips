@@ -4,8 +4,7 @@ title: Consensus liquidity for Kaia
 author: Lewis (@hyeonLewis), Ian (@ian0371), Ollie (@blukat29), Lake (@hyunsooda), and Aidan (@aidan-kwon)
 discussions-to: TBD
 status: Draft
-type: Standards Track
-category: Core
+type: Core
 created: 2024-11-07
 ---
 
@@ -18,12 +17,13 @@ created: 2024-11-07
   - [Terminology](#terminology)
   - [Overview](#overview)
   - [Configuration](#configuration)
+  - [CLRegistry](#clregistry)
+  - [StakingTrackerV2](#stakingtrackerv2)
   - [CLDEX](#cldex)
   - [Consensus](#consensus)
   - [On-chain Governance](#on-chain-governance)
 - [Rationale](#rationale)
 - [Backward Compatibility](#backward-compatibility)
-- [Implementation](#implementation)
 - [Copyright](#copyright)
 
 ## Simple Summary
@@ -100,7 +100,7 @@ interface ICLRegistry {
 
     /// @dev Returns the CL information of all registered validators
     /// @return The CL information of all registered validators
-    function getAllCLs() external view returns (CLInfo[] memory);
+    function getAllCLs() external view returns (address[] memory nodeIds, uint256[] memory gcIds, address[] memory clPools, address[] memory clStakings);
 }
 ```
 
@@ -111,7 +111,7 @@ The all external functions of `StakingTrackerV2` contract must have same selecto
 The additional tracking processes of `StakingTrackerV2` are as follows:
 
 1. Creating a new tracker: When creating a new tracker, the `StakingTrackerV2` contract must call `CLRegistry.getAllCLs()` to populate the CL information.
-2. Updating the tracker: When the staked KAIA in `CLPool` changes, the `CLPool` contract must notify the change to `StakingTrackerV2` by calling `refreshStake(address(this))`.
+2. Updating the tracker: When the staked KAIA in `CLPool` changes, the `StakingTrackerV2` contract must update the staked KAIA for the corresponding validator.
 
 #### Voting Power Eligibility
 
@@ -185,7 +185,7 @@ Both commission types have configurable parameters:
 **Swap Fee Commission**:
 
 - Commissions can be collected from swap fees
-- Burn ratios can vary by token type (e.g., KAIA: 10%, CL Token: 5%)
+- Burn ratios can be configurable by token type (e.g., KAIA: 10%, CL Token: 5%)
 
 **Block Reward Commission**:
 
@@ -201,26 +201,24 @@ For both commission types, the following parameters are configurable:
 
 After the `PRAGUE_FORK_BLOCK_NUMBER`, staked KAIA will be tracked through two mechanisms:
 
-1. **Traditional Staking** (`CnStaking`)
+1. **CnStaking**
 
    - Existing staking mechanism through the `CnStaking` contract
-   - Requires minimum 5M KAIA for validator qualification
-   - Direct staking with standard unstaking period
 
-2. **Consensus Liquidity** (`CLDEX`)
+2. **Consensus Liquidity**
+
    - New staking mechanism through CLDEX liquidity provision
-   - Staked KAIA calculated based on CLDEX LP Token
-   - Subject to 7-day of upfront minimum staking period
 
-The total staked amount for each validator is calculated as:
+Same as the voting power, the 5M staked KAIA in CnStaking is required to be eligible for validator to propose blocks.
+The total effective staked amount for each validator is calculated as:
 
 ```
-totalStakedKAIA = CnStaking + CLDEX
+totalEffectiveStakedKAIA = staked KAIA in CnStaking + staked KAIA in CLDEX
 ```
 
-Block rewards distribution:
+#### Block Rewards Distribution
 
-- Rewards are proportionally distributed based on total stake
+- Rewards are proportionally distributed based on total effective staked KAIA
 - No changes to inter-validator reward distribution logic
 - Rewards split between `CnStaking` and `CLDEX` based on their respective proportions
 
