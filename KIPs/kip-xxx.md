@@ -34,7 +34,7 @@ Introduce a consensus liquidity mechanism for Kaia. The staked KAIA through the 
 
 This KIP introduces a consensus liquidity mechanism where KAIA and CL Token holders can participate in Kaia network through liquidity provision. Users stake KAIA tokens in the native decentralized exchange (CLDEX), simultaneously providing market liquidity and securing the network. Stakers earn both swap fees and block rewards, creating an efficient capital utilization.
 
-Only existing Kaia validators can participate in the consensus liquidity, which means maintaining 5M KAIA staked solely through `CnStaking` contract is required.
+The eligibility of GC remains unaffected by consensus liquidity, which means it still requires maintaining 5M KAIA staked solely through `CnStaking` contract, as is currently the case.
 
 ## Motivation
 
