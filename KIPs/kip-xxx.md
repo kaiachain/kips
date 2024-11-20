@@ -209,8 +209,8 @@ After the `PRAGUE_FORK_BLOCK_NUMBER`, staked KAIA will be tracked through two me
 
    - New staking mechanism through CLDEX liquidity provision
 
-Same as the voting power, the 5M staked KAIA in CnStaking is required to be eligible for validator to propose blocks.
-The total effective staked amount for each validator is calculated as:
+Similar to voting power requirements, validators must maintain at least 5M KAIA staked in CnStaking to be eligible to propose blocks.
+The total effective staked amount for staking rewards distribution is calculated as:
 
 ```
 totalEffectiveStakedKAIA = staked KAIA in CnStaking + staked KAIA in CLDEX
@@ -218,9 +218,7 @@ totalEffectiveStakedKAIA = staked KAIA in CnStaking + staked KAIA in CLDEX
 
 #### Block Rewards Distribution
 
-- Rewards are proportionally distributed based on total effective staked KAIA
-- No changes to inter-validator reward distribution logic
-- Rewards split between `CnStaking` and `CLDEX` based on their respective proportions
+The total block reward for each validator will be calculated based on [KIP-82](https://kips.kaia.io/KIPs/kip-82), while the split ratio between `CnStaking` and `CLDEX` will be proportional to their respective staked KAIA amounts.
 
 ### On-chain Governance
 
