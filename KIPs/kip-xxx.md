@@ -176,12 +176,6 @@ CLDEX commissions are derived from two sources:
 1. Swap fees from CLPool
 2. Block rewards from CLStaking
 
-Both commission types have configurable parameters:
-
-- Commission receiver addresses
-- Split ratios
-- Burn ratios
-
 **Swap Fee Commission**:
 
 - Commissions can be collected from swap fees
