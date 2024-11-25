@@ -4,8 +4,7 @@ title: Transaction data gas cost reduction
 author: Lake (@hyunsooda) and Ollie (@blukat29)
 discussions-to: https://github.com/kaiachain/kips/issues/22
 status: Draft
-type: Standards Track
-category: Core
+type: Core
 created: 2024-10-18
 ---
 
