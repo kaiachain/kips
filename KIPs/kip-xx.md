@@ -1,5 +1,5 @@
 ---
-kip: to be assigned
+kip: 223
 title: Transaction data gas cost reduction
 author: Lake (@hyunsooda) and Ollie (@blukat29)
 discussions-to: https://github.com/kaiachain/kips/issues/22
