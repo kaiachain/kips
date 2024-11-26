@@ -1,12 +1,12 @@
 ---
-kip: TBD
+kip: KIP-228
 title: SetCode for EOA
 author: Ollie (@blukat29), Garry (@Mdaiki0730), Shiki (@shiki-tak)
 discussions-to: TBD
 status: Draft
-type: Standards Track
 category: Core
 created: 2024-11-15
+requires: 223
 ---
 
 ## Abstract
@@ -15,7 +15,7 @@ Add a new transaction type to assign a code to an EOA. This KIP focuses on descr
 
 ## Motivation
 
-TBU
+Improve user experience by allowing account abstraction features to already existing EOAs. Previously, for EOA owners to benefit from ERC-4337 interface, they had to create a new smart account and migrate all assets and privileges. With EIP-7702, users can attach code to an existing EOA in-place.
 
 ## Specification
 
@@ -46,7 +46,7 @@ Its consensus type prefix (that affects `block.transactionRoot`) is `ENVELOPED_S
 
 The transaction’s behavior follows that of EIP-7702 except for the following:
 
-- For each authorization tuple `[chain_id, address, nonce, y_parity, r, s]`, fetch the AccontKey field of the recovered authority account.
+- For each authorization tuple `[chain_id, address, nonce, y_parity, r, s]`, fetch the AccountKey field of the recovered authority account.
 - Verify that the AccountKey is of type `AccountKeyTypeLegacy`. If verification fails, immediately stop processing the tuple and continue to the next tuple in the list.
 
 #### Delegation Designation
@@ -55,7 +55,7 @@ Semantics of `EXTCODESIZE`, `EXTCODECOPY`, `EXTCODEHASH`, `CALL`, `CALLCODE`, `S
 
 #### Gas costs
 
-The intrinsic gas cost of a SetCode transaction follows the EIP-7702, meaning it inherits [EIP-2930](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-2930.md) and [EIP-2028](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-2028.md). Note that the EIP-2028 rule is realized by by KIP-xxx.
+The intrinsic gas cost of a SetCode transaction follows the EIP-7702, meaning it inherits [EIP-2930](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-2930.md) and [EIP-2028](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-2028.md). Note that the EIP-2028 rule is realized by [KIP-223](https://github.com/kaiachain/kips/blob/main/KIPs/kip-223.md).
 
 #### Transaction Origination
 
@@ -179,4 +179,3 @@ The semantics of Ethereum typed transactions are backward compatible. If the tar
 ## Copyright
 
 Copyright and related rights waived via [CC0](https://creativecommons.org/publicdomain/zero/1.0/).
-
