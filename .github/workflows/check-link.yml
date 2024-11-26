@@ -2,6 +2,9 @@ name: "Check Links in docs"
 on:
   pull_request:
     types: [opened, synchronize]
+  push:
+    branches:
+      - main
 
 jobs:
   linkChecker:
