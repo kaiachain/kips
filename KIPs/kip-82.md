@@ -3,7 +3,7 @@ kip: 82
 title: A new GC reward structure due to abolition of the Gini coefficient
 author: Yeri<yeriel.lee@krustuniverse.com>, Daniel<daniel.cc@krustuniverse.com>, Aidan<aidan.kwon@krustuniverse.com>, Ollie<ollie.j@krustuniverse.com>, Sam<sam.seo@krustuniverse.com>, Uno<uno.lee@krustuniverse.com>, Eddie<eddie.kim0@krustuniverse.com>
 discussion-to: https://govforum.klaytn.foundation/t/kgp-2-a-new-gc-reward-structure-to-abolition-of-the-gini-coefficient/21
-status: Draft
+status: Final
 type: Core
 created: 2022-09-21
 ---

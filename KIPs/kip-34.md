@@ -3,7 +3,7 @@ kip: 34
 title: Klaytn SDK Common Architecture
 author: Jimin Kim <jasmine.kim@groundx.xyz>, Seonyong Kim <kale.kim@groundx.xyz>, Junghyun Colin Kim <colin.kim@groundx.xyz>
 discussions-to: https://github.com/klaytn/kips/issues/35
-status: Draft
+status: Final
 type: Ecosystem
 created: 2020-07-02
 ---
