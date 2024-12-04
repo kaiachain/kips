@@ -4,8 +4,7 @@ title: Non-fungible Token Standard
 author: Junghyun Colin Kim <colin.kim@groundx.xyz>
 discussions-to: https://github.com/klaytn/kips/issues/17
 status: Final
-type: Standards Track
-category: KCT
+type: Tokenization
 created: 2020-03-04
 requires: 13
 ---

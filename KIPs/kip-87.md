@@ -4,8 +4,7 @@ title: NFT Avatar in Multi-Metaverse
 author: Yeri Lee (@yeri-lee), Junghyun Colin Kim (@kjhman21), Wonbae Kim (@kernys), Seokrin Sung (@taronsung)
 discussions-to: https://forum.klaytn.foundation/t/en-kip-87-nft-avatar-standard-proposal/6161
 status: Draft
-type: Standards Track
-category: Application
+type: Tokenization
 created: 2022-11-01
 requires: 17, 37
 ---
