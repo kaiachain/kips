@@ -14,6 +14,8 @@ jobs:
       actions: write
       pull-requests: write
       pages: read
+      contents: read
+      id-token: write
 
     steps:
       - name: Checkout the code
@@ -38,7 +40,7 @@ jobs:
         id: pages
         uses: actions/configure-pages@v5
       - name: Build with Jekyll to test
-        run: bundle exec jekyll build --baseurl "./kips"
+        run: bundle exec jekyll build --baseurl "/kips"
         env:
           JEKYLL_ENV: production
 
