@@ -4,8 +4,7 @@ title: Token Standard
 author: Kyungkoo Kai Kim <kai.kim@groundx.xyz>
 discussions-to: https://github.com/klaytn/kips/issues/37
 status: Final
-type: Standards Track
-category: KCT
+type: Tokenization
 created: 2020-08-19
 requires: 13
 ---

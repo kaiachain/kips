@@ -4,8 +4,7 @@ title: Interface Query Standard
 author: Junghyun Colin Kim <colin.kim@groundx.xyz>
 discussions-to: https://github.com/klaytn/kips/issues/14
 status: Final
-type: Standards Track
-category: Interface
+type: Core
 created: 2020-02-27
 ---
 

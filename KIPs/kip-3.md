@@ -4,8 +4,7 @@ title: Klaytn Keystore Format v4
 author: Junghyun Colin Kim <colin.kim@groundx.xyz>
 discussions-to: https://github.com/klaytn/klaytn/issues/438
 status: Final
-type: Standards Track
-category: Application
+type: Ecosystem
 created: 2020-01-03
 ---
 

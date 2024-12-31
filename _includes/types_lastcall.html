@@ -14,37 +14,20 @@
 
 <h2>KIP Types</h2>
 
-<p>KIPs are separated into a number of types, and each has its own list of KIPs.</p>
+<p>KIPs are separated into 4 types, and each has its own list of KIPs.</p>
 
-<h3>Standard Track ({{site.pages|where:"type","Standards Track"|size}})</h3>
-<p>Describes any change that affects most or all Kaia implementations, such as a change to the network protocol, a change in block or transaction validity rules, proposed application standards/conventions, or any change or addition that affects the interoperability of applications using Kaia. Furthermore Standard KIPs can be broken down into the following categories.</p>
+<h3 class="sublist"><a href="{{"core"|relative_url}}">Core</a> ({{site.pages|where:"type","Core"|size}})</h3>
+<p class="sublist">A Core KIP describes any change that affects Kaia protocol implementations, such as a change to the network protocol, an improvement in block or transaction validity rules, an improvement in storage-layer mechanism, an improvement in interface around client API/RPC specifications and standards, and also certain language-level standards like method names and contract ABIs, any change in Kaia’s tokenomics-related settings and financial parameters, or any change in GC block reward mechanism, etc. Core KIP would be seen requiring a consensus fork as well as changes that are not necessarily consensus critical but may be relevant to any core-related development. Core KIPs consist of two parts, a design document and implementation.</p>
 
-<h4 class="sublist"><a href="{{"core"|relative_url}}">Core</a> ({{site.pages|where:"type","Standards Track"|where:"category","Core"|size}})</h4>
-<p class="sublist">Improvements requiring a consensus fork as well as changes that are not necessarily consensus critical but may be relevant to “core dev” discussions (for example, it may be an algorithm for testnets as well).</p>
+<h3 class="sublist"><a href="{{"ecosystem"|relative_url}}">Ecosystem</a> ({{site.pages|where:"type","Ecosystem"|size}})</h3>
+<p class="sublist">An Ecosystem KIP describes any change falling under the broad category of ecosystem features, tools or environment used in Kaia development, such as a change on application layer related to proposed application standards/conventions, or any change or addition that affects the interoperability of applications using Kaia, or a change in SDK layer related to application-level standards and conventions, such as name registries, URI schemes, library/package formats, and wallet formats, or an introduction of new ecosystem tool that could be integrated to the Kaia chain with implementation know-hows, or an introduction of contract standards that would introduce ecosystem features, etc.
+</p>
 
-<h4 class="sublist"><a href="{{"networking"|relative_url}}">Networking</a> ({{site.pages|where:"type","Standards Track"|where:"category","Networking"|size}})</h4>
-<p class="sublist">Includes improvements around devp2p and Light Kaia Subprotocol, as well as proposed improvements to network protocol specifications of whisper and swarm.</p>
+<h3 class="sublist"><a href="{{"tokenization"|relative_url}}">Tokenization</a> ({{site.pages|where:"type","Tokenization"|size}})</h3>
+<p class="sublist">A Tokenization KIP describes any change or introduction related to Kaia compatible tokens, such as an introduction of purpose-driven fungible token or non-fungible token and its minting policies in general.</p>
 
-<h4 class="sublist"><a href="{{"storage"|relative_url}}">Storage</a> ({{site.pages|where:"type","Standards Track"|where:"category","Storage"|size}})</h4>
-<p class="sublist">Includes improvements related to Storage.</p>
-
-<h4 class="sublist"><a href="{{"interface"|relative_url}}">Interface</a> ({{site.pages|where:"type","Standards Track"|where:"category","Interface"|size}})</h4>
-<p class="sublist">Includes improvements around client API/RPC specifications and standards, and also certain language-level standards like method names and contract ABIs. The label “interface” aligns with the interfaces repo and discussion should primarily occur in that repository before a KIP is submitted to the KIPs repository.</p>
-
-<h4 class="sublist"><a href="{{"erc"|relative_url}}">KCT</a> ({{site.pages|where:"type","Standards Track"|where:"category","KCT"|size}})</h4>
-<p class="sublist">Application-level standards and conventions, including contract standards such as token standards (<a href="./KIPS/kip-7">KIP-7</a>), name registries, URI schemes, library/package formats, and account abstraction.</p>
-
-<h4 class="sublist"><a href="{{"sdk"|relative_url}}">SDK</a> ({{site.pages|where:"type","Standards Track"|where:"category","SDK"|size}})</h4>
-<p class="sublist">Includes improvements related to SDKs.</p>
-
-<h4  class="sublist"><a href="{{"application"|relative_url}}">Application</a> ({{site.pages|where:"type","Standards Track"|where:"category","Application"|size}})</h4>
-<p  class="sublist">Includes improvements related to Applications.</p>
-
-<h3><a href="{{"meta"|relative_url}}">Meta</a> ({{site.pages|where:"type","Meta"|size}})</h3>
-<p>Describes a process surrounding Kaia or proposes a change to (or an event in) a process. Process KIPs are like Standards Track KIPs but apply to areas other than the Kaia protocol itself. They may propose an implementation, but not to Kaia's codebase; they often require community consensus; unlike Informational KIPs, they are more than recommendations, and users are typically not free to ignore them. Examples include procedures, guidelines, changes to the decision-making process, and changes to the tools or environment used in Kaia development. Any meta-KIP is also considered a Process KIP.</p>
-
-<h3><a href="{{"informational"|relative_url}}">Informational</a> ({{site.pages|where:"type","Informational"|size}})</h3>
-<p>Describes a Kaia design issue, or provides general guidelines or information to the Kaia community, but does not propose a new feature. Informational KIPs do not necessarily represent Kaia community consensus or a recommendation, so users and implementers are free to ignore Informational KIPs or follow their advice.</p>
+<h3 class="sublist"><a href="{{"meta"|relative_url}}">Meta</a> ({{site.pages|where:"type","Meta"|size}})</h3>
+<p class="sublist">A Meta KIP describes a process surrounding Kaia or proposes a change to (or an event in) a process. Meta KIPs apply to areas other than the KIPs listed above. Examples include procedures, guidelines, and changes to the decision-making process. Any Meta KIP is also considered a Process KIP.</p>
 
 <h2>Kaia KIPs Last Call Review</h2>
 <p>All KIPs which are in the two-week "last call" status, please help review these and provide your feedback!</p>
@@ -61,7 +44,7 @@
 <tr>
   <td class="kipnum"><a href="{{page.url|relative_url}}">{{page.kip|xml_escape}}</a></td>
   <td class="title">{{page.title|xml_escape}}</td>
-  <td class="Category">{{page.type}} {{page.category|xml_escape}}</td>
+  <td class="Category">{{page.type}}</td>
   <td class="author">{% include authorlist.html authors=page.author %}</td>
 </tr>
 {% endfor %}
