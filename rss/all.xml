@@ -13,7 +13,7 @@ layout: null
     {% for kip in kips %}
       <item>
         <title>{{ kip.title | xml_escape }}</title>
-        <category>{{ kip.type | xml_escape }}/{{ kip.category | xml_escape }}</category>
+        <category>{{ kip.type | xml_escape }}</category>
         {% if kip.discussions-to %}
           <comments>{{ kip.discussions-to | xml_escape }}</comments>
         {% endif %}

@@ -13,7 +13,7 @@ layout: null
     {% for kip in kips %}
       {% if kip.status == "Last Call" %}
       {% capture description %}
-        <p><strong>KIP #{{ kip.kip }} - {{kip.title }}</strong> is in Last Call status. It is authored by {{ kip.author }} and was originally created {{ kip.created }}. It is in the {{ kip.category }} category of type {{ kip.type }}. Please review and note any changes that should block acceptance.</p>
+        <p><strong>KIP #{{ kip.kip }} - {{kip.title }}</strong> is in Last Call status. It is authored by {{ kip.author }} and was originally created {{ kip.created }}. It is in the type {{ kip.type }}. Please review and note any changes that should block acceptance.</p>
         {% if kip.discussions-to %}
           <p>The author has requested that discussions happen at the following URL: {{ kip.discussions-to }}</p>
         {% else %}

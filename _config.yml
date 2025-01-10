@@ -27,16 +27,19 @@ lang: en
 timezone: UTC
 
 header_pages:
- - all.html
- - core.html
- - networking.html
- - storage.html
- - interface.html
- - token.html
- - sdk.html
- - application.html
- - meta.html
- - informational.html
+  - all.html
+  - core.html
+  - ecosystem.html
+  - tokenization.html
+  - meta.html
+# Below are the old KIP types that are no longer used.
+#  - networking.html
+#  - storage.html
+#  - interface.html
+#  - token.html
+#  - sdk.html
+#  - application.html
+#  - informational.html
 
 twitter:
   card: summary
@@ -59,8 +62,7 @@ kramdown:
 permalink: /:slug
 
 defaults:
-  -
-    scope:
+  - scope:
       path: "KIPs"
     values:
       layout: "kip"

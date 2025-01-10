@@ -18,9 +18,6 @@ layout: default
     {% endif %}
     </td></tr>
     <tr><th>Type</th><td>{{ page.type | xml_escape }}</td></tr>
-    {% if page.category != undefined %}
-      <tr><th>Category</th><td>{{ page.category | xml_escape }}</td></tr>
-    {% endif %}
     <tr><th>Created</th><td>{{ page.created | xml_escape }}</td></tr>
     {% if page.updated != undefined %}
     <tr><th>Updated</th><td>{{ page.updated | xml_escape }}</td></tr>
