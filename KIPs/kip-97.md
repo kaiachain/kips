@@ -3,9 +3,8 @@ kip: 97
 title: Signed Data Standard
 author: TaeRim Lee <95decode@gmail.com>
 discussions-to: https://forum.klaytn.foundation/t/kip/6359
-status: Draft
-type: Standards Track
-category : Interface
+status: Final
+type: Core
 created: 2023-01-10
 ---
 
