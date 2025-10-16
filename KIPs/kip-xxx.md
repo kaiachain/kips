@@ -326,6 +326,8 @@ When no future forks are configured, the same RPC command would return:
 - [EIP-7910](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-7910.md)
 - [EIP-6122](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-6122.md)
 - [EIP-4844](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-4844.md)
+- [KIP-247](https://github.com/kaiachain/kips/blob/main/KIPs/kip-247.md)
+- [KIP-149](https://github.com/kaiachain/kips/blob/main/KIPs/kip-149.md)
 
 ## Copyright
 
