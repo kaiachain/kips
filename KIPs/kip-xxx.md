@@ -25,7 +25,7 @@ All clients constraints directly under the specification follow [EIP-7910](https
 
 ### Configuration RPC
 
-The Configuration RPC follows that of [EIP-7910](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-7910.md).
+A new JSON-RPC API, `eth_config`, is introduced. It takes no parameters and returns the result object specified in the next section.
 
 ### Result Object Structure
 
@@ -37,40 +37,43 @@ The menbers of the configuration object follows that of [EIP-7910](https://githu
 
 #### `activationTime`
 
-Kaia does not use timestamps for fork management. 
-This is considered to have no suitable return value and will exclude the field.
-From the JS SDK, `result.current.activationTime === undefined`. And `undefined` will explicitly throw an error, so users can know that the field is absent.
+The result MUST NOT have any `activationTime` field.
 
 #### `blobSchedule`
 
-Kaia does not implement [EIP-4844](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-4844.md), so blobSchedule will always be `null`.
+The blob configuration parameters for the specific fork will be represented as specified in [EIP-7910](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-7910.md). If [EIP-4844](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-4844.md) isn't implemented in the fork, the `blobSchedule` field MUST be `null`.
 
 #### `forkId`
 
-The forkId follows that of [EIP-7910](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-7910.md).
-Kaia does not follow [EIP-6122](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-6122.md), but only inherits it in the `fork_hash` spec.
+The forkId follows that of [EIP-7910](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-7910.md), i.e. the `FORK_HASH` format as specified in [EIP-6122](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-6122.md).
 
 #### `precompiles`
 
 The precompiles follows that of [EIP-7910](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-7910.md).
 
-Additionally, as of cancun there are Kaia's own precompiles.
+On top of Ethereum precompiles, some Kaia's precompiles may appear in this field.
 The contract names are (in order): `VMLOG`, `FEE_PAYER`, `VALIDATE_SENDER`
 
-If a new original precompile is added, the new “precompile KIP” shall declare its name.
+If any new precompiles are added, the EIP or KIP about the precompiles SHOULD state the names.
 
 #### `systemContracts`
 
-A JSON object representing the system-level contracts defined by KIPs.
+A JSON object representing the system-level contracts defined by EIPs and KIPs.
 These have keys that are alphabetically sorted contract names (e.g., ADDRESS_BOOK) and values ​​that are 20-byte addresses.
+
+System contracts whose address is hardcoded MUST appear in the result. Conversly, if a system contract address is stored in other contract's variables (e.g. [KIP-247 GaslessSwapRouter](https://github.com/kaiachain/kips/blob/main/KIPs/kip-247.md) is referenced from [KIP-149 Registry](https://github.com/kaiachain/kips/blob/main/KIPs/kip-149.md)), it SHALL NOT appear in the result.
 
 The system contracts from genesis are (in order) `MAINNET_CREDIT`, `ADDRESS_BOOK`.
 
-For Randao, the only system contract is `REGISTRY`.
+For Kip103, the added system contract is `KIP103`
 
-For Prague, the only system contract is `HISTORY_STORAGE_ADDRESS`.
+For Kip160, the added system contract is `KIP160`
 
-Future forks MUST define the list of system contracts in their meta-KIPs.
+For Randao, the added system contract is `REGISTRY`.
+
+For Prague, the added system contract is `HISTORY_STORAGE_ADDRESS`.
+
+If new system contracts are added at hardcoded addresses, the EIP or KIP about the system contracts SHOULD state the names.
 
 ### Blob Parameter Only Forks
 
@@ -78,11 +81,17 @@ Blob Parameter Only Forks do not exist in kaia, so this is ignored.
 
 ## Rationale
 
-### Other system contracts
+### activationTime field
 
-Kaia's `eth_config` will return a subset of the system contracts listed [kaia doc](https://docs.kaia.io/references/contract-addresses/).
-The common feature of these is that they are associated with a fork.
-Other system contracts listed are registered in the registry and can be obtained by calling it.
+Because Kaia uses block numbers, not timestamps to specify fork activation, so there is no suitable value to return for this field. If the block number is returned, it can be interpreted as a timestamp in the long past. If zero is returned, it can be interpreted as genesis activation.
+
+However, if the field is absent, the SDK will explicitly know that the activationTime is absent. For instance, in Javascript, it will be `result.current.activationTime === undefined`, and `undefined` cannot be converted to numbers.
+
+### System contracts are returned or not
+
+Only a subset of Kaia's system contracts are returned from this API.
+- If its address is hardcoded, it can be returned because the address never changes. e.g. AddressBook at 0x400, Registry at 0x401.
+- If its address is stored as a variable in other contracts, it must not be returned. The address can change at any time regardless of hardfork. e.g. contracts like GaslessSwapRouter and CLRegistry are referenced from Registy and can be changed at any time by transaction.
 
 ## Backwards Compatibility
 
