@@ -64,6 +64,7 @@ These have keys that are alphabetically sorted contract names (e.g., ADDRESS_BOO
 System contracts whose address is hardcoded MUST appear in the result. Conversly, if a system contract address is stored in other contract's variables (e.g. [KIP-247 GaslessSwapRouter](https://github.com/kaiachain/kips/blob/main/KIPs/kip-247.md) is referenced from [KIP-149 Registry](https://github.com/kaiachain/kips/blob/main/KIPs/kip-149.md)), it SHALL NOT appear in the result.
 
 The system contracts from genesis are (in order) `MAINNET_CREDIT`, `ADDRESS_BOOK`.
+`MAINNET_CREDIT` is only included if the genesis hash matches mainnet's one.
 
 For Kip103, the added system contract is `KIP103`
 
@@ -101,13 +102,13 @@ This does not affect the backward compatibility because this does not involve ha
 
 ### Sample Configs
 
-Kairos Prague Config
+Mainnet Prague Config
 
 ```JSON
 {
   "blobSchedule": null,
-  "chainId": "0x3E9",
-  "forkId": "0x0929e24e",
+  "chainId": "0x2019",
+  "forkId": "0xc00bab0e",
   "precompiles": {
     "BLAKE2F": "0x0000000000000000000000000000000000000009",
     "BLS12_G1ADD": "0x000000000000000000000000000000000000000b",
@@ -133,6 +134,8 @@ Kairos Prague Config
   "systemContracts": {
     "ADDRESS_BOOK": "0x0000000000000000000000000000000000000400",
     "HISTORY_STORAGE_ADDRESS": "0x0000f90827f1c53a10cb7a02335b175320002935",
+    "KIP103": "0xd5ad6d61dd87edabe2332607c328f5cc96aecb95",
+    "KIP160": "0xa4df15717da40077c0ad528296adbbd046579ee9",
     "MAINNET_CREDIT": "0x0000000000000000000000000000000000000000",
     "REGISTRY": "0x0000000000000000000000000000000000000401"
   }
@@ -145,7 +148,7 @@ Kairos Cancun Config
 {
   "blobSchedule": null,
   "chainId": "0x3E9",
-  "forkId": "0xbef71d30",
+  "forkId": "0x897592ea",
   "precompiles": {
     "BLAKE2F": "0x0000000000000000000000000000000000000009",
     "BN254_ADD": "0x0000000000000000000000000000000000000006",
@@ -163,7 +166,8 @@ Kairos Cancun Config
   },
   "systemContracts": {
     "ADDRESS_BOOK": "0x0000000000000000000000000000000000000400",
-    "MAINNET_CREDIT": "0x0000000000000000000000000000000000000000",
+    "KIP103": "0xd5ad6d61dd87edabe2332607c328f5cc96aecb95",
+    "KIP160": "0x3d478e73c9dbebb72332712d7265961b1868d193",
     "REGISTRY": "0x0000000000000000000000000000000000000401"
   }
 }
@@ -189,7 +193,7 @@ would return (after formatting):
     "current": {
       "blobSchedule": null,
       "chainId": "0x3E9",
-      "forkId": "0xbef71d30",
+      "forkId": "0xf00fbab3",
       "precompiles": {
         "BLAKE2F": "0x0000000000000000000000000000000000000009",
         "BN254_ADD": "0x0000000000000000000000000000000000000006",
@@ -207,14 +211,15 @@ would return (after formatting):
       },
       "systemContracts": {
         "ADDRESS_BOOK": "0x0000000000000000000000000000000000000400",
-        "MAINNET_CREDIT": "0x0000000000000000000000000000000000000000",
+        "KIP103": "0xd5ad6d61dd87edabe2332607c328f5cc96aecb95",
+        "KIP160": "0x3d478e73c9dbebb72332712d7265961b1868d193",
         "REGISTRY": "0x0000000000000000000000000000000000000401"
       }
     },
     "next": {
       "blobSchedule": null,
       "chainId": "0x3E9",
-      "forkId": "0x0929e24e",
+      "forkId": "0x0d29cd98",
       "precompiles": {
         "BLAKE2F": "0x0000000000000000000000000000000000000009",
         "BLS12_G1ADD": "0x000000000000000000000000000000000000000b",
@@ -240,14 +245,15 @@ would return (after formatting):
       "systemContracts": {
         "ADDRESS_BOOK": "0x0000000000000000000000000000000000000400",
         "HISTORY_STORAGE_ADDRESS": "0x0000f90827f1c53a10cb7a02335b175320002935",
-        "MAINNET_CREDIT": "0x0000000000000000000000000000000000000000",
+        "KIP103": "0xd5ad6d61dd87edabe2332607c328f5cc96aecb95",
+        "KIP160": "0x3d478e73c9dbebb72332712d7265961b1868d193",
         "REGISTRY": "0x0000000000000000000000000000000000000401"
       }
     },
     "last": {
       "blobSchedule": null,
       "chainId": "0x3E9",
-      "forkId": "0x0929e24e",
+      "forkId": "0x0d29cd98",
       "precompiles": {
         "BLAKE2F": "0x0000000000000000000000000000000000000009",
         "BLS12_G1ADD": "0x000000000000000000000000000000000000000b",
@@ -273,7 +279,8 @@ would return (after formatting):
       "systemContracts": {
         "ADDRESS_BOOK": "0x0000000000000000000000000000000000000400",
         "HISTORY_STORAGE_ADDRESS": "0x0000f90827f1c53a10cb7a02335b175320002935",
-        "MAINNET_CREDIT": "0x0000000000000000000000000000000000000000",
+        "KIP103": "0xd5ad6d61dd87edabe2332607c328f5cc96aecb95",
+        "KIP160": "0x3d478e73c9dbebb72332712d7265961b1868d193",
         "REGISTRY": "0x0000000000000000000000000000000000000401"
       }
     }
@@ -293,7 +300,7 @@ When no future forks are configured, the same RPC command would return:
     "current": {
       "blobSchedule": null,
       "chainId": "0x3E9",
-      "forkId": "0xbef71d30",
+      "forkId": "0xf00fbab3",
       "precompiles": {
         "BLAKE2F": "0x0000000000000000000000000000000000000009",
         "BN254_ADD": "0x0000000000000000000000000000000000000006",
@@ -311,7 +318,8 @@ When no future forks are configured, the same RPC command would return:
       },
       "systemContracts": {
         "ADDRESS_BOOK": "0x0000000000000000000000000000000000000400",
-        "MAINNET_CREDIT": "0x0000000000000000000000000000000000000000",
+        "KIP103": "0xd5ad6d61dd87edabe2332607c328f5cc96aecb95",
+        "KIP160": "0x3d478e73c9dbebb72332712d7265961b1868d193",
         "REGISTRY": "0x0000000000000000000000000000000000000401"
       }
     },
@@ -324,10 +332,6 @@ When no future forks are configured, the same RPC command would return:
 ## References
 
 - [EIP-7910](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-7910.md)
-- [EIP-6122](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-6122.md)
-- [EIP-4844](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-4844.md)
-- [KIP-247](https://github.com/kaiachain/kips/blob/main/KIPs/kip-247.md)
-- [KIP-149](https://github.com/kaiachain/kips/blob/main/KIPs/kip-149.md)
 
 ## Copyright
 
