@@ -11,3 +11,8 @@ vendor
 
 # Secrets
 .vercel
+
+# Vale local files		  
+/.github/styles/.vale-config
+/.github/styles/Google
+/.github/styles/proselint
